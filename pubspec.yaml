@@ -1,0 +1,21 @@
+name: flutter_pseudolocalizor
+description: A Pseudolocalization tool for Flutter which generates pseudo, nonsensical translations for multiple languages from a given English source.
+version: 0.1.0
+author: James Leahy <defuncart@gmail.com>
+homepage: https://github.com/defuncart/flutter_pseudolocalizor
+
+environment:
+  sdk: ">=2.3.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  meta: ^1.1.6
+  yaml: ^2.2.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  
