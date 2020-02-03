@@ -28,6 +28,9 @@ class PackageSettings {
   /// A model of csv settings.
   final CSVSettings csvSettings;
 
+  /// A list of RegExps to ignore during text replacement.
+  final List<RegExp> expressionsToIgnore;
+
   PackageSettings({
     @required this.inputFilepath,
     @required bool outputFilepath,
@@ -35,15 +38,18 @@ class PackageSettings {
     @required List<String> languagesToGenerate,
     @required bool useBrackets,
     @required this.textExpansionRatio,
+    @required List<String> expressionsToIgnore,
     CSVSettings csvSettings,
   })  : this.outputFilepath = outputFilepath ?? Utils.generateOutputFilePath(inputFilepath: inputFilepath),
         this.replaceBase = replaceBase ?? DefaultSettings.replaceBase,
         this.languagesToGenerate = Utils.covertSupportedLangugesFromListString(languagesToGenerate),
         this.useBrackets = useBrackets ?? DefaultSettings.useBrackets,
-        this.csvSettings = csvSettings ?? CSVSettings.withDefaultSettings();
+        this.csvSettings = csvSettings ?? CSVSettings.withDefaultSettings(),
+        this.expressionsToIgnore =
+            expressionsToIgnore == null ? [] : expressionsToIgnore.map((e) => RegExp(e)).toList();
 
   /// Returns a String representation of the model.
   @override
   String toString() =>
-      '{inputFilepath: $inputFilepath, outputFilepath: $outputFilepath, replaceBase: $replaceBase, languagesToGenerate: $languagesToGenerate, useBrackets: $useBrackets, textExpansionRatio: $textExpansionRatio}';
+      '{inputFilepath: $inputFilepath, outputFilepath: $outputFilepath, replaceBase: $replaceBase, languagesToGenerate: $languagesToGenerate, useBrackets: $useBrackets, textExpansionRatio: $textExpansionRatio, expressionsToIgnore: $expressionsToIgnore}';
 }
