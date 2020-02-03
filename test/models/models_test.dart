@@ -26,7 +26,7 @@ void main() {
     expect(packageSettings.useBrackets, isNotNull);
     expect(packageSettings.textExpansionRatio, null);
     expect(packageSettings.csvSettings, isNotNull);
-    expect(packageSettings.patternToIgnore, isNotNull);
+    expect(packageSettings.patternToIgnore, null);
 
     /// give non-null for inputFilepath
     packageSettings = PackageSettings(
@@ -47,7 +47,7 @@ void main() {
     expect(packageSettings.useBrackets, isNotNull);
     expect(packageSettings.textExpansionRatio, null);
     expect(packageSettings.csvSettings, isNotNull);
-    expect(packageSettings.patternToIgnore, isNotNull);
+    expect(packageSettings.patternToIgnore, null);
 
     /// give non-null for languagesToGenerate
     packageSettings = PackageSettings(
@@ -68,7 +68,7 @@ void main() {
     expect(packageSettings.useBrackets, isNotNull);
     expect(packageSettings.textExpansionRatio, null);
     expect(packageSettings.csvSettings, isNotNull);
-    expect(packageSettings.patternToIgnore, isNotNull);
+    expect(packageSettings.patternToIgnore, null);
   });
 
   test('CSVSettings', () {

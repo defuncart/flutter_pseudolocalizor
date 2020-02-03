@@ -31,8 +31,6 @@ mixin PseudoGenerator {
           )
         : _addSpecialCharactersToText(baseText, language: languageToGenerate);
 
-    print(characterReplacement);
-
     final textExpansion = numberOfRandomSpecialCharactersToGenerate > 0
         ? _generateXRandomSpecialCharacters(numberOfRandomSpecialCharactersToGenerate, language: languageToGenerate)
         : '';
