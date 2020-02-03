@@ -1,3 +1,4 @@
 key;en
 title;My Title
 subtitle;A subtitle
+test;'Here is a %variable\$d. And another %one\$s. 5% and 2\$s. Flutter'

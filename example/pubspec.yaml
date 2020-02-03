@@ -32,4 +32,7 @@ flutter_pseudolocalizor:
   csv_settings:
     delimiter: ";"
     column_index: 1
+  patterns_to_ignore:
+    - '%(\S*?)\$[ds]'
+    - 'Flutter'
   
