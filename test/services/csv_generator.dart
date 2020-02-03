@@ -33,7 +33,7 @@ subtitle;A subtitle
       useBrackets: true,
       textExpansionRatio: null,
       csvSettings: csvSettings,
-      expressionsToIgnore: null,
+      patternsToIgnore: null,
     );
 
     final contents = CSVGenerator.generate(file, packageSettings);
@@ -65,7 +65,7 @@ subtitle;A subtitle
       useBrackets: true,
       textExpansionRatio: null,
       csvSettings: csvSettings,
-      expressionsToIgnore: null,
+      patternsToIgnore: null,
     );
 
     final contents = CSVGenerator.generate(file, packageSettings);

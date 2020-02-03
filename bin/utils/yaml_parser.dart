@@ -13,7 +13,7 @@ class YamlArguments {
   static const useBrackets = 'use_brackets';
   static const textExpansionRatio = 'text_expansion_ratio';
   static const csvSettings = 'csv_settings';
-  static const expressionsToIgnore = 'expressions_to_ignore';
+  static const patternsToIgnore = 'patterns_to_ignore';
 }
 
 /// A class of arguments which the user can specify in pubspec.yaml for csv_settings object
@@ -41,7 +41,7 @@ class YamlParser {
       useBrackets: yamlMap[YamlArguments.useBrackets],
       textExpansionRatio: _dynamicToDouble(yamlMap[YamlArguments.textExpansionRatio]),
       csvSettings: _csvSettingsFromPubspec(yamlMap),
-      expressionsToIgnore: _yamlListToStringList(yamlMap[YamlArguments.expressionsToIgnore]),
+      patternsToIgnore: _yamlListToStringList(yamlMap[YamlArguments.patternsToIgnore]),
     );
   }
 
