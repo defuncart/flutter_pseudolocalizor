@@ -16,13 +16,21 @@ mixin PseudoGenerator {
     SupportedLanguage languageToGenerate,
     bool useBrackets = DefaultSettings.useBrackets,
     double textExpansionRate,
+    RegExp patternToIgnore,
   }) {
     final pseudoTextLength = textExpansionRate != null
         ? (baseText.length * textExpansionRate).ceil()
         : _pseudotranslationLengthForText(baseText);
     final numberOfRandomSpecialCharactersToGenerate = pseudoTextLength - baseText.length;
 
-    final characterReplacement = _addSpecialCharactersToText(baseText, language: languageToGenerate);
+    // ignore any patterns during text replacement, if needed
+    final characterReplacement = patternToIgnore != null
+        ? baseText.splitMapJoin(
+            patternToIgnore,
+            onNonMatch: (value) => _addSpecialCharactersToText(value, language: languageToGenerate),
+          )
+        : _addSpecialCharactersToText(baseText, language: languageToGenerate);
+
     final textExpansion = numberOfRandomSpecialCharactersToGenerate > 0
         ? _generateXRandomSpecialCharacters(numberOfRandomSpecialCharactersToGenerate, language: languageToGenerate)
         : '';

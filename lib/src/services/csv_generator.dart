@@ -62,6 +62,8 @@ class CSVGenerator with PseudoGenerator {
             baseText,
             languageToGenerate: languageToGenerate,
             useBrackets: packageSettings.useBrackets,
+            textExpansionRate: packageSettings.textExpansionRatio,
+            patternToIgnore: packageSettings.patternToIgnore,
           );
 
           generated.add(pseudoTranslation);

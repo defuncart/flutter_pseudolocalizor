@@ -28,6 +28,9 @@ class PackageSettings {
   /// A model of csv settings.
   final CSVSettings csvSettings;
 
+  /// A RegExp to ignore during text replacement.
+  final RegExp patternToIgnore;
+
   PackageSettings({
     @required this.inputFilepath,
     @required bool outputFilepath,
@@ -35,15 +38,33 @@ class PackageSettings {
     @required List<String> languagesToGenerate,
     @required bool useBrackets,
     @required this.textExpansionRatio,
+    @required List<String> patternsToIgnore,
     CSVSettings csvSettings,
   })  : this.outputFilepath = outputFilepath ?? Utils.generateOutputFilePath(inputFilepath: inputFilepath),
         this.replaceBase = replaceBase ?? DefaultSettings.replaceBase,
         this.languagesToGenerate = Utils.covertSupportedLangugesFromListString(languagesToGenerate),
         this.useBrackets = useBrackets ?? DefaultSettings.useBrackets,
-        this.csvSettings = csvSettings ?? CSVSettings.withDefaultSettings();
+        this.csvSettings = csvSettings ?? CSVSettings.withDefaultSettings(),
+        this.patternToIgnore = _combinePatterns(patternsToIgnore);
+
+  static RegExp _combinePatterns(List<String> patterns) {
+    if (patterns != null && patterns.length > 0) {
+      String combinedPattern = '';
+      for (int i = 0; i < patterns.length; i++) {
+        if (i != 0) {
+          combinedPattern += "|";
+        }
+        combinedPattern += patterns[i];
+      }
+
+      return RegExp(combinedPattern);
+    }
+
+    return null;
+  }
 
   /// Returns a String representation of the model.
   @override
   String toString() =>
-      '{inputFilepath: $inputFilepath, outputFilepath: $outputFilepath, replaceBase: $replaceBase, languagesToGenerate: $languagesToGenerate, useBrackets: $useBrackets, textExpansionRatio: $textExpansionRatio}';
+      '{inputFilepath: $inputFilepath, outputFilepath: $outputFilepath, replaceBase: $replaceBase, languagesToGenerate: $languagesToGenerate, useBrackets: $useBrackets, textExpansionRatio: $textExpansionRatio, expressionsToIgnore: $patternToIgnore}';
 }
