@@ -1,3 +1,7 @@
+## [0.2.0]
+
+* Added Setting to ignore certain expressions during text replacement, i.e. product name or regexp for variables.
+
 ## [0.1.0]
 
 * Initial beta version.
