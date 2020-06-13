@@ -2,6 +2,7 @@ import '../../enums/supported_language.dart';
 
 /// Language settings for SupportedLanguage.tr
 class TR {
+  /// The language
   static const language = SupportedLanguage.tr;
 
   /// An array of special characters

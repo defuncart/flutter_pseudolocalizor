@@ -2,11 +2,12 @@ import 'dart:io';
 
 import '../configs/default_settings.dart';
 import '../models/package_settings.dart';
-import 'pseudo_generator.dart';
 import '../utils/utils.dart';
+import 'pseudo_generator.dart';
 
 /// Generates pseudo localizations for a csv file
 class CSVGenerator with PseudoGenerator {
+  /// Generates pseudo localizations with a given [file] and [packageSettings]
   static String generate(
     File file,
     PackageSettings packageSettings,
@@ -53,7 +54,7 @@ class CSVGenerator with PseudoGenerator {
       }
     } else {
       List<List<String>> generatedAll = [];
-      generatedAll.add(packageSettings.languagesToGenerate.map((x) => Utils.describeEnum(x)).toList());
+      generatedAll.add(packageSettings.languagesToGenerate.map(Utils.describeEnum).toList());
       for (final baseText in locaBase) {
         List<String> generated = [];
 

@@ -32,7 +32,7 @@ class YamlParser {
 
   /// Returns the package settings from pubspec
   static PackageSettings packageSettingsFromPubspec() {
-    final Map<dynamic, dynamic> yamlMap = _packageSettingsAsYamlMap();
+    final yamlMap = _packageSettingsAsYamlMap();
     return PackageSettings(
       inputFilepath: yamlMap[YamlArguments.inputFilepath],
       outputFilepath: yamlMap[YamlArguments.outputFilepath],
@@ -82,6 +82,7 @@ class YamlParser {
       return double.tryParse(input);
     }
 
+    // ignore: avoid_returning_null
     return null;
   }
 }

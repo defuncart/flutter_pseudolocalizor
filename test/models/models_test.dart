@@ -1,9 +1,7 @@
 library models;
 
+import 'package:flutter_pseudolocalizor/flutter_pseudolocalizor.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import '../../lib/src/models/csv_settings.dart';
-import '../../lib/src/models/package_settings.dart';
 
 void main() {
   test('PackageSettings', () {

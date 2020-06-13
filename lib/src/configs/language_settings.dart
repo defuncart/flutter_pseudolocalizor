@@ -1,13 +1,13 @@
+import '../enums/supported_language.dart';
 import 'languages/de.dart';
 import 'languages/es.dart';
 import 'languages/fr.dart';
 import 'languages/it.dart';
+import 'languages/latin_extended.dart';
 import 'languages/pl.dart';
 import 'languages/pt.dart';
 import 'languages/ru.dart';
 import 'languages/tr.dart';
-import 'languages/latin_extended.dart';
-import '../enums/supported_language.dart';
 
 /// A config of language settings for the package
 class LanguageSettings {
