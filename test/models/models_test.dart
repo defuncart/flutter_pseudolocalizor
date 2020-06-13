@@ -69,6 +69,9 @@ void main() {
     expect(packageSettings.textExpansionRatio, null);
     expect(packageSettings.csvSettings, isNotNull);
     expect(packageSettings.patternToIgnore, null);
+
+    // toString()
+    expect(packageSettings.toString(), isNot('Instance of \'PackageSettings\''));
   });
 
   test('CSVSettings', () {
@@ -89,5 +92,8 @@ void main() {
 
     expect(csvSettings.delimiter, isNotNull);
     expect(csvSettings.columnIndex, isNotNull);
+
+    // toString()
+    expect(csvSettings.toString(), isNot('Instance of \'CSVSettings\''));
   });
 }
