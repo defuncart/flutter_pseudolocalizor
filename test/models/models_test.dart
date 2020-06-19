@@ -1,6 +1,6 @@
 library models;
 
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 
 import '../../lib/src/models/csv_settings.dart';
 import '../../lib/src/models/package_settings.dart';

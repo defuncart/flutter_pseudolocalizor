@@ -2,10 +2,10 @@ library csv_genertor;
 
 import 'dart:io';
 
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 
-import '../../lib/src/models/package_settings.dart';
 import '../../lib/src/models/csv_settings.dart';
+import '../../lib/src/models/package_settings.dart';
 import '../../lib/src/services/csv_generator.dart';
 
 void main() {
