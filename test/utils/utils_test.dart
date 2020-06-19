@@ -1,6 +1,6 @@
 library utils;
 
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 
 import '../../lib/src/enums/supported_input_file_type.dart';
 import '../../lib/src/enums/supported_language.dart';
