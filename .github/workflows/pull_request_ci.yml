@@ -1,6 +1,5 @@
 name: pull_request_ci
-# on: pull_request
-on: push
+on: pull_request
 jobs:
   lint-unit-tests:
     name: Lint + Unit Tests
@@ -18,9 +17,7 @@ jobs:
           pub get
       - name: Lint
         run: 
-          # flutter analyze
-          dartanalyzer lib bin
+          dartanalyzer lib bin test
       - name: Unit tests
         run:
-          # flutter test
           pub run test
