@@ -4,7 +4,7 @@ import 'dart:io';
 
 import 'package:flutter_pseudolocalizor/flutter_pseudolocalizor.dart';
 import 'package:flutter_pseudolocalizor/src/services/csv_generator.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 
 void main() {
   final csvFileContents = '''

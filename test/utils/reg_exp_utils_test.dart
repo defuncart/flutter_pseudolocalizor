@@ -1,5 +1,5 @@
 import 'package:flutter_pseudolocalizor/src/utils/reg_exp_utils.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 
 void main() {
   test('combinePatterns: patterns is null, expect null RegExp', () {

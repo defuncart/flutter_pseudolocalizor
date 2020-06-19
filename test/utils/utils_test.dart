@@ -3,7 +3,7 @@ library utils;
 import 'package:flutter_pseudolocalizor/src/enums/supported_input_file_type.dart';
 import 'package:flutter_pseudolocalizor/src/enums/supported_language.dart';
 import 'package:flutter_pseudolocalizor/src/utils/utils.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 
 void main() {
   test('Convert string to supported language', () {
