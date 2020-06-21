@@ -53,10 +53,10 @@ class CSVGenerator with PseudoGenerator {
         outputLines[i] = outputLines[i].replaceFirst(locaBase[i - 1], pseudoText);
       }
     } else {
-      List<List<String>> generatedAll = [];
+      final generatedAll = <List<String>>[];
       generatedAll.add(packageSettings.languagesToGenerate.map(Utils.describeEnum).toList());
       for (final baseText in locaBase) {
-        List<String> generated = [];
+        final generated = <String>[];
 
         for (final languageToGenerate in packageSettings.languagesToGenerate) {
           final pseudoTranslation = PseudoGenerator.generatePseudoTranslation(

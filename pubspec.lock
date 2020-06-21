@@ -89,7 +89,7 @@ packages:
     dependency: "direct dev"
     description:
       path: "."
-      ref: HEAD
+      ref: "972b5461f4c9977286707dfa40ee098227ccd8e1"
       resolved-ref: "972b5461f4c9977286707dfa40ee098227ccd8e1"
       url: "https://github.com/defuncart/flutter_analysis_options"
     source: git

@@ -48,7 +48,7 @@ mixin PseudoGenerator {
     final mappingCharacters = Utils.mappingCharactersForSupportedLanguage(language);
     final keys = mappingCharacters.keys.toList();
     for (final character in characters) {
-      int index = keys.indexOf(character);
+      final index = keys.indexOf(character);
       if (index > 0) {
         final possibleMappings = mappingCharacters[character];
         sb.write(possibleMappings[_random.nextInt(possibleMappings.length)]);
