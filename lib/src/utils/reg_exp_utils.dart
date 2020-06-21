@@ -3,18 +3,11 @@ abstract class RegExpUtils {
   /// Combines a list of string patterns into a RegExp
   static RegExp combinePatterns(List<String> patterns) {
     if (patterns != null && patterns.length > 0) {
-      final sb = StringBuffer();
-      for (final pattern in patterns) {
-        if (pattern != null) {
-          if (sb.isNotEmpty) {
-            sb.write('|');
-          }
-          sb.write(pattern);
-        }
-      }
-
-      if (sb.isNotEmpty) {
-        return RegExp(sb.toString());
+      final filteredPatterns = patterns.where((element) => element != null);
+      final concatPattern =
+          filteredPatterns.isNotEmpty ? filteredPatterns.reduce((value, element) => '$value|$element') : null;
+      if (concatPattern != null && concatPattern.isNotEmpty) {
+        return RegExp(concatPattern);
       }
     }
 
