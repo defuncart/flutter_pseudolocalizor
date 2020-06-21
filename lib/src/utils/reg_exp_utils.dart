@@ -3,15 +3,19 @@ abstract class RegExpUtils {
   /// Combines a list of string patterns into a RegExp
   static RegExp combinePatterns(List<String> patterns) {
     if (patterns != null && patterns.length > 0) {
-      String combinedPattern = '';
-      for (int i = 0; i < patterns.length; i++) {
-        if (i != 0) {
-          combinedPattern += "|";
+      final sb = StringBuffer();
+      for (final pattern in patterns) {
+        if (pattern != null) {
+          if (sb.isNotEmpty) {
+            sb.write('|');
+          }
+          sb.write(pattern);
         }
-        combinedPattern += patterns[i];
       }
 
-      return RegExp(combinedPattern);
+      if (sb.isNotEmpty) {
+        return RegExp(sb.toString());
+      }
     }
 
     return null;
