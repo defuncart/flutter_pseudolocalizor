@@ -1,9 +1,10 @@
 import 'package:meta/meta.dart';
 
 import '../configs/default_settings.dart';
-import 'csv_settings.dart';
 import '../enums/supported_language.dart';
+import '../utils/reg_exp_utils.dart';
 import '../utils/utils.dart';
+import 'csv_settings.dart';
 
 /// A model representing package settings
 class PackageSettings {
@@ -31,6 +32,7 @@ class PackageSettings {
   /// A RegExp to ignore during text replacement.
   final RegExp patternToIgnore;
 
+  /// Constructs a new instance of [PackageSettings]
   PackageSettings({
     @required this.inputFilepath,
     @required bool outputFilepath,
@@ -40,28 +42,12 @@ class PackageSettings {
     @required this.textExpansionRatio,
     @required List<String> patternsToIgnore,
     CSVSettings csvSettings,
-  })  : this.outputFilepath = outputFilepath ?? Utils.generateOutputFilePath(inputFilepath: inputFilepath),
-        this.replaceBase = replaceBase ?? DefaultSettings.replaceBase,
-        this.languagesToGenerate = Utils.covertSupportedLangugesFromListString(languagesToGenerate),
-        this.useBrackets = useBrackets ?? DefaultSettings.useBrackets,
-        this.csvSettings = csvSettings ?? CSVSettings.withDefaultSettings(),
-        this.patternToIgnore = _combinePatterns(patternsToIgnore);
-
-  static RegExp _combinePatterns(List<String> patterns) {
-    if (patterns != null && patterns.length > 0) {
-      String combinedPattern = '';
-      for (int i = 0; i < patterns.length; i++) {
-        if (i != 0) {
-          combinedPattern += "|";
-        }
-        combinedPattern += patterns[i];
-      }
-
-      return RegExp(combinedPattern);
-    }
-
-    return null;
-  }
+  })  : outputFilepath = outputFilepath ?? Utils.generateOutputFilePath(inputFilepath: inputFilepath),
+        replaceBase = replaceBase ?? DefaultSettings.replaceBase,
+        languagesToGenerate = Utils.covertSupportedLangugesFromListString(languagesToGenerate),
+        useBrackets = useBrackets ?? DefaultSettings.useBrackets,
+        csvSettings = csvSettings ?? CSVSettings.withDefaultSettings(),
+        patternToIgnore = RegExpUtils.combinePatterns(patternsToIgnore);
 
   /// Returns a String representation of the model.
   @override

@@ -10,11 +10,15 @@ class CSVSettings {
   /// The base language's column index. Defaults to 1.
   final int columnIndex;
 
+  /// Constructs a new instance of [CSVSettings]
+  ///
+  /// The parameter `delimiter` is required. If null, defaults to `CSVDefaultSettings.delimiter`.
+  /// The parameter `columnIndex` is required. If null, defaults to `CSVDefaultSettings.columnIndex`.
   const CSVSettings({
     @required String delimiter,
     @required int columnIndex,
-  })  : this.delimiter = delimiter ?? CSVDefaultSettings.delimiter,
-        this.columnIndex = columnIndex ?? CSVDefaultSettings.columnIndex;
+  })  : delimiter = delimiter ?? CSVDefaultSettings.delimiter,
+        columnIndex = columnIndex ?? CSVDefaultSettings.columnIndex;
 
   /// Consts a new instance of `CSVSettings` whose parameters are given default values.
   CSVSettings.withDefaultSettings() : this(delimiter: null, columnIndex: null);

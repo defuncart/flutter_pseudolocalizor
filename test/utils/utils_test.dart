@@ -1,14 +1,13 @@
 library utils;
 
+import 'package:flutter_pseudolocalizor/src/enums/supported_input_file_type.dart';
+import 'package:flutter_pseudolocalizor/src/enums/supported_language.dart';
+import 'package:flutter_pseudolocalizor/src/utils/utils.dart';
 import 'package:test/test.dart';
-
-import '../../lib/src/enums/supported_input_file_type.dart';
-import '../../lib/src/enums/supported_language.dart';
-import '../../lib/src/utils/utils.dart';
 
 void main() {
   test('Convert string to supported language', () {
-    final strings = SupportedLanguage.values.map((x) => Utils.describeEnum(x)).toList();
+    final strings = SupportedLanguage.values.map(Utils.describeEnum).toList();
 
     // strings (lower case) should be correctly converted
     for (int i = 0; i < strings.length; i++) {
@@ -32,7 +31,7 @@ void main() {
   });
 
   test('Convert List<string> to List<SupportedLanguage>', () {
-    final strings = SupportedLanguage.values.map((x) => Utils.describeEnum(x)).toList();
+    final strings = SupportedLanguage.values.map(Utils.describeEnum).toList();
 
     // strings (lower case) should be correctly converted
     var supportedLanguages = Utils.covertSupportedLangugesFromListString(strings);
@@ -48,7 +47,7 @@ void main() {
   });
 
   test('Convert string to SupportedInputFileType', () {
-    final strings = SupportedInputFileType.values.map((x) => Utils.describeEnum(x)).toList();
+    final strings = SupportedInputFileType.values.map(Utils.describeEnum).toList();
 
     // strings (lower case) should be correctly converted
     for (int i = 0; i < strings.length; i++) {

@@ -2,6 +2,7 @@ import '../../enums/supported_language.dart';
 
 /// Language settings for SupportedLanguage.ru
 class RU {
+  /// The language
   static const language = SupportedLanguage.ru;
 
   /// An array of special characters

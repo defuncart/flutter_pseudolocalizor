@@ -2,14 +2,16 @@ import 'package:meta/meta.dart';
 
 import '../configs/default_settings.dart';
 import '../configs/language_settings.dart';
-import '../enums/supported_language.dart';
 import '../enums/supported_input_file_type.dart';
+import '../enums/supported_language.dart';
 
 /// A class of utils used for the package
 class Utils {
+  /// Returns a list of special characters for a given [SupportLanguage]
   static List<String> specialCharactersForSupportedLanguage(SupportedLanguage language) =>
       language == null ? LanguageSettings.fallbackSpecialCharacters : LanguageSettings.specialCharacters[language];
 
+  /// Returns mapping characters for a given [SupportLanguage]
   static Map<String, List<String>> mappingCharactersForSupportedLanguage(SupportedLanguage language) =>
       language == null ? LanguageSettings.fallbackMappingCharacters : LanguageSettings.mappingCharacters[language];
 
@@ -58,8 +60,8 @@ class Utils {
 
   ///
   static String describeEnum(Object enumEntry) {
-    final String description = enumEntry.toString();
-    final int indexOfDot = description.indexOf('.');
+    final description = enumEntry.toString();
+    final indexOfDot = description.indexOf('.');
     assert(indexOfDot != -1 && indexOfDot < description.length - 1);
     return description.substring(indexOfDot + 1);
   }

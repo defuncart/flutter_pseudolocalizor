@@ -5,6 +5,7 @@ import '../models/package_settings.dart';
 import '../services/csv_generator.dart';
 import '../utils/utils.dart';
 
+/// A service which generates pseudolocalization files
 class Pseudolocalizor {
   /// Generates an output pseudolocalization file
   static void generate(
