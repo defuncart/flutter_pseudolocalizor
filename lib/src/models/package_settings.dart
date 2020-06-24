@@ -32,6 +32,9 @@ class PackageSettings {
   /// A RegExp to ignore during text replacement.
   final RegExp patternToIgnore;
 
+  /// A list of line numbers which should be ignored.
+  final List<int> linesToIgnore;
+
   /// Constructs a new instance of [PackageSettings]
   PackageSettings({
     @required this.inputFilepath,
@@ -41,6 +44,7 @@ class PackageSettings {
     @required bool useBrackets,
     @required this.textExpansionRatio,
     @required List<String> patternsToIgnore,
+    @required this.linesToIgnore,
     CSVSettings csvSettings,
   })  : outputFilepath = outputFilepath ?? Utils.generateOutputFilePath(inputFilepath: inputFilepath),
         replaceBase = replaceBase ?? DefaultSettings.replaceBase,
@@ -52,5 +56,5 @@ class PackageSettings {
   /// Returns a String representation of the model.
   @override
   String toString() =>
-      '{inputFilepath: $inputFilepath, outputFilepath: $outputFilepath, replaceBase: $replaceBase, languagesToGenerate: $languagesToGenerate, useBrackets: $useBrackets, textExpansionRatio: $textExpansionRatio, expressionsToIgnore: $patternToIgnore}';
+      '{inputFilepath: $inputFilepath, outputFilepath: $outputFilepath, replaceBase: $replaceBase, languagesToGenerate: $languagesToGenerate, useBrackets: $useBrackets, textExpansionRatio: $textExpansionRatio, patternToIgnore: $patternToIgnore, linesToIgnore: $linesToIgnore}';
 }

@@ -1,8 +1,7 @@
 import 'dart:io';
 
-import 'package:yaml/yaml.dart';
-
 import 'package:flutter_pseudolocalizor/flutter_pseudolocalizor.dart' show CSVSettings, PackageSettings;
+import 'package:yaml/yaml.dart';
 
 /// A class of arguments which the user can specify in pubspec.yaml
 class YamlArguments {
@@ -14,6 +13,7 @@ class YamlArguments {
   static const textExpansionRatio = 'text_expansion_ratio';
   static const csvSettings = 'csv_settings';
   static const patternsToIgnore = 'patterns_to_ignore';
+  static const linesToIgnore = 'lines_to_ignore';
 }
 
 /// A class of arguments which the user can specify in pubspec.yaml for csv_settings object
@@ -42,6 +42,7 @@ class YamlParser {
       textExpansionRatio: _dynamicToDouble(yamlMap[YamlArguments.textExpansionRatio]),
       csvSettings: _csvSettingsFromPubspec(yamlMap),
       patternsToIgnore: _yamlListToStringList(yamlMap[YamlArguments.patternsToIgnore]),
+      linesToIgnore: _yamlListToIntList(yamlMap[YamlArguments.linesToIgnore]),
     );
   }
 
@@ -69,6 +70,10 @@ class YamlParser {
   /// Converts a YamlList into a List<String>
   static List<String> _yamlListToStringList(YamlList inputList) =>
       inputList != null ? inputList.map((item) => item.toString()).toList() : null;
+
+  /// Converts a YamlList into a List<String>
+  static List<int> _yamlListToIntList<T>(YamlList inputList) =>
+      inputList != null ? inputList.map<int>((item) => item).toList() : null;
 
   /// Converts a dynamic to a double
   static double _dynamicToDouble(dynamic input) {
