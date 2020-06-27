@@ -72,7 +72,7 @@ flutter_pseudolocalizor:
   patterns_to_ignore:
     - '%(\S*?)\$[ds]'
     - 'Flutter'
-  lines_to_ignore:
+  line_numbers_to_ignore:
     - 2
 ```
 
@@ -86,7 +86,7 @@ flutter_pseudolocalizor:
 | csv_settings: delimiter    | A delimiter to separate columns in the input CSV file. Defaults to `,`.                  |
 | csv_settings: column_index | The column index of the base language (en) in the input CSV file. Defaults to `1`.       |
 | patterns_to_ignore         | A list of patterns to ignore during text replacement.                                    |
-| lines_to_ignore              | A list of line numbers which should be ignored.                                          |
+| line_numbers_to_ignore     | A list of line numbers which should be ignored.                                          |
 
 `input_filepath` must be given, all other settings are optional. If Latin-1 Supplement and Latin Extended-A letters should be tested, set `replace_base` to true. To test specific languages, set `languages_to_generate` with an array of languages.
 
@@ -98,7 +98,7 @@ flutter pub run flutter_pseudolocalizor
 
 to generate `test-PSEUDO.csv`. This generated file can then be incorporated into your dev build using a package like [flappy_translator](https://pub.dev/packages/flappy_translator).
 
-Note that `patterns_to_ignore` is especially useful to avoid text replacement for certain know constructs, for instance a product name or a pattern ``%myVar$d` used to parse variables from text.
+Note that `patterns_to_ignore` is especially useful to avoid text replacement for certain know constructs, for instance a product name or a pattern ``%myVar$d` used to parse variables from text. `line_numbers_to_ignore` is the actual line number as seen in a text document.
 
 ## Limitations
 

@@ -44,7 +44,7 @@ class CSVGenerator with PseudoGenerator {
     final outputLines = List<String>.from(lines);
     if (packageSettings.replaceBase) {
       for (var i = 1; i < outputLines.length; i++) {
-        final shouldReplace = !packageSettings.linesToIgnore.contains(i + 1);
+        final shouldReplace = !packageSettings.lineNumbersToIgnore.contains(i + 1);
         if (shouldReplace) {
           final pseudoText = PseudoGenerator.generatePseudoTranslation(
             locaBase[i - 1],
@@ -62,7 +62,7 @@ class CSVGenerator with PseudoGenerator {
       for (var i = 0; i < locaBase.length; i++) {
         final baseText = locaBase[i];
         final generated = <String>[];
-        final shouldReplace = !packageSettings.linesToIgnore.contains(i + 2);
+        final shouldReplace = !packageSettings.lineNumbersToIgnore.contains(i + 2);
 
         for (final languageToGenerate in packageSettings.languagesToGenerate) {
           final pseudoTranslation = shouldReplace
