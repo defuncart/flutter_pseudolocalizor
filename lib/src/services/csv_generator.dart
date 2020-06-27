@@ -43,29 +43,37 @@ class CSVGenerator with PseudoGenerator {
 
     final outputLines = List<String>.from(lines);
     if (packageSettings.replaceBase) {
-      for (int i = 1; i < outputLines.length; i++) {
-        final pseudoText = PseudoGenerator.generatePseudoTranslation(
-          locaBase[i - 1],
-          languageToGenerate: null,
-          useBrackets: packageSettings.useBrackets,
-          textExpansionRate: packageSettings.textExpansionRatio,
-        );
-        outputLines[i] = outputLines[i].replaceFirst(locaBase[i - 1], pseudoText);
-      }
-    } else {
-      final generatedAll = <List<String>>[];
-      generatedAll.add(packageSettings.languagesToGenerate.map(Utils.describeEnum).toList());
-      for (final baseText in locaBase) {
-        final generated = <String>[];
-
-        for (final languageToGenerate in packageSettings.languagesToGenerate) {
-          final pseudoTranslation = PseudoGenerator.generatePseudoTranslation(
-            baseText,
-            languageToGenerate: languageToGenerate,
+      for (var i = 1; i < outputLines.length; i++) {
+        final shouldReplace = !packageSettings.linesToIgnore.contains(i + 1);
+        if (shouldReplace) {
+          final pseudoText = PseudoGenerator.generatePseudoTranslation(
+            locaBase[i - 1],
+            languageToGenerate: null,
             useBrackets: packageSettings.useBrackets,
             textExpansionRate: packageSettings.textExpansionRatio,
             patternToIgnore: packageSettings.patternToIgnore,
           );
+          outputLines[i] = outputLines[i].replaceFirst(locaBase[i - 1], pseudoText);
+        }
+      }
+    } else {
+      final generatedAll = <List<String>>[];
+      generatedAll.add(packageSettings.languagesToGenerate.map(Utils.describeEnum).toList());
+      for (var i = 0; i < locaBase.length; i++) {
+        final baseText = locaBase[i];
+        final generated = <String>[];
+        final shouldReplace = !packageSettings.linesToIgnore.contains(i + 2);
+
+        for (final languageToGenerate in packageSettings.languagesToGenerate) {
+          final pseudoTranslation = shouldReplace
+              ? PseudoGenerator.generatePseudoTranslation(
+                  baseText,
+                  languageToGenerate: languageToGenerate,
+                  useBrackets: packageSettings.useBrackets,
+                  textExpansionRate: packageSettings.textExpansionRatio,
+                  patternToIgnore: packageSettings.patternToIgnore,
+                )
+              : baseText;
 
           generated.add(pseudoTranslation);
         }
