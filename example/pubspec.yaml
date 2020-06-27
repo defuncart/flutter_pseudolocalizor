@@ -35,4 +35,6 @@ flutter_pseudolocalizor:
   patterns_to_ignore:
     - '%(\S*?)\$[ds]'
     - 'Flutter'
+  lines_to_ignore:
+    - 2
   
