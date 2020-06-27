@@ -33,17 +33,19 @@ class YamlParser {
   /// Returns the package settings from pubspec
   static PackageSettings packageSettingsFromPubspec() {
     final yamlMap = _packageSettingsAsYamlMap();
-    return PackageSettings(
-      inputFilepath: yamlMap[YamlArguments.inputFilepath],
-      outputFilepath: yamlMap[YamlArguments.outputFilepath],
-      replaceBase: yamlMap[YamlArguments.replaceBase],
-      languagesToGenerate: _yamlListToStringList(yamlMap[YamlArguments.languagesToGenerate]),
-      useBrackets: yamlMap[YamlArguments.useBrackets],
-      textExpansionRatio: _dynamicToDouble(yamlMap[YamlArguments.textExpansionRatio]),
-      csvSettings: _csvSettingsFromPubspec(yamlMap),
-      patternsToIgnore: _yamlListToStringList(yamlMap[YamlArguments.patternsToIgnore]),
-      lineNumbersToIgnore: _yamlListToIntList(yamlMap[YamlArguments.lineNumbersToIgnore]),
-    );
+    return yamlMap != null
+        ? PackageSettings(
+            inputFilepath: yamlMap[YamlArguments.inputFilepath],
+            outputFilepath: yamlMap[YamlArguments.outputFilepath],
+            replaceBase: yamlMap[YamlArguments.replaceBase],
+            languagesToGenerate: _yamlListToStringList(yamlMap[YamlArguments.languagesToGenerate]),
+            useBrackets: yamlMap[YamlArguments.useBrackets],
+            textExpansionRatio: _dynamicToDouble(yamlMap[YamlArguments.textExpansionRatio]),
+            csvSettings: _csvSettingsFromPubspec(yamlMap),
+            patternsToIgnore: _yamlListToStringList(yamlMap[YamlArguments.patternsToIgnore]),
+            lineNumbersToIgnore: _yamlListToIntList(yamlMap[YamlArguments.lineNumbersToIgnore]),
+          )
+        : null;
   }
 
   /// Returns the csv settings from pubspec

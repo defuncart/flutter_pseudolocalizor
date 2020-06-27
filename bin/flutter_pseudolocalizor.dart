@@ -6,6 +6,10 @@ import 'utils/yaml_parser.dart';
 
 void main(List<String> arguments) {
   final packageSettings = YamlParser.packageSettingsFromPubspec();
+  if (packageSettings == null) {
+    print('Error! Settings for flutter_pseudolocalizor not found in pubspec.');
+    return;
+  }
 
   if (packageSettings.inputFilepath == null) {
     print('Error! Input filepath not defined!');
