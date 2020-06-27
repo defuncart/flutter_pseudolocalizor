@@ -10,13 +10,13 @@ void main() {
     final strings = SupportedLanguage.values.map(Utils.describeEnum).toList();
 
     // strings (lower case) should be correctly converted
-    for (int i = 0; i < strings.length; i++) {
+    for (var i = 0; i < strings.length; i++) {
       final supportedLanguage = Utils.convertSupportedLangaugeFromString(strings[i]);
       expect(supportedLanguage, SupportedLanguage.values[i]);
     }
 
     // strings (upper case) should be correctly converted
-    for (int i = 0; i < strings.length; i++) {
+    for (var i = 0; i < strings.length; i++) {
       final supportedLanguage = Utils.convertSupportedLangaugeFromString(strings[i].toUpperCase());
       expect(supportedLanguage, SupportedLanguage.values[i]);
     }
@@ -50,13 +50,13 @@ void main() {
     final strings = SupportedInputFileType.values.map(Utils.describeEnum).toList();
 
     // strings (lower case) should be correctly converted
-    for (int i = 0; i < strings.length; i++) {
+    for (var i = 0; i < strings.length; i++) {
       final supportedInputFileTypes = Utils.convertSupportedInputFileTypeFromString(strings[i]);
       expect(supportedInputFileTypes, SupportedInputFileType.values[i]);
     }
 
     // strings (upper case) should be correctly converted
-    for (int i = 0; i < strings.length; i++) {
+    for (var i = 0; i < strings.length; i++) {
       final supportedInputFileTypes = Utils.convertSupportedInputFileTypeFromString(strings[i].toUpperCase());
       expect(supportedInputFileTypes, SupportedInputFileType.values[i]);
     }

@@ -63,7 +63,7 @@ mixin PseudoGenerator {
   /// Returns a string contain X random special characters for the selected language.
   static String _generateXRandomSpecialCharacters(int count, {@required SupportedLanguage language}) {
     final sb = StringBuffer();
-    for (int i = 0; i < count; i++) {
+    for (var i = 0; i < count; i++) {
       sb.write(_randomSpecialCharacter(language: language));
     }
     return sb.toString();

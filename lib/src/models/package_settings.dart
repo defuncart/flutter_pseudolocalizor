@@ -44,14 +44,15 @@ class PackageSettings {
     @required bool useBrackets,
     @required this.textExpansionRatio,
     @required List<String> patternsToIgnore,
-    @required this.linesToIgnore,
+    @required List<int> linesToIgnore,
     CSVSettings csvSettings,
   })  : outputFilepath = outputFilepath ?? Utils.generateOutputFilePath(inputFilepath: inputFilepath),
         replaceBase = replaceBase ?? DefaultSettings.replaceBase,
         languagesToGenerate = Utils.covertSupportedLangugesFromListString(languagesToGenerate),
         useBrackets = useBrackets ?? DefaultSettings.useBrackets,
         csvSettings = csvSettings ?? CSVSettings.withDefaultSettings(),
-        patternToIgnore = RegExpUtils.combinePatterns(patternsToIgnore);
+        patternToIgnore = RegExpUtils.combinePatterns(patternsToIgnore),
+        linesToIgnore = linesToIgnore ?? [];
 
   /// Returns a String representation of the model.
   @override

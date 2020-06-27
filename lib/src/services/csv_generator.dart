@@ -37,7 +37,7 @@ class CSVGenerator with PseudoGenerator {
     }
 
     final locaBase = <String>[];
-    for (int i = packageSettings.csvSettings.columnIndex; i < lines.length; i++) {
+    for (var i = packageSettings.csvSettings.columnIndex; i < lines.length; i++) {
       locaBase.add(lines[i].split(packageSettings.csvSettings.delimiter)[packageSettings.csvSettings.columnIndex]);
     }
 
@@ -82,8 +82,8 @@ class CSVGenerator with PseudoGenerator {
         generated.clear();
       }
 
-      for (int i = 0; i < outputLines.length; i++) {
-        for (int j = 0; j < generatedAll[i].length; j++) {
+      for (var i = 0; i < outputLines.length; i++) {
+        for (var j = 0; j < generatedAll[i].length; j++) {
           outputLines[i] += '${packageSettings.csvSettings.delimiter}${generatedAll[i][j]}';
         }
       }
