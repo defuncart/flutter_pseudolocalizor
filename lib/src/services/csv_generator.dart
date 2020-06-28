@@ -37,35 +37,43 @@ class CSVGenerator with PseudoGenerator {
     }
 
     final locaBase = <String>[];
-    for (int i = packageSettings.csvSettings.columnIndex; i < lines.length; i++) {
+    for (var i = packageSettings.csvSettings.columnIndex; i < lines.length; i++) {
       locaBase.add(lines[i].split(packageSettings.csvSettings.delimiter)[packageSettings.csvSettings.columnIndex]);
     }
 
     final outputLines = List<String>.from(lines);
     if (packageSettings.replaceBase) {
-      for (int i = 1; i < outputLines.length; i++) {
-        final pseudoText = PseudoGenerator.generatePseudoTranslation(
-          locaBase[i - 1],
-          languageToGenerate: null,
-          useBrackets: packageSettings.useBrackets,
-          textExpansionRate: packageSettings.textExpansionRatio,
-        );
-        outputLines[i] = outputLines[i].replaceFirst(locaBase[i - 1], pseudoText);
-      }
-    } else {
-      final generatedAll = <List<String>>[];
-      generatedAll.add(packageSettings.languagesToGenerate.map(Utils.describeEnum).toList());
-      for (final baseText in locaBase) {
-        final generated = <String>[];
-
-        for (final languageToGenerate in packageSettings.languagesToGenerate) {
-          final pseudoTranslation = PseudoGenerator.generatePseudoTranslation(
-            baseText,
-            languageToGenerate: languageToGenerate,
+      for (var i = 1; i < outputLines.length; i++) {
+        final shouldReplace = !packageSettings.lineNumbersToIgnore.contains(i + 1);
+        if (shouldReplace) {
+          final pseudoText = PseudoGenerator.generatePseudoTranslation(
+            locaBase[i - 1],
+            languageToGenerate: null,
             useBrackets: packageSettings.useBrackets,
             textExpansionRate: packageSettings.textExpansionRatio,
             patternToIgnore: packageSettings.patternToIgnore,
           );
+          outputLines[i] = outputLines[i].replaceFirst(locaBase[i - 1], pseudoText);
+        }
+      }
+    } else {
+      final generatedAll = <List<String>>[];
+      generatedAll.add(packageSettings.languagesToGenerate.map(Utils.describeEnum).toList());
+      for (var i = 0; i < locaBase.length; i++) {
+        final baseText = locaBase[i];
+        final generated = <String>[];
+        final shouldReplace = !packageSettings.lineNumbersToIgnore.contains(i + 2);
+
+        for (final languageToGenerate in packageSettings.languagesToGenerate) {
+          final pseudoTranslation = shouldReplace
+              ? PseudoGenerator.generatePseudoTranslation(
+                  baseText,
+                  languageToGenerate: languageToGenerate,
+                  useBrackets: packageSettings.useBrackets,
+                  textExpansionRate: packageSettings.textExpansionRatio,
+                  patternToIgnore: packageSettings.patternToIgnore,
+                )
+              : baseText;
 
           generated.add(pseudoTranslation);
         }
@@ -74,8 +82,8 @@ class CSVGenerator with PseudoGenerator {
         generated.clear();
       }
 
-      for (int i = 0; i < outputLines.length; i++) {
-        for (int j = 0; j < generatedAll[i].length; j++) {
+      for (var i = 0; i < outputLines.length; i++) {
+        for (var j = 0; j < generatedAll[i].length; j++) {
           outputLines[i] += '${packageSettings.csvSettings.delimiter}${generatedAll[i][j]}';
         }
       }
