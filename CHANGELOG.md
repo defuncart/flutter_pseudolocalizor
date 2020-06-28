@@ -1,3 +1,9 @@
+## [0.3.0]
+
+* Added ability to completely ignore certain lines during text replacement.
+* Removed dependency on Flutter, thus Dart-only projects can now avail of this package.
+* Improved code coverage.
+
 ## [0.2.0]
 
 * Added Setting to ignore certain expressions during text replacement, i.e. product name or regexp for variables.

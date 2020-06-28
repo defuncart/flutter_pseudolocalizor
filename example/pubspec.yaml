@@ -12,7 +12,7 @@ dependencies:
     sdk: flutter
 
 dev_dependencies:
-  flutter_pseudolocalizor: 
+  flutter_pseudolocalizor:
     path: ../
 
 flutter_pseudolocalizor:
