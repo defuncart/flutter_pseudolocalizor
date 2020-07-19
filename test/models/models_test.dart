@@ -75,7 +75,8 @@ void main() {
     expect(packageSettings.lineNumbersToIgnore, isNotNull);
 
     // toString()
-    expect(packageSettings.toString(), isNot('Instance of \'PackageSettings\''));
+    expect(
+        packageSettings.toString(), isNot('Instance of \'PackageSettings\''));
   });
 
   test('CSVSettings', () {
