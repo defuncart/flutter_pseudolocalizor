@@ -26,9 +26,11 @@ class Pseudolocalizor {
     }
 
     final fileExtension = file.path.split('.').last;
-    final filetype = Utils.convertSupportedInputFileTypeFromString(fileExtension);
+    final filetype =
+        Utils.convertSupportedInputFileTypeFromString(fileExtension);
     if (filetype == null) {
-      print('Error! File ${packageSettings.inputFilepath} has extension $fileExtension which is not supported!');
+      print(
+          'Error! File ${packageSettings.inputFilepath} has extension $fileExtension which is not supported!');
       return;
     }
 

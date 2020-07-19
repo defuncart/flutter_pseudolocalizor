@@ -36,8 +36,10 @@ class LanguageSettings {
   };
 
   /// A fallback value for special characters
-  static List<String> get fallbackSpecialCharacters => LatinExtended.specialCharacters;
+  static List<String> get fallbackSpecialCharacters =>
+      LatinExtended.specialCharacters;
 
   /// A fallback value for mapping characters
-  static Map<String, List<String>> get fallbackMappingCharacters => LatinExtended.mappingCharacters;
+  static Map<String, List<String>> get fallbackMappingCharacters =>
+      LatinExtended.mappingCharacters;
 }
