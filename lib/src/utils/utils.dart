@@ -17,7 +17,7 @@ class Utils {
 
   /// Converts a list of strings ['de', 'pl] into [SupportedLanguage.de, SupportedLanguage.pl]
   static List<SupportedLanguage> covertSupportedLangugesFromListString(List<String> inputList) {
-    if (inputList == null || inputList.length == 0) {
+    if (inputList == null || inputList.isEmpty) {
       return null;
     }
 
@@ -35,14 +35,14 @@ class Utils {
   /// Converts a string into SupportedLanguage
   static SupportedLanguage convertSupportedLangaugeFromString(String language) {
     final values = SupportedLanguage.values.where((item) => describeEnum(item).toString() == language?.toLowerCase());
-    return values != null && values.length > 0 ? values.first : null;
+    return values != null && values.isNotEmpty ? values.first : null;
   }
 
   /// Converts a string into SupportedInputFileType
   static SupportedInputFileType convertSupportedInputFileTypeFromString(String filetype) {
     final values =
         SupportedInputFileType.values.where((item) => describeEnum(item).toString() == filetype?.toLowerCase());
-    return values != null && values.length > 0 ? values.first : null;
+    return values != null && values.isNotEmpty ? values.first : null;
   }
 
   /// Returns a generated output filepath for a given inputfiepath
