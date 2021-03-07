@@ -1,15 +1,11 @@
 name: example
 description: An example for flutter_pseudolocalizor package.
-version: 0.2.0
+version: 0.3.0
 author: James Leahy <defuncart@gmail.com>
 homepage: https://github.com/defuncart/flutter_pseudolocalizor
 
 environment:
   sdk: ">=2.6.0 <3.0.0"
-
-dependencies:
-  flutter:
-    sdk: flutter
 
 dev_dependencies:
   flutter_pseudolocalizor:
