@@ -27,7 +27,7 @@ class CSVGenerator with PseudoGenerator {
     if (packageSettings.csvSettings.columnIndex < 0 ||
         packageSettings.csvSettings.columnIndex >= firstLineElements.length) {
       print(
-          'Error! Column index ${packageSettings.csvSettings.columnIndex} in ${packageSettings.inputFilepath} doesn\'t exist.');
+          "Error! Column index ${packageSettings.csvSettings.columnIndex} in ${packageSettings.inputFilepath} doesn't exist.");
       return null;
     }
 

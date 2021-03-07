@@ -34,24 +34,32 @@ class YamlParser {
   static PackageSettings? packageSettingsFromPubspec() {
     final yamlMap = _packageSettingsAsYamlMap();
 
-    if (yamlMap?[YamlArguments.inputFilepath] == null) {
-      print('Error! Input filepath not defined!');
-      return null;
+    if (yamlMap != null) {
+      final inputFilepath = yamlMap[YamlArguments.inputFilepath];
+      if (inputFilepath == null) {
+        print('Error! Input filepath not defined!');
+        exit(0);
+      }
+
+      final csvSettings = _csvSettingsFromPubspec(yamlMap);
+      if (csvSettings == null) {
+        print('Warning! No CSV settings supplied, using defaults.');
+      }
+
+      return PackageSettings(
+        inputFilepath: inputFilepath,
+        outputFilepath: yamlMap[YamlArguments.outputFilepath],
+        replaceBase: yamlMap[YamlArguments.replaceBase],
+        languagesToGenerate: _yamlListToStringList(yamlMap[YamlArguments.languagesToGenerate]),
+        useBrackets: yamlMap[YamlArguments.useBrackets],
+        textExpansionRatio: _dynamicToDouble(yamlMap[YamlArguments.textExpansionRatio]),
+        csvSettings: csvSettings,
+        patternsToIgnore: _yamlListToStringList(yamlMap[YamlArguments.patternsToIgnore]),
+        lineNumbersToIgnore: _yamlListToIntList(yamlMap[YamlArguments.lineNumbersToIgnore]),
+      );
     }
 
-    return yamlMap != null
-        ? PackageSettings(
-            inputFilepath: yamlMap[YamlArguments.inputFilepath],
-            outputFilepath: yamlMap[YamlArguments.outputFilepath],
-            replaceBase: yamlMap[YamlArguments.replaceBase],
-            languagesToGenerate: _yamlListToStringList(yamlMap[YamlArguments.languagesToGenerate]),
-            useBrackets: yamlMap[YamlArguments.useBrackets],
-            textExpansionRatio: _dynamicToDouble(yamlMap[YamlArguments.textExpansionRatio])!,
-            csvSettings: _csvSettingsFromPubspec(yamlMap),
-            patternsToIgnore: _yamlListToStringList(yamlMap[YamlArguments.patternsToIgnore]),
-            lineNumbersToIgnore: _yamlListToIntList(yamlMap[YamlArguments.lineNumbersToIgnore]) as List<int>?,
-          )
-        : null;
+    return null;
   }
 
   /// Returns the csv settings from pubspec
@@ -75,15 +83,15 @@ class YamlParser {
     return yamlMap[yamlPackageSectionId];
   }
 
-  /// Converts a YamlList into a List<String>
+  /// Converts a YamlList into a List<String>?
   static List<String>? _yamlListToStringList(YamlList? inputList) =>
       inputList != null ? inputList.map((item) => item.toString()).toList() : null;
 
-  /// Converts a YamlList into a List<int>
+  /// Converts a YamlList into a List<int>?
   static List<int>? _yamlListToIntList<T>(YamlList? inputList) =>
       inputList != null ? inputList.map<int>((item) => item).toList() : null;
 
-  /// Converts a dynamic to a double
+  /// Converts a dynamic to a double?
   static double? _dynamicToDouble(dynamic input) {
     if (input != null) {
       if (input.runtimeType == double) {
@@ -95,7 +103,6 @@ class YamlParser {
       return double.tryParse(input);
     }
 
-    // ignore: avoid_returning_null
     return null;
   }
 }
