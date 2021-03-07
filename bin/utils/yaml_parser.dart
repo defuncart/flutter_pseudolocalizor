@@ -1,6 +1,7 @@
 import 'dart:io';
 
-import 'package:flutter_pseudolocalizor/flutter_pseudolocalizor.dart' show CSVSettings, PackageSettings;
+import 'package:flutter_pseudolocalizor/flutter_pseudolocalizor.dart'
+    show CSVSettings, PackageSettings;
 import 'package:yaml/yaml.dart';
 
 /// A class of arguments which the user can specify in pubspec.yaml
@@ -50,12 +51,16 @@ class YamlParser {
         inputFilepath: inputFilepath,
         outputFilepath: yamlMap[YamlArguments.outputFilepath],
         replaceBase: yamlMap[YamlArguments.replaceBase],
-        languagesToGenerate: _yamlListToStringList(yamlMap[YamlArguments.languagesToGenerate]),
+        languagesToGenerate:
+            _yamlListToStringList(yamlMap[YamlArguments.languagesToGenerate]),
         useBrackets: yamlMap[YamlArguments.useBrackets],
-        textExpansionRatio: _dynamicToDouble(yamlMap[YamlArguments.textExpansionRatio]),
+        textExpansionRatio:
+            _dynamicToDouble(yamlMap[YamlArguments.textExpansionRatio]),
         csvSettings: csvSettings,
-        patternsToIgnore: _yamlListToStringList(yamlMap[YamlArguments.patternsToIgnore]),
-        lineNumbersToIgnore: _yamlListToIntList(yamlMap[YamlArguments.lineNumbersToIgnore]),
+        patternsToIgnore:
+            _yamlListToStringList(yamlMap[YamlArguments.patternsToIgnore]),
+        lineNumbersToIgnore:
+            _yamlListToIntList(yamlMap[YamlArguments.lineNumbersToIgnore]),
       );
     }
 
@@ -85,7 +90,9 @@ class YamlParser {
 
   /// Converts a YamlList into a List<String>?
   static List<String>? _yamlListToStringList(YamlList? inputList) =>
-      inputList != null ? inputList.map((item) => item.toString()).toList() : null;
+      inputList != null
+          ? inputList.map((item) => item.toString()).toList()
+          : null;
 
   /// Converts a YamlList into a List<int>?
   static List<int>? _yamlListToIntList<T>(YamlList? inputList) =>

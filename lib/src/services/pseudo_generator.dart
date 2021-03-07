@@ -19,18 +19,22 @@ mixin PseudoGenerator {
     final pseudoTextLength = textExpansionRate != null
         ? (baseText.length * textExpansionRate).ceil()
         : _pseudotranslationLengthForText(baseText);
-    final numberOfRandomSpecialCharactersToGenerate = pseudoTextLength - baseText.length;
+    final numberOfRandomSpecialCharactersToGenerate =
+        pseudoTextLength - baseText.length;
 
     // ignore any patterns during text replacement, if needed
     final characterReplacement = patternToIgnore != null
         ? baseText.splitMapJoin(
             patternToIgnore,
-            onNonMatch: (value) => _addSpecialCharactersToText(value, language: languageToGenerate),
+            onNonMatch: (value) => _addSpecialCharactersToText(value,
+                language: languageToGenerate),
           )
         : _addSpecialCharactersToText(baseText, language: languageToGenerate);
 
     final textExpansion = numberOfRandomSpecialCharactersToGenerate > 0
-        ? _generateXRandomSpecialCharacters(numberOfRandomSpecialCharactersToGenerate, language: languageToGenerate)
+        ? _generateXRandomSpecialCharacters(
+            numberOfRandomSpecialCharactersToGenerate,
+            language: languageToGenerate)
         : '';
 
     return (useBrackets ? '[ ' : '') +
@@ -40,10 +44,12 @@ mixin PseudoGenerator {
   }
 
   /// Returns a string containing mapped special characters (a => ä) for the selected language.
-  static String _addSpecialCharactersToText(String text, {required SupportedLanguage? language}) {
+  static String _addSpecialCharactersToText(String text,
+      {required SupportedLanguage? language}) {
     final sb = StringBuffer();
     final characters = text.split('');
-    final mappingCharacters = Utils.mappingCharactersForSupportedLanguage(language)!;
+    final mappingCharacters =
+        Utils.mappingCharactersForSupportedLanguage(language)!;
     final keys = mappingCharacters.keys.toList();
     for (final character in characters) {
       final index = keys.indexOf(character);
@@ -59,7 +65,8 @@ mixin PseudoGenerator {
   }
 
   /// Returns a string contain X random special characters for the selected language.
-  static String _generateXRandomSpecialCharacters(int count, {required SupportedLanguage? language}) {
+  static String _generateXRandomSpecialCharacters(int count,
+      {required SupportedLanguage? language}) {
     final sb = StringBuffer();
     for (var i = 0; i < count; i++) {
       sb.write(_randomSpecialCharacter(language: language));
@@ -68,8 +75,10 @@ mixin PseudoGenerator {
   }
 
   /// Returns a random special character for the selected language.
-  static String _randomSpecialCharacter({required SupportedLanguage? language}) {
-    final specialCharacters = Utils.specialCharactersForSupportedLanguage(language)!;
+  static String _randomSpecialCharacter(
+      {required SupportedLanguage? language}) {
+    final specialCharacters =
+        Utils.specialCharactersForSupportedLanguage(language)!;
     return specialCharacters[_random.nextInt(specialCharacters.length)];
   }
 

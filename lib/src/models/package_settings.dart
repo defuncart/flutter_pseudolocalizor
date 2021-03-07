@@ -44,9 +44,11 @@ class PackageSettings {
     required List<String>? patternsToIgnore,
     required List<int>? lineNumbersToIgnore,
     CSVSettings? csvSettings,
-  })  : outputFilepath = outputFilepath ?? Utils.generateOutputFilePath(inputFilepath: inputFilepath)!,
+  })  : outputFilepath = outputFilepath ??
+            Utils.generateOutputFilePath(inputFilepath: inputFilepath)!,
         replaceBase = replaceBase ?? DefaultSettings.replaceBase,
-        languagesToGenerate = Utils.covertSupportedLangugesFromListString(languagesToGenerate),
+        languagesToGenerate =
+            Utils.covertSupportedLangugesFromListString(languagesToGenerate),
         useBrackets = useBrackets ?? DefaultSettings.useBrackets,
         csvSettings = csvSettings ?? CSVSettings.withDefaultSettings(),
         patternToIgnore = RegExpUtils.combinePatterns(patternsToIgnore),

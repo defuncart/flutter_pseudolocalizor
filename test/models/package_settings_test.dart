@@ -64,6 +64,7 @@ void main() {
       lineNumbersToIgnore: null,
     );
 
-    expect(packageSettings.toString(), isNot('Instance of \'PackageSettings\''));
+    expect(
+        packageSettings.toString(), isNot('Instance of \'PackageSettings\''));
   });
 }
