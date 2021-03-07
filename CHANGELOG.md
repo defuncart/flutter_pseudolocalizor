@@ -1,3 +1,8 @@
+## [0.4.0]
+
+* Aligns analysis options to pedantic used by Google instead of custom Effective Dart options.
+* Null safety migration.
+
 ## [0.3.0]
 
 * Added ability to completely ignore certain lines during text replacement.
