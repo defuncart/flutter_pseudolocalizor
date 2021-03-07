@@ -93,6 +93,12 @@ flutter_pseudolocalizor:
 Ensure that your current working directory is the project root. Given the localization file `test.csv`, simply run the terminal command:
 
 ```
+dart run flutter_pseudolocalizor
+```
+
+or
+
+```
 flutter pub run flutter_pseudolocalizor
 ```
 
