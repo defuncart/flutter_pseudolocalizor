@@ -11,10 +11,10 @@ void main(List<String> arguments) {
     return;
   }
 
-  if (packageSettings.inputFilepath == null) {
-    print('Error! Input filepath not defined!');
-    return;
-  }
+  // if (packageSettings.inputFilepath == null) {
+  //   print('Error! Input filepath not defined!');
+  //   return;
+  // }
 
   // if the input file doesn't exist, quit
   final file = File(packageSettings.inputFilepath);
@@ -25,21 +25,18 @@ void main(List<String> arguments) {
 
   if (packageSettings.replaceBase == true &&
       packageSettings.languagesToGenerate != null &&
-      packageSettings.languagesToGenerate.isNotEmpty) {
-    print(
-        'Warning! Ignoring ${YamlArguments.languagesToGenerate} as ${YamlArguments.replaceBase} is true!');
+      packageSettings.languagesToGenerate!.isNotEmpty) {
+    print('Warning! Ignoring ${YamlArguments.languagesToGenerate} as ${YamlArguments.replaceBase} is true!');
   }
 
   if (packageSettings.replaceBase == false &&
-      (packageSettings.languagesToGenerate == null ||
-          packageSettings.languagesToGenerate.isEmpty)) {
+      (packageSettings.languagesToGenerate == null || packageSettings.languagesToGenerate!.isEmpty)) {
     print('Error! No languages to generate specified!');
     return;
   }
 
   if (packageSettings.textExpansionRatio != null &&
-      (packageSettings.textExpansionRatio < 1 ||
-          packageSettings.textExpansionRatio > 3)) {
+      (packageSettings.textExpansionRatio! < 1 || packageSettings.textExpansionRatio! > 3)) {
     print('Error! Expected 1.0 <= ${YamlArguments.textExpansionRatio} <= 3!');
     return;
   }

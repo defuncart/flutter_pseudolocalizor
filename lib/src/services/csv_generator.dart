@@ -8,23 +8,22 @@ import 'pseudo_generator.dart';
 /// Generates pseudo localizations for a csv file
 class CSVGenerator with PseudoGenerator {
   /// Generates pseudo localizations with a given [file] and [packageSettings]
-  static String generate(
+  static String? generate(
     File file,
     PackageSettings packageSettings,
   ) {
-    if (file == null ||
-        packageSettings == null ||
-        packageSettings.csvSettings == null) {
-      print('Error! Null data passed to CSVGenerator.generate().');
-      return null;
-    }
+    // if (file == null ||
+    //     packageSettings == null ||
+    //     packageSettings.csvSettings == null) {
+    //   print('Error! Null data passed to CSVGenerator.generate().');
+    //   return null;
+    // }
 
     // read all lines into a list
     final lines = file.readAsLinesSync();
 
     // ensure that the column index is valid
-    final firstLineElements =
-        lines.first.split(packageSettings.csvSettings.delimiter);
+    final firstLineElements = lines.first.split(packageSettings.csvSettings.delimiter);
     if (packageSettings.csvSettings.columnIndex < 0 ||
         packageSettings.csvSettings.columnIndex >= firstLineElements.length) {
       print(
@@ -33,26 +32,21 @@ class CSVGenerator with PseudoGenerator {
     }
 
     // ensure that the column `DefaultSettings.baseLanguage` is as specified in settings
-    if (firstLineElements[packageSettings.csvSettings.columnIndex] !=
-        DefaultSettings.baseLanguage) {
+    if (firstLineElements[packageSettings.csvSettings.columnIndex] != DefaultSettings.baseLanguage) {
       print(
           'Error! Langauge ${DefaultSettings.baseLanguage} not found at column ${packageSettings.csvSettings.columnIndex} in ${packageSettings.inputFilepath}');
       return null;
     }
 
     final locaBase = <String>[];
-    for (var i = packageSettings.csvSettings.columnIndex;
-        i < lines.length;
-        i++) {
-      locaBase.add(lines[i].split(packageSettings.csvSettings.delimiter)[
-          packageSettings.csvSettings.columnIndex]);
+    for (var i = packageSettings.csvSettings.columnIndex; i < lines.length; i++) {
+      locaBase.add(lines[i].split(packageSettings.csvSettings.delimiter)[packageSettings.csvSettings.columnIndex]);
     }
 
     final outputLines = List<String>.from(lines);
     if (packageSettings.replaceBase) {
       for (var i = 1; i < outputLines.length; i++) {
-        final shouldReplace =
-            !packageSettings.lineNumbersToIgnore.contains(i + 1);
+        final shouldReplace = !packageSettings.lineNumbersToIgnore.contains(i + 1);
         if (shouldReplace) {
           final pseudoText = PseudoGenerator.generatePseudoTranslation(
             locaBase[i - 1],
@@ -61,21 +55,18 @@ class CSVGenerator with PseudoGenerator {
             textExpansionRate: packageSettings.textExpansionRatio,
             patternToIgnore: packageSettings.patternToIgnore,
           );
-          outputLines[i] =
-              outputLines[i].replaceFirst(locaBase[i - 1], pseudoText);
+          outputLines[i] = outputLines[i].replaceFirst(locaBase[i - 1], pseudoText);
         }
       }
     } else {
       final generatedAll = <List<String>>[];
-      generatedAll.add(
-          packageSettings.languagesToGenerate.map(Utils.describeEnum).toList());
+      generatedAll.add(packageSettings.languagesToGenerate!.map(Utils.describeEnum).toList());
       for (var i = 0; i < locaBase.length; i++) {
         final baseText = locaBase[i];
         final generated = <String>[];
-        final shouldReplace =
-            !packageSettings.lineNumbersToIgnore.contains(i + 2);
+        final shouldReplace = !packageSettings.lineNumbersToIgnore.contains(i + 2);
 
-        for (final languageToGenerate in packageSettings.languagesToGenerate) {
+        for (final languageToGenerate in packageSettings.languagesToGenerate!) {
           final pseudoTranslation = shouldReplace
               ? PseudoGenerator.generatePseudoTranslation(
                   baseText,
@@ -95,8 +86,7 @@ class CSVGenerator with PseudoGenerator {
 
       for (var i = 0; i < outputLines.length; i++) {
         for (var j = 0; j < generatedAll[i].length; j++) {
-          outputLines[i] +=
-              '${packageSettings.csvSettings.delimiter}${generatedAll[i][j]}';
+          outputLines[i] += '${packageSettings.csvSettings.delimiter}${generatedAll[i][j]}';
         }
       }
     }

@@ -1,7 +1,6 @@
 import 'dart:io';
 
-import 'package:flutter_pseudolocalizor/flutter_pseudolocalizor.dart'
-    show CSVSettings, PackageSettings;
+import 'package:flutter_pseudolocalizor/flutter_pseudolocalizor.dart' show CSVSettings, PackageSettings;
 import 'package:yaml/yaml.dart';
 
 /// A class of arguments which the user can specify in pubspec.yaml
@@ -32,29 +31,31 @@ class YamlParser {
   static const yamlPackageSectionId = 'flutter_pseudolocalizor';
 
   /// Returns the package settings from pubspec
-  static PackageSettings packageSettingsFromPubspec() {
+  static PackageSettings? packageSettingsFromPubspec() {
     final yamlMap = _packageSettingsAsYamlMap();
+
+    if (yamlMap?[YamlArguments.inputFilepath] == null) {
+      print('Error! Input filepath not defined!');
+      return null;
+    }
+
     return yamlMap != null
         ? PackageSettings(
             inputFilepath: yamlMap[YamlArguments.inputFilepath],
             outputFilepath: yamlMap[YamlArguments.outputFilepath],
             replaceBase: yamlMap[YamlArguments.replaceBase],
-            languagesToGenerate: _yamlListToStringList(
-                yamlMap[YamlArguments.languagesToGenerate]),
+            languagesToGenerate: _yamlListToStringList(yamlMap[YamlArguments.languagesToGenerate]),
             useBrackets: yamlMap[YamlArguments.useBrackets],
-            textExpansionRatio:
-                _dynamicToDouble(yamlMap[YamlArguments.textExpansionRatio]),
+            textExpansionRatio: _dynamicToDouble(yamlMap[YamlArguments.textExpansionRatio])!,
             csvSettings: _csvSettingsFromPubspec(yamlMap),
-            patternsToIgnore:
-                _yamlListToStringList(yamlMap[YamlArguments.patternsToIgnore]),
-            lineNumbersToIgnore:
-                _yamlListToIntList(yamlMap[YamlArguments.lineNumbersToIgnore]),
+            patternsToIgnore: _yamlListToStringList(yamlMap[YamlArguments.patternsToIgnore]),
+            lineNumbersToIgnore: _yamlListToIntList(yamlMap[YamlArguments.lineNumbersToIgnore]) as List<int>?,
           )
         : null;
   }
 
   /// Returns the csv settings from pubspec
-  static CSVSettings _csvSettingsFromPubspec(Map<dynamic, dynamic> yamlMap) {
+  static CSVSettings? _csvSettingsFromPubspec(Map<dynamic, dynamic> yamlMap) {
     if (yamlMap.containsKey(YamlArguments.csvSettings)) {
       final csvSettingsAsYamlMap = yamlMap[YamlArguments.csvSettings];
       return CSVSettings(
@@ -67,7 +68,7 @@ class YamlParser {
   }
 
   /// Returns the package settings from pubspec as a yaml map
-  static Map<dynamic, dynamic> _packageSettingsAsYamlMap() {
+  static Map<dynamic, dynamic>? _packageSettingsAsYamlMap() {
     final file = File(pubspecFilePath);
     final yamlString = file.readAsStringSync();
     final Map<dynamic, dynamic> yamlMap = loadYaml(yamlString);
@@ -75,17 +76,15 @@ class YamlParser {
   }
 
   /// Converts a YamlList into a List<String>
-  static List<String> _yamlListToStringList(YamlList inputList) =>
-      inputList != null
-          ? inputList.map((item) => item.toString()).toList()
-          : null;
+  static List<String>? _yamlListToStringList(YamlList? inputList) =>
+      inputList != null ? inputList.map((item) => item.toString()).toList() : null;
 
   /// Converts a YamlList into a List<int>
-  static List<int> _yamlListToIntList<T>(YamlList inputList) =>
+  static List<int>? _yamlListToIntList<T>(YamlList? inputList) =>
       inputList != null ? inputList.map<int>((item) => item).toList() : null;
 
   /// Converts a dynamic to a double
-  static double _dynamicToDouble(dynamic input) {
+  static double? _dynamicToDouble(dynamic input) {
     if (input != null) {
       if (input.runtimeType == double) {
         return input;
