@@ -12,13 +12,6 @@ class CSVGenerator with PseudoGenerator {
     File file,
     PackageSettings packageSettings,
   ) {
-    // if (file == null ||
-    //     packageSettings == null ||
-    //     packageSettings.csvSettings == null) {
-    //   print('Error! Null data passed to CSVGenerator.generate().');
-    //   return null;
-    // }
-
     // read all lines into a list
     final lines = file.readAsLinesSync();
 

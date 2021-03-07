@@ -55,14 +55,12 @@ class Utils {
 
   /// Returns a generated output filepath for a given inputfiepath
   static String? generateOutputFilePath({required String inputFilepath}) {
-    // if (inputFilepath != null) {
     final index = inputFilepath.lastIndexOf('.');
     if (index != -1) {
       return '${inputFilepath.substring(0, index)}-${DefaultSettings.outputFilenamePrependText}${inputFilepath.substring(index, inputFilepath.length)}';
     }
     print(
         'ERROR! input filepath does not contain an extension! $inputFilepath');
-    // }
 
     return null;
   }

@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import '../configs/default_settings.dart';
 import '../enums/supported_language.dart';
 import '../utils/utils.dart';
 
@@ -12,7 +11,7 @@ mixin PseudoGenerator {
   static String generatePseudoTranslation(
     String baseText, {
     SupportedLanguage? languageToGenerate,
-    bool useBrackets = DefaultSettings.useBrackets,
+    required bool useBrackets,
     double? textExpansionRate,
     RegExp? patternToIgnore,
   }) {
@@ -44,8 +43,10 @@ mixin PseudoGenerator {
   }
 
   /// Returns a string containing mapped special characters (a => ä) for the selected language.
-  static String _addSpecialCharactersToText(String text,
-      {required SupportedLanguage? language}) {
+  static String _addSpecialCharactersToText(
+    String text, {
+    required SupportedLanguage? language,
+  }) {
     final sb = StringBuffer();
     final characters = text.split('');
     final mappingCharacters =
@@ -65,8 +66,10 @@ mixin PseudoGenerator {
   }
 
   /// Returns a string contain X random special characters for the selected language.
-  static String _generateXRandomSpecialCharacters(int count,
-      {required SupportedLanguage? language}) {
+  static String _generateXRandomSpecialCharacters(
+    int count, {
+    required SupportedLanguage? language,
+  }) {
     final sb = StringBuffer();
     for (var i = 0; i < count; i++) {
       sb.write(_randomSpecialCharacter(language: language));
@@ -75,8 +78,9 @@ mixin PseudoGenerator {
   }
 
   /// Returns a random special character for the selected language.
-  static String _randomSpecialCharacter(
-      {required SupportedLanguage? language}) {
+  static String _randomSpecialCharacter({
+    required SupportedLanguage? language,
+  }) {
     final specialCharacters =
         Utils.specialCharactersForSupportedLanguage(language)!;
     return specialCharacters[_random.nextInt(specialCharacters.length)];

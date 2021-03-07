@@ -28,6 +28,6 @@ void main() {
       columnIndex: null,
     );
 
-    expect(csvSettings.toString(), isNot('Instance of \'CSVSettings\''));
+    expect(csvSettings.toString(), isNot("Instance of 'CSVSettings'"));
   });
 }

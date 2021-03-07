@@ -34,7 +34,6 @@ class YamlParser {
   /// Returns the package settings from pubspec
   static PackageSettings? packageSettingsFromPubspec() {
     final yamlMap = _packageSettingsAsYamlMap();
-
     if (yamlMap != null) {
       final inputFilepath = yamlMap[YamlArguments.inputFilepath];
       if (inputFilepath == null) {
@@ -88,13 +87,13 @@ class YamlParser {
     return yamlMap[yamlPackageSectionId];
   }
 
-  /// Converts a YamlList into a List<String>?
+  /// Converts a YamlList? into a List<String>?
   static List<String>? _yamlListToStringList(YamlList? inputList) =>
       inputList != null
           ? inputList.map((item) => item.toString()).toList()
           : null;
 
-  /// Converts a YamlList into a List<int>?
+  /// Converts a YamlList? into a List<int>?
   static List<int>? _yamlListToIntList<T>(YamlList? inputList) =>
       inputList != null ? inputList.map<int>((item) => item).toList() : null;
 
