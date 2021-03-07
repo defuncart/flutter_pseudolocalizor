@@ -31,7 +31,7 @@ class PackageSettings {
   final RegExp? patternToIgnore;
 
   /// A list of line numbers which should be ignored.
-  final List<int> lineNumbersToIgnore;
+  final List<int>? lineNumbersToIgnore;
 
   /// Constructs a new instance of [PackageSettings]
   PackageSettings({
@@ -42,7 +42,7 @@ class PackageSettings {
     required bool? useBrackets,
     required this.textExpansionRatio,
     required List<String>? patternsToIgnore,
-    required List<int>? lineNumbersToIgnore,
+    required this.lineNumbersToIgnore,
     CSVSettings? csvSettings,
   })  : outputFilepath = outputFilepath ??
             Utils.generateOutputFilePath(inputFilepath: inputFilepath)!,
@@ -51,8 +51,7 @@ class PackageSettings {
             Utils.covertSupportedLangugesFromListString(languagesToGenerate),
         useBrackets = useBrackets ?? DefaultSettings.useBrackets,
         csvSettings = csvSettings ?? CSVSettings.withDefaultSettings(),
-        patternToIgnore = RegExpUtils.combinePatterns(patternsToIgnore),
-        lineNumbersToIgnore = lineNumbersToIgnore ?? [];
+        patternToIgnore = RegExpUtils.combinePatterns(patternsToIgnore);
 
   /// Returns a String representation of the model.
   @override

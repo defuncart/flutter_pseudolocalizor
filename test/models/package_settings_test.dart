@@ -19,12 +19,12 @@ void main() {
     expect(packageSettings.inputFilepath, 'loca.csv');
     expect(packageSettings.outputFilepath, isNotNull);
     expect(packageSettings.replaceBase, isNotNull);
-    expect(packageSettings.languagesToGenerate, null);
+    expect(packageSettings.languagesToGenerate, isNull);
     expect(packageSettings.useBrackets, isNotNull);
-    expect(packageSettings.textExpansionRatio, null);
+    expect(packageSettings.textExpansionRatio, isNull);
     expect(packageSettings.csvSettings, isNotNull);
-    expect(packageSettings.patternToIgnore, null);
-    expect(packageSettings.lineNumbersToIgnore, isNotNull);
+    expect(packageSettings.patternToIgnore, isNull);
+    expect(packageSettings.lineNumbersToIgnore, isNull);
   });
 
   test('When languagesToGenerate constructor param non-null, expect given', () {
@@ -45,10 +45,10 @@ void main() {
     expect(packageSettings.replaceBase, isNotNull);
     expect(packageSettings.languagesToGenerate, isNotNull);
     expect(packageSettings.useBrackets, isNotNull);
-    expect(packageSettings.textExpansionRatio, null);
+    expect(packageSettings.textExpansionRatio, isNull);
     expect(packageSettings.csvSettings, isNotNull);
-    expect(packageSettings.patternToIgnore, null);
-    expect(packageSettings.lineNumbersToIgnore, isNotNull);
+    expect(packageSettings.patternToIgnore, isNull);
+    expect(packageSettings.lineNumbersToIgnore, isNull);
   });
 
   test('Expect toString is overridden', () {
