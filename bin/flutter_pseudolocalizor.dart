@@ -4,44 +4,39 @@ import 'package:flutter_pseudolocalizor/flutter_pseudolocalizor.dart';
 
 import 'utils/yaml_parser.dart';
 
-void main(List<String> arguments) {
+void main() {
   final packageSettings = YamlParser.packageSettingsFromPubspec();
   if (packageSettings == null) {
     print('Error! Settings for flutter_pseudolocalizor not found in pubspec.');
-    return;
-  }
-
-  if (packageSettings.inputFilepath == null) {
-    print('Error! Input filepath not defined!');
-    return;
+    exit(0);
   }
 
   // if the input file doesn't exist, quit
   final file = File(packageSettings.inputFilepath);
   if (!file.existsSync()) {
     print('Error! File ${packageSettings.inputFilepath} does not exist!');
-    return;
+    exit(0);
   }
 
   if (packageSettings.replaceBase == true &&
       packageSettings.languagesToGenerate != null &&
-      packageSettings.languagesToGenerate.isNotEmpty) {
+      packageSettings.languagesToGenerate!.isNotEmpty) {
     print(
         'Warning! Ignoring ${YamlArguments.languagesToGenerate} as ${YamlArguments.replaceBase} is true!');
   }
 
   if (packageSettings.replaceBase == false &&
       (packageSettings.languagesToGenerate == null ||
-          packageSettings.languagesToGenerate.isEmpty)) {
+          packageSettings.languagesToGenerate!.isEmpty)) {
     print('Error! No languages to generate specified!');
-    return;
+    exit(0);
   }
 
   if (packageSettings.textExpansionRatio != null &&
-      (packageSettings.textExpansionRatio < 1 ||
-          packageSettings.textExpansionRatio > 3)) {
+      (packageSettings.textExpansionRatio! < 1 ||
+          packageSettings.textExpansionRatio! > 3)) {
     print('Error! Expected 1.0 <= ${YamlArguments.textExpansionRatio} <= 3!');
-    return;
+    exit(0);
   }
 
   Pseudolocalizor.generate(file, packageSettings);

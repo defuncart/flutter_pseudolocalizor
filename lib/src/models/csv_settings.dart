@@ -1,5 +1,3 @@
-import 'package:meta/meta.dart';
-
 import '../configs/csv_default_settings.dart';
 
 /// A model representing CSV File parsing settings
@@ -15,9 +13,9 @@ class CSVSettings {
   /// The parameter `delimiter` is required. If null, defaults to `CSVDefaultSettings.delimiter`.
   /// The parameter `columnIndex` is required. If null, defaults to `CSVDefaultSettings.columnIndex`.
   const CSVSettings({
-    @required String delimiter,
-    @required int columnIndex,
-  })  : delimiter = delimiter ?? CSVDefaultSettings.delimiter,
+    required String? delimiter,
+    required int? columnIndex,
+  })   : delimiter = delimiter ?? CSVDefaultSettings.delimiter,
         columnIndex = columnIndex ?? CSVDefaultSettings.columnIndex;
 
   /// Consts a new instance of `CSVSettings` whose parameters are given default values.

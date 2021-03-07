@@ -1,5 +1,3 @@
-library utils;
-
 import 'package:flutter_pseudolocalizor/src/enums/supported_input_file_type.dart';
 import 'package:flutter_pseudolocalizor/src/enums/supported_language.dart';
 import 'package:flutter_pseudolocalizor/src/utils/utils.dart';
@@ -25,11 +23,11 @@ void main() {
 
     // null input, expect null output
     var supportedLanguage = Utils.convertSupportedLangaugeFromString(null);
-    expect(supportedLanguage, null);
+    expect(supportedLanguage, isNull);
 
     // incorrect input, expect null output
     supportedLanguage = Utils.convertSupportedLangaugeFromString('bla');
-    expect(supportedLanguage, null);
+    expect(supportedLanguage, isNull);
   });
 
   test('Convert List<string> to List<SupportedLanguage>', () {
@@ -47,7 +45,7 @@ void main() {
 
     // null input should generate null output
     supportedLanguages = Utils.covertSupportedLangugesFromListString(null);
-    expect(supportedLanguages, null);
+    expect(supportedLanguages, isNull);
   });
 
   test('Convert string to SupportedInputFileType', () {
@@ -72,22 +70,18 @@ void main() {
     // null input, expect null output
     var supportedInputFileTypes =
         Utils.convertSupportedInputFileTypeFromString(null);
-    expect(supportedInputFileTypes, null);
+    expect(supportedInputFileTypes, isNull);
 
     // incorrect input, expect null output
     supportedInputFileTypes =
         Utils.convertSupportedInputFileTypeFromString('bla');
-    expect(supportedInputFileTypes, null);
+    expect(supportedInputFileTypes, isNull);
   });
 
   test('Generate output file', () {
-    // null input, expect null output
-    var outputFilepath = Utils.generateOutputFilePath(inputFilepath: null);
-    expect(outputFilepath, null);
-
     // incorrect input, expect null output
-    outputFilepath = Utils.generateOutputFilePath(inputFilepath: 'bla');
-    expect(outputFilepath, null);
+    var outputFilepath = Utils.generateOutputFilePath(inputFilepath: 'bla');
+    expect(outputFilepath, isNull);
 
     // correct input, expect generated output
     outputFilepath = Utils.generateOutputFilePath(inputFilepath: 'test.csv');

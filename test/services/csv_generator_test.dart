@@ -1,5 +1,3 @@
-library csv_genertor;
-
 import 'dart:io';
 
 import 'package:flutter_pseudolocalizor/flutter_pseudolocalizor.dart';
@@ -35,7 +33,7 @@ subtitle;A subtitle
       lineNumbersToIgnore: null,
     );
 
-    final contents = CSVGenerator.generate(file, packageSettings);
+    final contents = CSVGenerator.generate(file, packageSettings)!;
     final rowCount = rowCountFromCSVContents(contents);
     final columnCount = columnCountFromCSVContents(contents);
 
@@ -68,7 +66,7 @@ subtitle;A subtitle
       lineNumbersToIgnore: null,
     );
 
-    final contents = CSVGenerator.generate(file, packageSettings);
+    final contents = CSVGenerator.generate(file, packageSettings)!;
     final rowCount = rowCountFromCSVContents(contents);
     final columnCount = columnCountFromCSVContents(contents);
 

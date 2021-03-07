@@ -8,17 +8,10 @@ import 'pseudo_generator.dart';
 /// Generates pseudo localizations for a csv file
 class CSVGenerator with PseudoGenerator {
   /// Generates pseudo localizations with a given [file] and [packageSettings]
-  static String generate(
+  static String? generate(
     File file,
     PackageSettings packageSettings,
   ) {
-    if (file == null ||
-        packageSettings == null ||
-        packageSettings.csvSettings == null) {
-      print('Error! Null data passed to CSVGenerator.generate().');
-      return null;
-    }
-
     // read all lines into a list
     final lines = file.readAsLinesSync();
 
@@ -28,7 +21,7 @@ class CSVGenerator with PseudoGenerator {
     if (packageSettings.csvSettings.columnIndex < 0 ||
         packageSettings.csvSettings.columnIndex >= firstLineElements.length) {
       print(
-          'Error! Column index ${packageSettings.csvSettings.columnIndex} in ${packageSettings.inputFilepath} doesn\'t exist.');
+          "Error! Column index ${packageSettings.csvSettings.columnIndex} in ${packageSettings.inputFilepath} doesn't exist.");
       return null;
     }
 
@@ -52,7 +45,7 @@ class CSVGenerator with PseudoGenerator {
     if (packageSettings.replaceBase) {
       for (var i = 1; i < outputLines.length; i++) {
         final shouldReplace =
-            !packageSettings.lineNumbersToIgnore.contains(i + 1);
+            packageSettings.lineNumbersToIgnore?.contains(i + 1) ?? true;
         if (shouldReplace) {
           final pseudoText = PseudoGenerator.generatePseudoTranslation(
             locaBase[i - 1],
@@ -67,15 +60,16 @@ class CSVGenerator with PseudoGenerator {
       }
     } else {
       final generatedAll = <List<String>>[];
-      generatedAll.add(
-          packageSettings.languagesToGenerate.map(Utils.describeEnum).toList());
+      generatedAll.add(packageSettings.languagesToGenerate!
+          .map(Utils.describeEnum)
+          .toList());
       for (var i = 0; i < locaBase.length; i++) {
         final baseText = locaBase[i];
         final generated = <String>[];
         final shouldReplace =
-            !packageSettings.lineNumbersToIgnore.contains(i + 2);
+            packageSettings.lineNumbersToIgnore?.contains(i + 2) ?? true;
 
-        for (final languageToGenerate in packageSettings.languagesToGenerate) {
+        for (final languageToGenerate in packageSettings.languagesToGenerate!) {
           final pseudoTranslation = shouldReplace
               ? PseudoGenerator.generatePseudoTranslation(
                   baseText,
