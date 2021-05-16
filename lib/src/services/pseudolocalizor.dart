@@ -9,7 +9,6 @@ import '../utils/utils.dart';
 class Pseudolocalizor {
   /// Generates an output pseudolocalization file
   static void generate(
-    File file,
     PackageSettings packageSettings,
   ) {
     // check that the file exists
