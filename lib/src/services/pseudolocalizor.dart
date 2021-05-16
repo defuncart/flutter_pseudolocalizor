@@ -4,6 +4,7 @@ import '../enums/supported_input_file_type.dart';
 import '../models/package_settings.dart';
 import '../services/csv_generator.dart';
 import '../utils/utils.dart';
+import 'arb_generator.dart';
 
 /// A service which generates pseudolocalization files
 class Pseudolocalizor {
@@ -45,6 +46,18 @@ class Pseudolocalizor {
         outputFile.writeAsStringSync(fileContents);
 
         print('All done! Wrote to ${outputFile.path}');
+      }
+    } else if (filetype == SupportedInputFileType.arb) {
+      // TODO multiple files
+      final outputFile = File(
+        Utils.generateOutputFilePath(
+            inputFilepath: packageSettings.inputFilepath),
+      );
+      final fileContents = ARBGenerator.generate(file, packageSettings);
+      if (fileContents != null) {
+        outputFile.writeAsStringSync(fileContents);
+
+        print('All done! Wrote to ${file.path}');
       }
     }
   }
