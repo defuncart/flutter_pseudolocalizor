@@ -104,7 +104,7 @@ flutter pub run flutter_pseudolocalizor
 
 to generate `test-PSEUDO.csv`. This generated file can then be incorporated into your dev build using a package like [flappy_translator](https://pub.dev/packages/flappy_translator).
 
-Note that `patterns_to_ignore` is especially useful to avoid text replacement for certain know constructs, for instance a product name or a pattern ``%myVar$d` used to parse variables from text.
+Note that `patterns_to_ignore` is especially useful to avoid text replacement for certain know constructs, for instance a product name or a pattern `%myVar$d` used to parse variables from text.
 
 ## Limitations
 
