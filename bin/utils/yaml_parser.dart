@@ -14,7 +14,7 @@ class YamlArguments {
   static const textExpansionRatio = 'text_expansion_ratio';
   static const csvSettings = 'csv_settings';
   static const patternsToIgnore = 'patterns_to_ignore';
-  static const lineNumbersToIgnore = 'line_numbers_to_ignore';
+  static const keysToIgnore = 'keys_to_ignore';
 }
 
 /// A class of arguments which the user can specify in pubspec.yaml for csv_settings object
@@ -58,8 +58,8 @@ class YamlParser {
         csvSettings: csvSettings,
         patternsToIgnore:
             _yamlListToStringList(yamlMap[YamlArguments.patternsToIgnore]),
-        lineNumbersToIgnore:
-            _yamlListToIntList(yamlMap[YamlArguments.lineNumbersToIgnore]),
+        keysToIgnore:
+            _yamlListToStringList(yamlMap[YamlArguments.keysToIgnore]),
       );
     }
 
@@ -92,10 +92,6 @@ class YamlParser {
       inputList != null
           ? inputList.map((item) => item.toString()).toList()
           : null;
-
-  /// Converts a YamlList? into a List<int>?
-  static List<int>? _yamlListToIntList<T>(YamlList? inputList) =>
-      inputList != null ? inputList.map<int>((item) => item).toList() : null;
 
   /// Converts a dynamic to a double?
   static double? _dynamicToDouble(dynamic input) {

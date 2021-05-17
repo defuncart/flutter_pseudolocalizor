@@ -12,7 +12,7 @@ void main() {
       textExpansionRatio: null,
       csvSettings: null,
       patternsToIgnore: null,
-      lineNumbersToIgnore: null,
+      keysToIgnore: null,
     );
 
     expect(packageSettings, isNotNull);
@@ -24,7 +24,7 @@ void main() {
     expect(packageSettings.textExpansionRatio, isNull);
     expect(packageSettings.csvSettings, isNotNull);
     expect(packageSettings.patternToIgnore, isNull);
-    expect(packageSettings.lineNumbersToIgnore, isNull);
+    expect(packageSettings.keysToIgnore, isNull);
   });
 
   test('When languagesToGenerate constructor param non-null, expect given', () {
@@ -37,7 +37,7 @@ void main() {
       textExpansionRatio: null,
       csvSettings: null,
       patternsToIgnore: null,
-      lineNumbersToIgnore: null,
+      keysToIgnore: null,
     );
 
     expect(packageSettings.inputFilepath, isNotNull);
@@ -48,7 +48,7 @@ void main() {
     expect(packageSettings.textExpansionRatio, isNull);
     expect(packageSettings.csvSettings, isNotNull);
     expect(packageSettings.patternToIgnore, isNull);
-    expect(packageSettings.lineNumbersToIgnore, isNull);
+    expect(packageSettings.keysToIgnore, isNull);
   });
 
   test('Expect toString is overridden', () {
@@ -61,7 +61,7 @@ void main() {
       textExpansionRatio: null,
       csvSettings: null,
       patternsToIgnore: null,
-      lineNumbersToIgnore: null,
+      keysToIgnore: null,
     );
 
     expect(packageSettings.toString(), isNot("Instance of 'PackageSettings'"));

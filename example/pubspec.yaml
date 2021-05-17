@@ -31,5 +31,5 @@ flutter_pseudolocalizor:
   patterns_to_ignore:
     - '%(\S*?)\$[ds]'
     - 'Flutter'
-  line_numbers_to_ignore:
-    - 2
+  keys_to_ignore:
+    - 'title'
