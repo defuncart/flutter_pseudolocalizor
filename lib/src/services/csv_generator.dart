@@ -41,11 +41,15 @@ class CSVGenerator with PseudoGenerator {
           packageSettings.csvSettings.columnIndex]);
     }
 
+    final locaKeys = lines
+        .map((line) => line.split(packageSettings.csvSettings.delimiter).first)
+        .toList();
+
     final outputLines = List<String>.from(lines);
     if (packageSettings.replaceBase) {
       for (var i = 1; i < outputLines.length; i++) {
         final shouldReplace =
-            packageSettings.lineNumbersToIgnore?.contains(i + 1) ?? true;
+            !(packageSettings.keysToIgnore?.contains(locaKeys[i]) ?? false);
         if (shouldReplace) {
           final pseudoText = PseudoGenerator.generatePseudoTranslation(
             locaBase[i - 1],
@@ -67,7 +71,7 @@ class CSVGenerator with PseudoGenerator {
         final baseText = locaBase[i];
         final generated = <String>[];
         final shouldReplace =
-            packageSettings.lineNumbersToIgnore?.contains(i + 2) ?? true;
+            !(packageSettings.keysToIgnore?.contains(locaKeys[i + 1]) ?? false);
 
         for (final languageToGenerate in packageSettings.languagesToGenerate!) {
           final pseudoTranslation = shouldReplace

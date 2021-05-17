@@ -30,7 +30,7 @@ subtitle;A subtitle
       textExpansionRatio: null,
       csvSettings: csvSettings,
       patternsToIgnore: null,
-      lineNumbersToIgnore: null,
+      keysToIgnore: null,
     );
 
     final contents = CSVGenerator.generate(file, packageSettings)!;
@@ -63,7 +63,7 @@ subtitle;A subtitle
       textExpansionRatio: null,
       csvSettings: csvSettings,
       patternsToIgnore: null,
-      lineNumbersToIgnore: null,
+      keysToIgnore: null,
     );
 
     final contents = CSVGenerator.generate(file, packageSettings)!;
