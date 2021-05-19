@@ -36,10 +36,11 @@ class ARBGenerator with PseudoGenerator {
       if (_regExPluralSelect.hasMatch(value)) {
         pseudoText = value;
 
-        final matches = _regExFnComponent.allMatches(value);
+        // final matches = _regExFnComponent.allMatches(value);
+        final matches = _matches(value);
         for (final match in matches) {
           final psuedoSelect = PseudoGenerator.generatePseudoTranslation(
-            match.group(2)!,
+            match.text,
             languageToGenerate: null,
             useBrackets: packageSettings.useBrackets,
             textExpansionFormat: packageSettings.textExpansionFormat,
@@ -49,8 +50,8 @@ class ARBGenerator with PseudoGenerator {
           );
 
           pseudoText = pseudoText.replaceFirst(
-            match.group(1)!,
-            match.group(1)!.replaceAll(match.group(2)!, psuedoSelect),
+            match.function,
+            match.function.replaceAll(match.text, psuedoSelect),
           );
         }
       } else {
@@ -71,4 +72,58 @@ class ARBGenerator with PseudoGenerator {
     final encoder = JsonEncoder.withIndent('  ');
     return encoder.convert(arbContents);
   }
+
+  /// TODO determine matches basic on RegExp and funky logic
+  /// only works when variable is at end of statement
+  static Iterable<_Match> _matches(String value) {
+    final returnValue = <_Match>[];
+
+    final matchesWithoutVariables = _regExFnComponent.allMatches(value);
+    for (final match in matchesWithoutVariables) {
+      returnValue.add(
+        _Match(function: match.group(1)!, text: match.group(2)!),
+      );
+    }
+
+    final exps = <String>[];
+    for (final match in matchesWithoutVariables) {
+      if (match.groupCount > 0) {
+        exps.add(match.group(1)!);
+      }
+    }
+
+    final matchAllCasesExtraBracketEnd =
+        RegExp(r'([a-z_]\w*\{.*\})').allMatches(value);
+    if (matchAllCasesExtraBracketEnd.isNotEmpty) {
+      for (final match in matchAllCasesExtraBracketEnd) {
+        if (match.groupCount > 0) {
+          var function = match.group(1)!;
+          exps.forEach((exp) => function = function.replaceAll(exp, ''));
+          function = function.substring(0, function.length - 1);
+          function = function.trim();
+
+          if (function.isNotEmpty) {
+            returnValue.add(
+              _Match(
+                function: function,
+                text: RegExp(r'\{(.*)\}').allMatches(function).first.group(1)!,
+              ),
+            );
+          }
+        }
+      }
+    }
+
+    return returnValue;
+  }
+}
+
+class _Match {
+  const _Match({
+    required this.function,
+    required this.text,
+  });
+
+  final String function;
+  final String text;
 }
