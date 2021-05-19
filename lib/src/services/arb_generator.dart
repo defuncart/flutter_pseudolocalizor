@@ -30,17 +30,36 @@ class ARBGenerator with PseudoGenerator {
     // TODO simply base replace for now
 
     for (final key in keys) {
-      final String value = arbContents[key];
-      String pseudoText;
+      final shouldReplace =
+          !(packageSettings.keysToIgnore?.contains(key) ?? false);
+      if (shouldReplace) {
+        final String value = arbContents[key];
+        String pseudoText;
 
-      if (_regExPluralSelect.hasMatch(value)) {
-        pseudoText = value;
+        if (_regExPluralSelect.hasMatch(value)) {
+          pseudoText = value;
 
-        // final matches = _regExFnComponent.allMatches(value);
-        final matches = _matches(value);
-        for (final match in matches) {
-          final psuedoSelect = PseudoGenerator.generatePseudoTranslation(
-            match.text,
+          // final matches = _regExFnComponent.allMatches(value);
+          final matches = _matches(value);
+          for (final match in matches) {
+            final psuedoSelect = PseudoGenerator.generatePseudoTranslation(
+              match.text,
+              languageToGenerate: null,
+              useBrackets: packageSettings.useBrackets,
+              textExpansionFormat: packageSettings.textExpansionFormat,
+              textExpansionRate: packageSettings.textExpansionRatio,
+              // patternToIgnore: packageSettings.patternToIgnore,
+              patternToIgnore: _regExVariableName,
+            );
+
+            pseudoText = pseudoText.replaceFirst(
+              match.function,
+              match.function.replaceAll(match.text, psuedoSelect),
+            );
+          }
+        } else {
+          pseudoText = PseudoGenerator.generatePseudoTranslation(
+            value,
             languageToGenerate: null,
             useBrackets: packageSettings.useBrackets,
             textExpansionFormat: packageSettings.textExpansionFormat,
@@ -48,25 +67,10 @@ class ARBGenerator with PseudoGenerator {
             // patternToIgnore: packageSettings.patternToIgnore,
             patternToIgnore: _regExVariableName,
           );
-
-          pseudoText = pseudoText.replaceFirst(
-            match.function,
-            match.function.replaceAll(match.text, psuedoSelect),
-          );
         }
-      } else {
-        pseudoText = PseudoGenerator.generatePseudoTranslation(
-          value,
-          languageToGenerate: null,
-          useBrackets: packageSettings.useBrackets,
-          textExpansionFormat: packageSettings.textExpansionFormat,
-          textExpansionRate: packageSettings.textExpansionRatio,
-          // patternToIgnore: packageSettings.patternToIgnore,
-          patternToIgnore: _regExVariableName,
-        );
-      }
 
-      arbContents[key] = pseudoText;
+        arbContents[key] = pseudoText;
+      }
     }
 
     final encoder = JsonEncoder.withIndent('  ');
