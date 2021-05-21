@@ -1,6 +1,10 @@
 import 'dart:math';
 
+import 'package:meta/meta.dart';
+
 import '../enums/supported_language.dart';
+import '../enums/text_expansion_type.dart';
+import '../extensions/string_extensions.dart';
 import '../utils/utils.dart';
 
 /// Base pseudolocalization generation logic which can be utilized by file generators
@@ -12,34 +16,95 @@ mixin PseudoGenerator {
     String baseText, {
     SupportedLanguage? languageToGenerate,
     required bool useBrackets,
+    TextExpansionType textExpansionType = TextExpansionType.repeatVowels,
     double? textExpansionRate,
     RegExp? patternToIgnore,
   }) {
     final pseudoTextLength = textExpansionRate != null
         ? (baseText.length * textExpansionRate).ceil()
         : _pseudotranslationLengthForText(baseText);
-    final numberOfRandomSpecialCharactersToGenerate =
+    final numberOfExpansionCharactersToGenerate =
         pseudoTextLength - baseText.length;
+    var _baseText = baseText;
+    var textExpansion = '';
+
+    if (textExpansionType == TextExpansionType.repeatVowels) {
+      var count = 0;
+      while (count < numberOfExpansionCharactersToGenerate) {
+        _baseText = patternToIgnore != null
+            ? _baseText.splitMapJoin(
+                patternToIgnore,
+                onNonMatch: (value) => repeatVowels(value,
+                    count: (numberOfExpansionCharactersToGenerate *
+                            (value.length / baseText.length))
+                        .floor()),
+              )
+            : repeatVowels(
+                _baseText,
+                count: numberOfExpansionCharactersToGenerate - count,
+              );
+        count = _baseText.length - baseText.length;
+      }
+    } else {
+      textExpansion = numberOfExpansionCharactersToGenerate > 0
+          ? _generateXRandomSpecialCharacters(
+              numberOfExpansionCharactersToGenerate,
+              language: languageToGenerate,
+            )
+          : '';
+    }
 
     // ignore any patterns during text replacement, if needed
     final characterReplacement = patternToIgnore != null
-        ? baseText.splitMapJoin(
+        ? _baseText.splitMapJoin(
             patternToIgnore,
-            onNonMatch: (value) => _addSpecialCharactersToText(value,
-                language: languageToGenerate),
+            onNonMatch: (value) => _addSpecialCharactersToText(
+              value,
+              language: languageToGenerate,
+            ),
           )
         : _addSpecialCharactersToText(baseText, language: languageToGenerate);
 
-    final textExpansion = numberOfRandomSpecialCharactersToGenerate > 0
-        ? _generateXRandomSpecialCharacters(
-            numberOfRandomSpecialCharactersToGenerate,
-            language: languageToGenerate)
-        : '';
-
-    return (useBrackets ? '[ ' : '') +
+    return (useBrackets ? '[' : '') +
         characterReplacement +
         (textExpansion.isNotEmpty ? ' $textExpansion' : '') +
-        (useBrackets ? ' ]' : '');
+        (useBrackets ? ']' : '');
+  }
+
+  /// Repeats [count] vowels in [text], i.e. Hello => Heelloo
+  @visibleForTesting
+  static String repeatVowels(
+    String text, {
+    required int count,
+  }) {
+    assert(count > 0);
+
+    var elongatedText = text;
+    var temp = <String>[];
+    var vowelsRepeated = 0;
+    while (vowelsRepeated < count) {
+      for (var i = 0; i < elongatedText.length; i++) {
+        if (elongatedText[i].isVowel) {
+          temp.add(elongatedText[i]);
+          vowelsRepeated++;
+        }
+        temp.add(elongatedText[i]);
+
+        if (vowelsRepeated == count) {
+          if (i < elongatedText.length) {
+            temp.addAll(elongatedText.substring(i + 1).split(''));
+          }
+          break;
+        }
+      }
+
+      elongatedText = temp.reduce((value, element) => value + element);
+      temp.clear();
+    }
+
+    return temp.isNotEmpty
+        ? temp.reduce((value, element) => value + element)
+        : elongatedText;
   }
 
   /// Returns a string containing mapped special characters (a => ä) for the selected language.
