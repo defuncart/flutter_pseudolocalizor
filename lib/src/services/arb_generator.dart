@@ -96,26 +96,19 @@ class ARBGenerator with PseudoGenerator {
       }
     }
 
-    final matchAllCasesExtraBracketEnd =
-        RegExp(r'([a-z_]\w*\{.*\})').allMatches(value);
-    if (matchAllCasesExtraBracketEnd.isNotEmpty) {
-      for (final match in matchAllCasesExtraBracketEnd) {
-        if (match.groupCount > 0) {
-          var function = match.group(1)!;
-          exps.forEach((exp) => function = function.replaceAll(exp, ''));
-          function = function.substring(0, function.length - 1);
-          function = function.trim();
+    final matchAllCases =
+        RegExp(r'\{[a-z_]\w*, (plural|select){1}, (.*)\}').allMatches(value);
+    var function = matchAllCases.first.group(2)!;
+    exps.forEach((exp) => function = function.replaceAll(exp, ''));
+    function = function.trim();
 
-          if (function.isNotEmpty) {
-            returnValue.add(
-              _Match(
-                function: function,
-                text: RegExp(r'\{(.*)\}').allMatches(function).first.group(1)!,
-              ),
-            );
-          }
-        }
-      }
+    if (function.isNotEmpty) {
+      returnValue.add(
+        _Match(
+          function: function,
+          text: RegExp(r'\{(.*)\}').allMatches(function).first.group(1)!,
+        ),
+      );
     }
 
     return returnValue;
