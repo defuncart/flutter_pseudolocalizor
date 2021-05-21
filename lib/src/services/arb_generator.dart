@@ -78,7 +78,6 @@ class ARBGenerator with PseudoGenerator {
   }
 
   /// TODO determine matches basic on RegExp and funky logic
-  /// only works when variable is at end of statement
   static Iterable<_Match> _matches(String value) {
     final returnValue = <_Match>[];
 
@@ -98,17 +97,28 @@ class ARBGenerator with PseudoGenerator {
 
     final matchAllCases =
         RegExp(r'\{[a-z_]\w*, (plural|select){1}, (.*)\}').allMatches(value);
-    var function = matchAllCases.first.group(2)!;
-    exps.forEach((exp) => function = function.replaceAll(exp, ''));
-    function = function.trim();
+    var matchesWithVariables = matchAllCases.first.group(2)!;
+    exps.forEach((exp) =>
+        matchesWithVariables = matchesWithVariables.replaceAll(exp, ''));
+    matchesWithVariables = matchesWithVariables.trim();
 
-    if (function.isNotEmpty) {
-      returnValue.add(
-        _Match(
-          function: function,
-          text: RegExp(r'\{(.*)\}').allMatches(function).first.group(1)!,
-        ),
-      );
+    if (matchesWithVariables.isNotEmpty) {
+      final components = matchesWithVariables.split(RegExp(r'(?<=\}\s)'));
+
+      var function = '';
+      for (final component in components) {
+        function += component;
+        if (function.countCurlyOpenBrackets ==
+            function.countCurlyClosedBrackets) {
+          returnValue.add(
+            _Match(
+              function: function,
+              text: RegExp(r'\{(.*)\}').allMatches(function).first.group(1)!,
+            ),
+          );
+          function = '';
+        }
+      }
     }
 
     return returnValue;
@@ -123,4 +133,26 @@ class _Match {
 
   final String function;
   final String text;
+}
+
+extension on String {
+  int get countCurlyOpenBrackets {
+    var count = 0;
+    for (var i = 0; i < length; i++) {
+      if (this[i] == '{') {
+        count++;
+      }
+    }
+    return count;
+  }
+
+  int get countCurlyClosedBrackets {
+    var count = 0;
+    for (var i = 0; i < length; i++) {
+      if (this[i] == '}') {
+        count++;
+      }
+    }
+    return count;
+  }
 }
