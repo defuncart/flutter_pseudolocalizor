@@ -35,7 +35,7 @@ class Utils {
       }
     }
 
-    return returnArray;
+    return returnArray.isNotEmpty ? returnArray : null;
   }
 
   /// Converts a string into SupportedLanguage
