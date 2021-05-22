@@ -9,6 +9,7 @@ void main() {
       replaceBase: null,
       languagesToGenerate: null,
       useBrackets: null,
+      textExpansionFormat: null,
       textExpansionRatio: null,
       csvSettings: null,
       patternsToIgnore: null,
@@ -21,6 +22,7 @@ void main() {
     expect(packageSettings.replaceBase, isNotNull);
     expect(packageSettings.languagesToGenerate, isNull);
     expect(packageSettings.useBrackets, isNotNull);
+    expect(packageSettings.textExpansionFormat, isNotNull);
     expect(packageSettings.textExpansionRatio, isNull);
     expect(packageSettings.csvSettings, isNotNull);
     expect(packageSettings.patternToIgnore, isNull);
@@ -34,6 +36,7 @@ void main() {
       replaceBase: null,
       languagesToGenerate: ['de'],
       useBrackets: null,
+      textExpansionFormat: null,
       textExpansionRatio: null,
       csvSettings: null,
       patternsToIgnore: null,
@@ -45,6 +48,7 @@ void main() {
     expect(packageSettings.replaceBase, isNotNull);
     expect(packageSettings.languagesToGenerate, isNotNull);
     expect(packageSettings.useBrackets, isNotNull);
+    expect(packageSettings.textExpansionFormat, isNotNull);
     expect(packageSettings.textExpansionRatio, isNull);
     expect(packageSettings.csvSettings, isNotNull);
     expect(packageSettings.patternToIgnore, isNull);
@@ -58,6 +62,7 @@ void main() {
       replaceBase: null,
       languagesToGenerate: null,
       useBrackets: null,
+      textExpansionFormat: null,
       textExpansionRatio: null,
       csvSettings: null,
       patternsToIgnore: null,

@@ -1,10 +1,11 @@
 import 'package:flutter_pseudolocalizor/src/enums/supported_input_file_type.dart';
 import 'package:flutter_pseudolocalizor/src/enums/supported_language.dart';
+import 'package:flutter_pseudolocalizor/src/enums/text_expansion_format.dart';
 import 'package:flutter_pseudolocalizor/src/utils/utils.dart';
 import 'package:test/test.dart';
 
 void main() {
-  test('Convert string to supported language', () {
+  test('Convert string to $SupportedLanguage', () {
     final strings = SupportedLanguage.values.map(Utils.describeEnum).toList();
 
     // strings (lower case) should be correctly converted
@@ -30,7 +31,7 @@ void main() {
     expect(supportedLanguage, isNull);
   });
 
-  test('Convert List<string> to List<SupportedLanguage>', () {
+  test('Convert $List<string> to $List<SupportedLanguage>', () {
     final strings = SupportedLanguage.values.map(Utils.describeEnum).toList();
 
     // strings (lower case) should be correctly converted
@@ -48,7 +49,7 @@ void main() {
     expect(supportedLanguages, isNull);
   });
 
-  test('Convert string to SupportedInputFileType', () {
+  test('Convert string to $SupportedInputFileType', () {
     final strings =
         SupportedInputFileType.values.map(Utils.describeEnum).toList();
 
@@ -75,6 +76,33 @@ void main() {
     // incorrect input, expect null output
     supportedInputFileTypes =
         Utils.convertSupportedInputFileTypeFromString('bla');
+    expect(supportedInputFileTypes, isNull);
+  });
+
+  test('Convert string to $TextExpansionFormat', () {
+    final strings = TextExpansionFormat.values.map(Utils.describeEnum).toList();
+
+    // strings (lower case) should be correctly converted
+    for (var i = 0; i < strings.length; i++) {
+      final supportedInputFileTypes =
+          Utils.convertTextExpansionFormatFromString(strings[i]);
+      expect(supportedInputFileTypes, TextExpansionFormat.values[i]);
+    }
+
+    // strings (upper case) should be correctly converted
+    for (var i = 0; i < strings.length; i++) {
+      final supportedInputFileTypes =
+          Utils.convertTextExpansionFormatFromString(strings[i].toUpperCase());
+      expect(supportedInputFileTypes, TextExpansionFormat.values[i]);
+    }
+
+    // null input, expect null output
+    var supportedInputFileTypes =
+        Utils.convertTextExpansionFormatFromString(null);
+    expect(supportedInputFileTypes, isNull);
+
+    // incorrect input, expect null output
+    supportedInputFileTypes = Utils.convertTextExpansionFormatFromString('bla');
     expect(supportedInputFileTypes, isNull);
   });
 

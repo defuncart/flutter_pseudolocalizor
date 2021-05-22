@@ -1,5 +1,6 @@
 import '../configs/default_settings.dart';
 import '../enums/supported_language.dart';
+import '../enums/text_expansion_format.dart';
 import '../utils/reg_exp_utils.dart';
 import '../utils/utils.dart';
 import 'csv_settings.dart';
@@ -21,6 +22,9 @@ class PackageSettings {
   /// Whether the pseudo text should be wrapped in square brackets. Defaults to `true`.
   final bool useBrackets;
 
+  /// The format of the text expansion.
+  final TextExpansionFormat textExpansionFormat;
+
   /// The ratio of text expansion for the pseudo text (compared to base text).
   final double? textExpansionRatio;
 
@@ -40,6 +44,7 @@ class PackageSettings {
     required bool? replaceBase,
     required List<String>? languagesToGenerate,
     required bool? useBrackets,
+    required String? textExpansionFormat,
     required this.textExpansionRatio,
     required List<String>? patternsToIgnore,
     required this.keysToIgnore,
@@ -50,11 +55,14 @@ class PackageSettings {
         languagesToGenerate =
             Utils.covertSupportedLangugesFromListString(languagesToGenerate),
         useBrackets = useBrackets ?? DefaultSettings.useBrackets,
-        csvSettings = csvSettings ?? CSVSettings.withDefaultSettings(),
-        patternToIgnore = RegExpUtils.combinePatterns(patternsToIgnore);
+        textExpansionFormat =
+            Utils.convertTextExpansionFormatFromString(textExpansionFormat) ??
+                DefaultSettings.textExpansionFormat,
+        patternToIgnore = RegExpUtils.combinePatterns(patternsToIgnore),
+        csvSettings = csvSettings ?? CSVSettings.withDefaultSettings();
 
   /// Returns a String representation of the model.
   @override
   String toString() =>
-      '{inputFilepath: $inputFilepath, outputFilepath: $outputFilepath, replaceBase: $replaceBase, languagesToGenerate: $languagesToGenerate, useBrackets: $useBrackets, textExpansionRatio: $textExpansionRatio, patternToIgnore: $patternToIgnore, keysToIgnore: $keysToIgnore}';
+      '{inputFilepath: $inputFilepath, outputFilepath: $outputFilepath, replaceBase: $replaceBase, languagesToGenerate: $languagesToGenerate, useBrackets: $useBrackets, textExpansionFormat: $textExpansionFormat, textExpansionRatio: $textExpansionRatio, patternToIgnore: $patternToIgnore, keysToIgnore: $keysToIgnore}';
 }
