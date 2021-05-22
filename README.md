@@ -61,7 +61,7 @@ flutter_pseudolocalizor:
   input_filepath: "test.csv"
   replace_base: false
   use_brackets: true
-  text_expansion_format: repeatVowels
+  text_expansion_format: 'repeatVowels'
   text_expansion_ratio: null
   languages_to_generate:
     - de
