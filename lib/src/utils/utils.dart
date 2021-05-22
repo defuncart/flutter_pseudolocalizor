@@ -14,11 +14,11 @@ class Utils {
           : LanguageSettings.specialCharacters[language]!;
 
   /// Returns mapping characters for a given [SupportLanguage]
-  static Map<String, List<String>>? mappingCharactersForSupportedLanguage(
+  static Map<String, List<String>> mappingCharactersForSupportedLanguage(
           SupportedLanguage? language) =>
       language == null
           ? LanguageSettings.fallbackMappingCharacters
-          : LanguageSettings.mappingCharacters[language];
+          : LanguageSettings.mappingCharacters[language]!;
 
   /// Converts a list of strings ['de', 'pl] into [SupportedLanguage.de, SupportedLanguage.pl]
   static List<SupportedLanguage>? covertSupportedLangugesFromListString(

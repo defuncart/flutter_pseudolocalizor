@@ -13,6 +13,14 @@ void main() {
     }
   });
 
+  test('mappingCharactersForSupportedLanguage', () {
+    expect(Utils.mappingCharactersForSupportedLanguage(null), isNotNull);
+
+    for (final language in SupportedLanguage.values) {
+      expect(Utils.mappingCharactersForSupportedLanguage(language), isNotNull);
+    }
+  });
+
   test('Convert string to $SupportedLanguage', () {
     final strings = SupportedLanguage.values.map(Utils.describeEnum).toList();
 

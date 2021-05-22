@@ -128,7 +128,7 @@ mixin PseudoGenerator {
     final sb = StringBuffer();
     final characters = text.split('');
     final mappingCharacters =
-        Utils.mappingCharactersForSupportedLanguage(language)!;
+        Utils.mappingCharactersForSupportedLanguage(language);
     final keys = mappingCharacters.keys.toList();
     for (final character in characters) {
       final index = keys.indexOf(character);
