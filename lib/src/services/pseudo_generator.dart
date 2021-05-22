@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:meta/meta.dart';
 
 import '../enums/supported_language.dart';
-import '../enums/text_expansion_type.dart';
+import '../enums/text_expansion_format.dart';
 import '../extensions/string_extensions.dart';
 import '../utils/utils.dart';
 
@@ -16,7 +16,7 @@ mixin PseudoGenerator {
     String baseText, {
     SupportedLanguage? languageToGenerate,
     required bool useBrackets,
-    TextExpansionType textExpansionType = TextExpansionType.repeatVowels,
+    TextExpansionFormat textExpansionFormat = TextExpansionFormat.repeatVowels,
     double? textExpansionRate,
     RegExp? patternToIgnore,
   }) {
@@ -28,7 +28,7 @@ mixin PseudoGenerator {
     var _baseText = baseText;
     var textExpansion = '';
 
-    if (textExpansionType == TextExpansionType.repeatVowels) {
+    if (textExpansionFormat == TextExpansionFormat.repeatVowels) {
       var count = 0;
       while (count < numberOfExpansionCharactersToGenerate) {
         _baseText = patternToIgnore != null
