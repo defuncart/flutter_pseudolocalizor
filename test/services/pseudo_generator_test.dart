@@ -94,6 +94,25 @@ void main() {
       });
     });
 
+    group('generateRandomSpecialCharacters', () {
+      test('When count < 1, expect empty string', () {
+        expect(
+          PseudoGenerator.generateRandomSpecialCharacters(-1, language: null),
+          isEmpty,
+        );
+      });
+
+      test('When count > 0, expect correct string length', () {
+        expect(
+          PseudoGenerator.generateRandomSpecialCharacters(
+            1,
+            language: null,
+          ).length,
+          1,
+        );
+      });
+    });
+
     group('randomSpecialCharacter', () {
       test('Regardless of language, expect single character', () {
         expect(

@@ -29,7 +29,7 @@ mixin PseudoGenerator {
     if (numberOfExpansionCharactersToGenerate > 0) {
       switch (textExpansionFormat) {
         case TextExpansionFormat.append:
-          textExpansion = _generateXRandomSpecialCharacters(
+          textExpansion = generateRandomSpecialCharacters(
             numberOfExpansionCharactersToGenerate,
             language: languageToGenerate,
           );
@@ -145,11 +145,15 @@ mixin PseudoGenerator {
     return sb.toString();
   }
 
-  /// Returns a string contain X random special characters for the selected language.
-  static String _generateXRandomSpecialCharacters(
+  /// Returns a string containing [count] random special characters for the selected language.
+  static String generateRandomSpecialCharacters(
     int count, {
     required SupportedLanguage? language,
   }) {
+    if (count < 1) {
+      return '';
+    }
+
     final sb = StringBuffer();
     for (var i = 0; i < count; i++) {
       sb.write(randomSpecialCharacter(language: language));
