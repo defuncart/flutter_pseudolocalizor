@@ -7,11 +7,11 @@ import '../enums/text_expansion_format.dart';
 /// A class of utils used for the package
 class Utils {
   /// Returns a list of special characters for a given [SupportLanguage]
-  static List<String>? specialCharactersForSupportedLanguage(
+  static List<String> specialCharactersForSupportedLanguage(
           SupportedLanguage? language) =>
       language == null
           ? LanguageSettings.fallbackSpecialCharacters
-          : LanguageSettings.specialCharacters[language];
+          : LanguageSettings.specialCharacters[language]!;
 
   /// Returns mapping characters for a given [SupportLanguage]
   static Map<String, List<String>>? mappingCharactersForSupportedLanguage(

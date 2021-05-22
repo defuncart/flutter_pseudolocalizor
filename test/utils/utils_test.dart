@@ -5,6 +5,14 @@ import 'package:flutter_pseudolocalizor/src/utils/utils.dart';
 import 'package:test/test.dart';
 
 void main() {
+  test('specialCharactersForSupportedLanguage', () {
+    expect(Utils.specialCharactersForSupportedLanguage(null), isNotNull);
+
+    for (final language in SupportedLanguage.values) {
+      expect(Utils.specialCharactersForSupportedLanguage(language), isNotNull);
+    }
+  });
+
   test('Convert string to $SupportedLanguage', () {
     final strings = SupportedLanguage.values.map(Utils.describeEnum).toList();
 

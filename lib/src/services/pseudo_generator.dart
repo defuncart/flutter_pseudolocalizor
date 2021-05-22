@@ -160,7 +160,7 @@ mixin PseudoGenerator {
     required SupportedLanguage? language,
   }) {
     final specialCharacters =
-        Utils.specialCharactersForSupportedLanguage(language)!;
+        Utils.specialCharactersForSupportedLanguage(language);
     return specialCharacters[_random.nextInt(specialCharacters.length)];
   }
 
