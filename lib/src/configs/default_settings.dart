@@ -1,7 +1,7 @@
 import '../enums/text_expansion_format.dart';
 
 /// A config of default settings for the package
-class DefaultSettings {
+abstract class DefaultSettings {
   /// Prepend text when autogenerating output filename.
   static const outputFilenamePrependText = 'PSEUDO';
 
@@ -15,5 +15,5 @@ class DefaultSettings {
   static const useBrackets = true;
 
   /// Which text expansion format to use.
-  static const textExpansionType = TextExpansionFormat.repeatVowels;
+  static const textExpansionFormat = TextExpansionFormat.repeatVowels;
 }

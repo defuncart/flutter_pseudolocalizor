@@ -57,7 +57,7 @@ class PackageSettings {
         useBrackets = useBrackets ?? DefaultSettings.useBrackets,
         textExpansionFormat =
             Utils.convertTextExpansionFormatFromString(textExpansionFormat) ??
-                DefaultSettings.textExpansionType,
+                DefaultSettings.textExpansionFormat,
         patternToIgnore = RegExpUtils.combinePatterns(patternsToIgnore),
         csvSettings = csvSettings ?? CSVSettings.withDefaultSettings();
 

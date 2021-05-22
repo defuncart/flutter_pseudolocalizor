@@ -3,7 +3,7 @@ extension StringExtensions on String {
 
   /// Determines if a String is a vowel
   ///
-  /// Assumes that the String has a single character
+  /// Throws [ArgumentError] when String is not a single character
   ///
   /// Note that y is also considered a vowel
   bool get isVowel {
