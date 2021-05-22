@@ -43,6 +43,16 @@ void main() {
           'heelloo, goooodbyye',
         );
       });
+
+      test('when count < 1, input', () {
+        expect(
+          PseudoGenerator.repeatVowels(
+            'hello',
+            count: 0,
+          ),
+          'hello',
+        );
+      });
     });
   });
 }

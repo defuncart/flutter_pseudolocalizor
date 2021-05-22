@@ -1,7 +1,5 @@
 import 'dart:math';
 
-import 'package:meta/meta.dart';
-
 import '../enums/supported_language.dart';
 import '../enums/text_expansion_format.dart';
 import '../extensions/string_extensions.dart';
@@ -28,30 +26,32 @@ mixin PseudoGenerator {
     var _baseText = baseText;
     var textExpansion = '';
 
-    if (textExpansionFormat == TextExpansionFormat.repeatVowels) {
-      var count = 0;
-      while (count < numberOfExpansionCharactersToGenerate) {
-        _baseText = patternToIgnore != null
-            ? _baseText.splitMapJoin(
-                patternToIgnore,
-                onNonMatch: (value) => repeatVowels(value,
-                    count: (numberOfExpansionCharactersToGenerate *
-                            (value.length / baseText.length))
-                        .floor()),
+    if (numberOfExpansionCharactersToGenerate > 0) {
+      if (textExpansionFormat == TextExpansionFormat.repeatVowels) {
+        var count = 0;
+        while (count < numberOfExpansionCharactersToGenerate) {
+          _baseText = patternToIgnore != null
+              ? _baseText.splitMapJoin(
+                  patternToIgnore,
+                  onNonMatch: (value) => repeatVowels(value,
+                      count: (numberOfExpansionCharactersToGenerate *
+                              (value.length / baseText.length))
+                          .floor()),
+                )
+              : repeatVowels(
+                  _baseText,
+                  count: numberOfExpansionCharactersToGenerate - count,
+                );
+          count = _baseText.length - baseText.length;
+        }
+      } else {
+        textExpansion = numberOfExpansionCharactersToGenerate > 0
+            ? _generateXRandomSpecialCharacters(
+                numberOfExpansionCharactersToGenerate,
+                language: languageToGenerate,
               )
-            : repeatVowels(
-                _baseText,
-                count: numberOfExpansionCharactersToGenerate - count,
-              );
-        count = _baseText.length - baseText.length;
+            : '';
       }
-    } else {
-      textExpansion = numberOfExpansionCharactersToGenerate > 0
-          ? _generateXRandomSpecialCharacters(
-              numberOfExpansionCharactersToGenerate,
-              language: languageToGenerate,
-            )
-          : '';
     }
 
     // ignore any patterns during text replacement, if needed
@@ -72,12 +72,13 @@ mixin PseudoGenerator {
   }
 
   /// Repeats [count] vowels in [text], i.e. Hello => Heelloo
-  @visibleForTesting
   static String repeatVowels(
     String text, {
     required int count,
   }) {
-    assert(count > 0);
+    if (count < 1) {
+      return text;
+    }
 
     var elongatedText = text;
     var temp = <String>[];

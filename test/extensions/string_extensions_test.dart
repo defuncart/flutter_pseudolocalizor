@@ -43,7 +43,7 @@ void main() {
         }
       });
 
-      test('when not a single character, expect assertion', () {
+      test('when not a single character, expect argument error', () {
         expect(
           () => ''.isVowel,
           throwsArgumentError,
