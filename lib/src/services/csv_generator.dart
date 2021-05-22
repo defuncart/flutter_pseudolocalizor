@@ -55,6 +55,7 @@ class CSVGenerator with PseudoGenerator {
             locaBase[i - 1],
             languageToGenerate: null,
             useBrackets: packageSettings.useBrackets,
+            textExpansionFormat: packageSettings.textExpansionFormat,
             textExpansionRate: packageSettings.textExpansionRatio,
             patternToIgnore: packageSettings.patternToIgnore,
           );
@@ -79,6 +80,7 @@ class CSVGenerator with PseudoGenerator {
                   baseText,
                   languageToGenerate: languageToGenerate,
                   useBrackets: packageSettings.useBrackets,
+                  textExpansionFormat: packageSettings.textExpansionFormat,
                   textExpansionRate: packageSettings.textExpansionRatio,
                   patternToIgnore: packageSettings.patternToIgnore,
                 )

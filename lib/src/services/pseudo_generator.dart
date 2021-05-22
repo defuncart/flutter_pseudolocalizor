@@ -16,7 +16,7 @@ mixin PseudoGenerator {
     String baseText, {
     SupportedLanguage? languageToGenerate,
     required bool useBrackets,
-    TextExpansionFormat textExpansionFormat = TextExpansionFormat.repeatVowels,
+    required TextExpansionFormat textExpansionFormat,
     double? textExpansionRate,
     RegExp? patternToIgnore,
   }) {
