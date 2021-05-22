@@ -1,6 +1,6 @@
 ## [0.5.0] - XX/XX/2021
 
-* Added repeated vowels text expansion and ability to specify format.
+* Added repeated vowels, number words and exclamation marks as text expansion formats.
 * Added ability to completely ignore certain keys during text replacement. This is a breaking change as previously line numbers were used.
 
 ## [0.4.0] - 07/04/2021
