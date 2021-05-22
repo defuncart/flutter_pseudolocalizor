@@ -40,7 +40,7 @@ void main() {
             'hello, goodbye',
             count: 5,
           ),
-          'heelloo, goooodbyye',
+          'heelloo, goooodbyee',
         );
       });
 

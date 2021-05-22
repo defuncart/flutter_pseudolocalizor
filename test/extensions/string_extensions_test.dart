@@ -4,8 +4,8 @@ import 'package:test/test.dart';
 void main() {
   group('StringExtensions', () {
     group('isVowel', () {
-      test('When a, e, i, o, u, y, expect true', () {
-        final letters = ['a', 'e', 'i', 'o', 'u', 'y'];
+      test('When a, e, i, o, u, expect true', () {
+        final letters = ['a', 'e', 'i', 'o', 'u'];
 
         for (final letter in letters) {
           expect(letter.isVowel, isTrue);
@@ -34,6 +34,7 @@ void main() {
           'v',
           'w',
           'x',
+          'y',
           'z',
         ];
 
