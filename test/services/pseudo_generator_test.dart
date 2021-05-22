@@ -54,5 +54,43 @@ void main() {
         );
       });
     });
+
+    group('generateNumberWords', () {
+      test('when expansionCount = 0, expect empty', () {
+        expect(
+          PseudoGenerator.generateNumberWords(
+            expansionCount: 0,
+          ),
+          isEmpty,
+        );
+      });
+
+      test('when expansionCount < 4, expect one', () {
+        expect(
+          PseudoGenerator.generateNumberWords(
+            expansionCount: 3,
+          ),
+          'one',
+        );
+      });
+
+      test('when expansionCount < 8, expect one two', () {
+        expect(
+          PseudoGenerator.generateNumberWords(
+            expansionCount: 7,
+          ),
+          'one two',
+        );
+      });
+
+      test('when expansionCount < 13, expect one two three', () {
+        expect(
+          PseudoGenerator.generateNumberWords(
+            expansionCount: 13,
+          ),
+          'one two three',
+        );
+      });
+    });
   });
 }

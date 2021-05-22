@@ -164,6 +164,38 @@ mixin PseudoGenerator {
     return specialCharacters[_random.nextInt(specialCharacters.length)];
   }
 
+  static const _numberWords = [
+    'one',
+    'two',
+    'three',
+    'four',
+    'five',
+    'six',
+    'seven',
+    'eight',
+    'nine',
+  ];
+
+  /// Generates the required words for [expansionCount], i.e. `one two`.
+  static String generateNumberWords({required int expansionCount}) {
+    if (expansionCount < 1) {
+      return '';
+    }
+
+    var index = 0;
+    final sb = StringBuffer();
+
+    do {
+      if (index != 0) {
+        sb.write(' ');
+      }
+      sb.write(_numberWords[index]);
+      index++;
+    } while (index < _numberWords.length && sb.length < expansionCount);
+
+    return sb.toString();
+  }
+
   /// Determines the Pseudotranslation length for a given text string.
   ///
   /// As a quick rule of thumb, using [IGDA Localization SIG](https://www.gamasutra.com/blogs/IGDALocalizationSIG/20180504/317560/PseudoLocalization__A_Must_in_Video_Gaming.php)'s suggestion.
