@@ -26,12 +26,12 @@ Considering English as the base language, after translation many languages will 
 
 There are many different ways to format the pseudo text, for instance:
 
-- doubling the length of all vowels (i.e. `Heellöö Wöörld`).
-- wrapping the text in square brackets and using the words *one*, *two*, *three* etc. as text expansion (i.e `[Hello World one]`).
-- wrapping the text in square brackets and !!! (i.e. `[ !!! Hellö Wörld !!! ]`)
-- wrapping the text in square brackets and prepending random special characters as text expansion (ie. `[ Hellö Wörld äßÜẞ ]`).
+- repeating all vowels multiple times (i.e. `Heellöö Wöörld`).
+- using the words *one*, *two*, *three* etc. as text expansion (i.e `Hello World one`).
+- wrapping the word with !!! (i.e. `!!! Hellö Wörld !!!`)
+- appending random special characters as text expansion (ie. `Hellö Wörld äßÜẞ`).
 
-**Note:** The text expansion may also use punctuation of the target language (i.e. ¿ and ¡ in Spanish).
+Moreover, the text expansion is often wrapped in square brackets to easily determine UI clipping, while it may also use punctuation of the target language (i.e. ¿ and ¡ in Spanish).
 
 ### Pseudo Translations
 
@@ -61,6 +61,7 @@ flutter_pseudolocalizor:
   input_filepath: "test.csv"
   replace_base: false
   use_brackets: true
+  text_expansion_format: repeatVowels
   text_expansion_ratio: null
   languages_to_generate:
     - de
@@ -81,7 +82,8 @@ flutter_pseudolocalizor:
 | input_filepath             | A path to the input localization file.                                                   |
 | output_filepath            | A path for the generated output file. Defaults to `<input_filename>-PSEUDO.<extension>`. |
 | replace_base               | Whether the base language (en) should be replaced. Defaults to `false`.                  |
-| text_expansion_ratio       | The ratio (between 1 and 3) of text expansion. If `null`, uses a linear function.        | 
+| text_expansion_format      | The format of the text expansion. Defaults to `repeatVowels`, alternative `append`.      |
+| text_expansion_ratio       | The ratio (between 1 and 3) of text expansion. If `null`, uses a linear function.        |
 | languages_to_generate      | An array of languages to generate. Ignored if `replace_base` is true.                    |
 | csv_settings: delimiter    | A delimiter to separate columns in the input CSV file. Defaults to `,`.                  |
 | csv_settings: column_index | The column index of the base language (en) in the input CSV file. Defaults to `1`.       |
@@ -111,7 +113,7 @@ Note that `patterns_to_ignore` is especially useful to avoid text replacement fo
 - Only CSV input files are supported.
 - Supports Latin-1 Supplement and Latin Extended-A but not Latin Extended-B or Latin Extended-C.
 - The following languages are supported: de, es, fr, it, pl, pt, ru and tr.
-- Only text expansion is considered.
+- Only two text expansion formats are considered.
 - Only one character replacement style.
 - Except for Spanish, punctuation isn't considered for text expansion.
 
