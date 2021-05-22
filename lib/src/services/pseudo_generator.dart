@@ -27,30 +27,37 @@ mixin PseudoGenerator {
     var textExpansion = '';
 
     if (numberOfExpansionCharactersToGenerate > 0) {
-      if (textExpansionFormat == TextExpansionFormat.repeatVowels) {
-        var count = 0;
-        while (count < numberOfExpansionCharactersToGenerate) {
-          _baseText = patternToIgnore != null
-              ? _baseText.splitMapJoin(
-                  patternToIgnore,
-                  onNonMatch: (value) => repeatVowels(value,
-                      count: (numberOfExpansionCharactersToGenerate *
-                              (value.length / baseText.length))
-                          .floor()),
+      switch (textExpansionFormat) {
+        case TextExpansionFormat.append:
+          textExpansion = numberOfExpansionCharactersToGenerate > 0
+              ? _generateXRandomSpecialCharacters(
+                  numberOfExpansionCharactersToGenerate,
+                  language: languageToGenerate,
                 )
-              : repeatVowels(
-                  _baseText,
-                  count: numberOfExpansionCharactersToGenerate - count,
-                );
-          count = _baseText.length - baseText.length;
-        }
-      } else {
-        textExpansion = numberOfExpansionCharactersToGenerate > 0
-            ? _generateXRandomSpecialCharacters(
-                numberOfExpansionCharactersToGenerate,
-                language: languageToGenerate,
-              )
-            : '';
+              : '';
+          break;
+        case TextExpansionFormat.repeatVowels:
+          var count = 0;
+          while (count < numberOfExpansionCharactersToGenerate) {
+            _baseText = patternToIgnore != null
+                ? _baseText.splitMapJoin(
+                    patternToIgnore,
+                    onNonMatch: (value) => repeatVowels(value,
+                        count: (numberOfExpansionCharactersToGenerate *
+                                (value.length / baseText.length))
+                            .floor()),
+                  )
+                : repeatVowels(
+                    _baseText,
+                    count: numberOfExpansionCharactersToGenerate - count,
+                  );
+            count = _baseText.length - baseText.length;
+          }
+          break;
+        case TextExpansionFormat.oneTwo:
+          break;
+        case TextExpansionFormat.exclamationMarks:
+          break;
       }
     }
 
@@ -65,9 +72,14 @@ mixin PseudoGenerator {
           )
         : _addSpecialCharactersToText(baseText, language: languageToGenerate);
 
+    final useExclamationMarks =
+        textExpansionFormat == TextExpansionFormat.exclamationMarks;
+
     return (useBrackets ? '[' : '') +
+        (useExclamationMarks ? '!!! ' : '') +
         characterReplacement +
         (textExpansion.isNotEmpty ? ' $textExpansion' : '') +
+        (useExclamationMarks ? ' !!!' : '') +
         (useBrackets ? ']' : '');
   }
 
