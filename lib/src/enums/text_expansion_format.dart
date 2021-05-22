@@ -7,7 +7,7 @@ enum TextExpansionFormat {
   repeatVowels,
 
   /// appends numbers as words, i.e. `Hello World one`
-  oneTwo,
+  numberWords,
 
   /// wraps text in exclamation marks, i.e. `!!! Hello World !!!`
   exclamationMarks

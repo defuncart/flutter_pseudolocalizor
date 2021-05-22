@@ -29,12 +29,10 @@ mixin PseudoGenerator {
     if (numberOfExpansionCharactersToGenerate > 0) {
       switch (textExpansionFormat) {
         case TextExpansionFormat.append:
-          textExpansion = numberOfExpansionCharactersToGenerate > 0
-              ? _generateXRandomSpecialCharacters(
-                  numberOfExpansionCharactersToGenerate,
-                  language: languageToGenerate,
-                )
-              : '';
+          textExpansion = _generateXRandomSpecialCharacters(
+            numberOfExpansionCharactersToGenerate,
+            language: languageToGenerate,
+          );
           break;
         case TextExpansionFormat.repeatVowels:
           var count = 0;
@@ -54,9 +52,13 @@ mixin PseudoGenerator {
             count = _baseText.length - baseText.length;
           }
           break;
-        case TextExpansionFormat.oneTwo:
+        case TextExpansionFormat.numberWords:
+          textExpansion = generateNumberWords(
+            expansionCount: numberOfExpansionCharactersToGenerate,
+          );
           break;
         case TextExpansionFormat.exclamationMarks:
+          // dealt with below
           break;
       }
     }
