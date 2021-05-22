@@ -22,26 +22,27 @@ Generally psuedo translations will replace characters in the English string (i.e
 
 Considering English as the base language, after translation many languages will exhibit *text expansion* and have longer text strings. Generally German extends by 10-35%, Polish 20-30% and Russian by 15%. Moreover, shorter English text strings tends to expanded even more than larger strings. Thus one approach to text expansion is to use a constant (say 40%), while another is to use a function of input text length returning values from 30-50%. Note that some languages (i.e. Japanese, Korean) generally contract and can actually have shorter text strings than their English counterparts.
 
-### Text Format
+### Text Expansion Format
 
-There are many different ways to format the pseudo text, for instance:
+There are multiple different ways to format the text expansion, for instance:
 
-- repeating all vowels multiple times (i.e. `Heellöö Wöörld`).
-- using the words *one*, *two*, *three* etc. as text expansion (i.e `Hello World one`).
-- wrapping the word with !!! (i.e. `!!! Hellö Wörld !!!`)
-- appending random special characters as text expansion (ie. `Hellö Wörld äßÜẞ`).
+- appending random special characters: `Hellö Wörld äßÜẞ`.
+- repeating all vowels multiple times: `Heellöö Wöörld`.
+- appending number words: `Hellö Wörld one two`.
+- wrapping the base text with exclamation marks:  `!!! Hellö Wörld !!!`)
 
 Moreover, the text expansion is often wrapped in square brackets to easily determine UI clipping, while it may also use punctuation of the target language (i.e. ¿ and ¡ in Spanish).
 
 ### Pseudo Translations
 
-Putting this altogether, we could render our base string as follows:
+Putting this altogether, the base string can be rendered as follows:
 
 | English | Hello World!           |
 | ------- | ---------------------- |
-| German  | [ Hellö Wörld! ÜüäßÖ ] |
-| Polish  | [ Hęłłó Wórłd! ęśżĘŚ ] |
-| Russian | [ Нёлло Шоялд! ОТЧжт ] |
+| German  | [Hellö Wörld! ÜüäßÖ]   |
+| Polish  | [Hęęęłłóóó Wóórłd!]    |
+| Russian | [!!! Нёлло Шоялд! !!!] |
+| Spanish | [Hélló Wórld! one two] |
 
 It is important to remember that these pseduotranslations are nonsensical: they are not real translations, instead merely a way to test that the app is ready for the translation stage.
 
@@ -77,18 +78,18 @@ flutter_pseudolocalizor:
     - 2
 ```
 
-| Setting                    | Description                                                                              |
-| -------------------------- | ---------------------------------------------------------------------------------------- |
-| input_filepath             | A path to the input localization file.                                                   |
-| output_filepath            | A path for the generated output file. Defaults to `<input_filename>-PSEUDO.<extension>`. |
-| replace_base               | Whether the base language (en) should be replaced. Defaults to `false`.                  |
-| text_expansion_format      | The format of the text expansion. Defaults to `repeatVowels`, alternative `append`.      |
-| text_expansion_ratio       | The ratio (between 1 and 3) of text expansion. If `null`, uses a linear function.        |
-| languages_to_generate      | An array of languages to generate. Ignored if `replace_base` is true.                    |
-| csv_settings: delimiter    | A delimiter to separate columns in the input CSV file. Defaults to `,`.                  |
-| csv_settings: column_index | The column index of the base language (en) in the input CSV file. Defaults to `1`.       |
-| patterns_to_ignore         | A list of patterns to ignore during text replacement.                                    |
-| keys_to_ignore             | A list of keys which should be ignored.                                                  |
+| Setting                    | Description                                                                                                             |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| input_filepath             | A path to the input localization file.                                                                                  |
+| output_filepath            | A path for the generated output file. Defaults to `<input_filename>-PSEUDO.<extension>`.                                |
+| replace_base               | Whether the base language (en) should be replaced. Defaults to `false`.                                                 |
+| text_expansion_format      | The format of the text expansion. Defaults to `repeatVowels`, alternatives `append`, `numberWords`, `exclamationMarks`. |
+| text_expansion_ratio       | The ratio (between 1 and 3) of text expansion. If `null`, uses a linear function.                                       |
+| languages_to_generate      | An array of languages to generate. Ignored if `replace_base` is true.                                                   |
+| csv_settings: delimiter    | A delimiter to separate columns in the input CSV file. Defaults to `,`.                                                 |
+| csv_settings: column_index | The column index of the base language (en) in the input CSV file. Defaults to `1`.                                      |
+| patterns_to_ignore         | A list of patterns to ignore during text replacement.                                                                   |
+| keys_to_ignore             | A list of keys which should be ignored.                                                                                 |
 
 `input_filepath` must be given, all other settings are optional. If Latin-1 Supplement and Latin Extended-A letters should be tested, set `replace_base` to true. To test specific languages, set `languages_to_generate` with an array of languages.
 
@@ -113,7 +114,6 @@ Note that `patterns_to_ignore` is especially useful to avoid text replacement fo
 - Only CSV input files are supported.
 - Supports Latin-1 Supplement and Latin Extended-A but not Latin Extended-B or Latin Extended-C.
 - The following languages are supported: de, es, fr, it, pl, pt, ru and tr.
-- Only two text expansion formats are considered.
 - Only one character replacement style.
 - Except for Spanish, punctuation isn't considered for text expansion.
 
