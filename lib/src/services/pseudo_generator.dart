@@ -58,7 +58,7 @@ mixin PseudoGenerator {
           );
           break;
         case TextExpansionFormat.exclamationMarks:
-          // dealt with below
+          // nothing to do
           break;
       }
     }
@@ -152,13 +152,13 @@ mixin PseudoGenerator {
   }) {
     final sb = StringBuffer();
     for (var i = 0; i < count; i++) {
-      sb.write(_randomSpecialCharacter(language: language));
+      sb.write(randomSpecialCharacter(language: language));
     }
     return sb.toString();
   }
 
   /// Returns a random special character for the selected language.
-  static String _randomSpecialCharacter({
+  static String randomSpecialCharacter({
     required SupportedLanguage? language,
   }) {
     final specialCharacters =

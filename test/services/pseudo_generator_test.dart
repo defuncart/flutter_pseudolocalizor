@@ -1,3 +1,4 @@
+import 'package:flutter_pseudolocalizor/src/enums/supported_language.dart';
 import 'package:flutter_pseudolocalizor/src/services/pseudo_generator.dart';
 import 'package:test/test.dart';
 
@@ -90,6 +91,22 @@ void main() {
           ),
           'one two three',
         );
+      });
+    });
+
+    group('randomSpecialCharacter', () {
+      test('Regardless of language, expect single character', () {
+        expect(
+          PseudoGenerator.randomSpecialCharacter(language: null).length,
+          1,
+        );
+
+        for (final language in SupportedLanguage.values) {
+          expect(
+            PseudoGenerator.randomSpecialCharacter(language: language).length,
+            1,
+          );
+        }
       });
     });
   });
