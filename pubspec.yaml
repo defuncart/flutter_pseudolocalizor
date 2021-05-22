@@ -1,6 +1,6 @@
 name: flutter_pseudolocalizor
 description: A Pseudolocalization tool for Flutter and Dart which generates pseudo, nonsensical translations for multiple languages from a given English source.
-version: 0.4.0
+version: 0.5.0-dev
 homepage: https://github.com/defuncart/flutter_pseudolocalizor
 repository: https://github.com/defuncart/flutter_pseudolocalizor
 issue_tracker: https://github.com/defuncart/flutter_pseudolocalizor/issues
