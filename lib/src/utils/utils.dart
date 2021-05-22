@@ -2,6 +2,7 @@ import '../configs/default_settings.dart';
 import '../configs/language_settings.dart';
 import '../enums/supported_input_file_type.dart';
 import '../enums/supported_language.dart';
+import '../enums/text_expansion_format.dart';
 
 /// A class of utils used for the package
 class Utils {
@@ -40,16 +41,24 @@ class Utils {
   /// Converts a string into SupportedLanguage
   static SupportedLanguage? convertSupportedLangaugeFromString(
       String? language) {
-    final values = SupportedLanguage.values.where(
-        (item) => describeEnum(item).toString() == language?.toLowerCase());
+    final values = SupportedLanguage.values
+        .where((item) => describeEnum(item) == language?.toLowerCase());
     return values.isNotEmpty ? values.first : null;
   }
 
   /// Converts a string into SupportedInputFileType
   static SupportedInputFileType? convertSupportedInputFileTypeFromString(
       String? filetype) {
-    final values = SupportedInputFileType.values.where(
-        (item) => describeEnum(item).toString() == filetype?.toLowerCase());
+    final values = SupportedInputFileType.values
+        .where((item) => describeEnum(item) == filetype?.toLowerCase());
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  /// Converts a string into TextExpansionType
+  static TextExpansionFormat? convertTextExpansionFormatFromString(
+      String? textExpansionType) {
+    final values = TextExpansionFormat.values.where((item) =>
+        describeEnum(item).toLowerCase() == textExpansionType?.toLowerCase());
     return values.isNotEmpty ? values.first : null;
   }
 

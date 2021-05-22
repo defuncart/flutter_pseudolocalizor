@@ -11,6 +11,7 @@ class YamlArguments {
   static const replaceBase = 'replace_base';
   static const languagesToGenerate = 'languages_to_generate';
   static const useBrackets = 'use_brackets';
+  static const textExpansionFormat = 'text_expansion_format';
   static const textExpansionRatio = 'text_expansion_ratio';
   static const csvSettings = 'csv_settings';
   static const patternsToIgnore = 'patterns_to_ignore';
@@ -53,6 +54,7 @@ class YamlParser {
         languagesToGenerate:
             _yamlListToStringList(yamlMap[YamlArguments.languagesToGenerate]),
         useBrackets: yamlMap[YamlArguments.useBrackets],
+        textExpansionFormat: yamlMap[YamlArguments.textExpansionFormat],
         textExpansionRatio:
             _dynamicToDouble(yamlMap[YamlArguments.textExpansionRatio]),
         csvSettings: csvSettings,
