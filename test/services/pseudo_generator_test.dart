@@ -5,6 +5,18 @@ import 'package:test/test.dart';
 
 void main() {
   group('$PseudoGenerator', () {
+    group('addSpecialCharactersToText', () {
+      test('Expect return length same as input length', () {
+        expect(
+          PseudoGenerator.addSpecialCharactersToText(
+            'hello',
+            language: null,
+          ).length,
+          5,
+        );
+      });
+    });
+
     group('elongateVowels', () {
       test('When hello count = 1, expect heello', () {
         expect(
@@ -185,5 +197,36 @@ void main() {
         }
       });
     });
+
+    group('pseudotranslationLengthForText', () {
+      test('When count > 20, expect 1.3 times', () {
+        expect(
+          PseudoGenerator.pseudotranslationLengthForText(
+            _generateStringWithLength(21),
+          ),
+          (21 * 1.3).ceil(),
+        );
+      });
+
+      test('When count > 10, expect 1.4 times', () {
+        expect(
+          PseudoGenerator.pseudotranslationLengthForText(
+            _generateStringWithLength(11),
+          ),
+          (11 * 1.4).ceil(),
+        );
+      });
+
+      test('When count < 11, expect 1.5 times', () {
+        expect(
+          PseudoGenerator.pseudotranslationLengthForText(
+            _generateStringWithLength(10),
+          ),
+          (10 * 1.5).ceil(),
+        );
+      });
+    });
   });
 }
+
+String _generateStringWithLength(int length) => String.fromCharCodes(List.generate(length, (_) => 89));

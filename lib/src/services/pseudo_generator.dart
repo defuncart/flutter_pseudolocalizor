@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:meta/meta.dart';
+
 import '../configs/language_settings.dart';
 import '../enums/supported_language.dart';
 import '../enums/text_expansion_format.dart';
@@ -20,7 +22,7 @@ mixin PseudoGenerator {
   }) {
     final pseudoTextLength = textExpansionRate != null
         ? (baseText.length * textExpansionRate).ceil()
-        : _pseudotranslationLengthForText(baseText);
+        : pseudotranslationLengthForText(baseText);
     final numberOfExpansionCharactersToGenerate =
         pseudoTextLength - baseText.length;
     var _baseText = baseText;
@@ -67,12 +69,12 @@ mixin PseudoGenerator {
     final characterReplacement = patternToIgnore != null
         ? _baseText.splitMapJoin(
             patternToIgnore,
-            onNonMatch: (value) => _addSpecialCharactersToText(
+            onNonMatch: (value) => addSpecialCharactersToText(
               value,
               language: languageToGenerate,
             ),
           )
-        : _addSpecialCharactersToText(baseText, language: languageToGenerate);
+        : addSpecialCharactersToText(baseText, language: languageToGenerate);
 
     final useExclamationMarks =
         textExpansionFormat == TextExpansionFormat.exclamationMarks;
@@ -86,6 +88,7 @@ mixin PseudoGenerator {
   }
 
   /// Repeats [count] vowels in [text], i.e. Hello => Heelloo
+  @visibleForTesting
   static String repeatVowels(
     String text, {
     required int count,
@@ -123,7 +126,8 @@ mixin PseudoGenerator {
   }
 
   /// Returns a string containing mapped special characters (a => ä) for the selected language.
-  static String _addSpecialCharactersToText(
+  @visibleForTesting
+  static String addSpecialCharactersToText(
     String text, {
     required SupportedLanguage? language,
   }) {
@@ -145,6 +149,7 @@ mixin PseudoGenerator {
   }
 
   /// Returns a string containing [count] random special characters for the selected language.
+  @visibleForTesting
   static String generateRandomSpecialCharacters(
     int count, {
     required SupportedLanguage? language,
@@ -161,6 +166,7 @@ mixin PseudoGenerator {
   }
 
   /// Returns a random special character for [language].
+  @visibleForTesting
   static String randomSpecialCharacter({
     required SupportedLanguage? language,
   }) {
@@ -169,6 +175,7 @@ mixin PseudoGenerator {
   }
 
   /// Returns a list of special characters for [language].
+  @visibleForTesting
   static List<String> specialCharactersForSupportedLanguage(
           SupportedLanguage? language) =>
       language == null
@@ -176,6 +183,7 @@ mixin PseudoGenerator {
           : LanguageSettings.specialCharacters[language]!;
 
   /// Returns mapping characters for [language].
+  @visibleForTesting
   static Map<String, List<String>> mappingCharactersForSupportedLanguage(
           SupportedLanguage? language) =>
       language == null
@@ -195,6 +203,7 @@ mixin PseudoGenerator {
   ];
 
   /// Generates the required words for [expansionCount], i.e. `one two`.
+  @visibleForTesting
   static String generateNumberWords({required int expansionCount}) {
     if (expansionCount < 1) {
       return '';
@@ -217,7 +226,8 @@ mixin PseudoGenerator {
   /// Determines the Pseudotranslation length for a given text string.
   ///
   /// As a quick rule of thumb, using [IGDA Localization SIG](https://www.gamasutra.com/blogs/IGDALocalizationSIG/20180504/317560/PseudoLocalization__A_Must_in_Video_Gaming.php)'s suggestion.
-  static int _pseudotranslationLengthForText(String text) {
+  @visibleForTesting
+  static int pseudotranslationLengthForText(String text) {
     if (text.length > 20) {
       return (text.length * 1.3).ceil();
     } else if (text.length > 10) {
