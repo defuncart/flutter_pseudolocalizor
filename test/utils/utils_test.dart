@@ -5,22 +5,6 @@ import 'package:flutter_pseudolocalizor/src/utils/utils.dart';
 import 'package:test/test.dart';
 
 void main() {
-  test('specialCharactersForSupportedLanguage', () {
-    expect(Utils.specialCharactersForSupportedLanguage(null), isNotNull);
-
-    for (final language in SupportedLanguage.values) {
-      expect(Utils.specialCharactersForSupportedLanguage(language), isNotNull);
-    }
-  });
-
-  test('mappingCharactersForSupportedLanguage', () {
-    expect(Utils.mappingCharactersForSupportedLanguage(null), isNotNull);
-
-    for (final language in SupportedLanguage.values) {
-      expect(Utils.mappingCharactersForSupportedLanguage(language), isNotNull);
-    }
-  });
-
   test('covertSupportedLangugesFromListString', () {
     expect(Utils.covertSupportedLangugesFromListString(null), isNull);
     expect(Utils.covertSupportedLangugesFromListString(<String>[]), isNull);

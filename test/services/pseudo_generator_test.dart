@@ -1,3 +1,4 @@
+import 'package:flutter_pseudolocalizor/src/configs/language_settings.dart';
 import 'package:flutter_pseudolocalizor/src/enums/supported_language.dart';
 import 'package:flutter_pseudolocalizor/src/services/pseudo_generator.dart';
 import 'package:test/test.dart';
@@ -110,6 +111,62 @@ void main() {
           ).length,
           1,
         );
+      });
+    });
+
+    group('specialCharactersForSupportedLanguage', () {
+      test('when null is passed, expect default', () {
+        expect(
+          PseudoGenerator.specialCharactersForSupportedLanguage(null),
+          isNotNull,
+        );
+        expect(
+          PseudoGenerator.specialCharactersForSupportedLanguage(null),
+          LanguageSettings.fallbackSpecialCharacters,
+        );
+      });
+
+      test(
+          'when language is passed, expect special characters '
+          'for that language', () {
+        for (final language in SupportedLanguage.values) {
+          expect(
+            PseudoGenerator.specialCharactersForSupportedLanguage(language),
+            isNotNull,
+          );
+          expect(
+            PseudoGenerator.specialCharactersForSupportedLanguage(language),
+            LanguageSettings.specialCharacters[language]!,
+          );
+        }
+      });
+    });
+
+    group('mappingCharactersForSupportedLanguage', () {
+      test('when null is passed, expect default', () {
+        expect(
+          PseudoGenerator.mappingCharactersForSupportedLanguage(null),
+          isNotNull,
+        );
+        expect(
+          PseudoGenerator.mappingCharactersForSupportedLanguage(null),
+          LanguageSettings.fallbackMappingCharacters,
+        );
+      });
+
+      test(
+          'when language is passed, expect special characters '
+          'for that language', () {
+        for (final language in SupportedLanguage.values) {
+          expect(
+            PseudoGenerator.mappingCharactersForSupportedLanguage(language),
+            isNotNull,
+          );
+          expect(
+            PseudoGenerator.mappingCharactersForSupportedLanguage(language),
+            LanguageSettings.mappingCharacters[language]!,
+          );
+        }
       });
     });
 

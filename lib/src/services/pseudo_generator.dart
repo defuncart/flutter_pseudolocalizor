@@ -1,9 +1,9 @@
 import 'dart:math';
 
+import '../configs/language_settings.dart';
 import '../enums/supported_language.dart';
 import '../enums/text_expansion_format.dart';
 import '../extensions/string_extensions.dart';
-import '../utils/utils.dart';
 
 /// Base pseudolocalization generation logic which can be utilized by file generators
 mixin PseudoGenerator {
@@ -129,8 +129,7 @@ mixin PseudoGenerator {
   }) {
     final sb = StringBuffer();
     final characters = text.split('');
-    final mappingCharacters =
-        Utils.mappingCharactersForSupportedLanguage(language);
+    final mappingCharacters = mappingCharactersForSupportedLanguage(language);
     final keys = mappingCharacters.keys.toList();
     for (final character in characters) {
       final index = keys.indexOf(character);
@@ -161,14 +160,27 @@ mixin PseudoGenerator {
     return sb.toString();
   }
 
-  /// Returns a random special character for the selected language.
+  /// Returns a random special character for [language].
   static String randomSpecialCharacter({
     required SupportedLanguage? language,
   }) {
-    final specialCharacters =
-        Utils.specialCharactersForSupportedLanguage(language);
+    final specialCharacters = specialCharactersForSupportedLanguage(language);
     return specialCharacters[_random.nextInt(specialCharacters.length)];
   }
+
+  /// Returns a list of special characters for [language].
+  static List<String> specialCharactersForSupportedLanguage(
+          SupportedLanguage? language) =>
+      language == null
+          ? LanguageSettings.fallbackSpecialCharacters
+          : LanguageSettings.specialCharacters[language]!;
+
+  /// Returns mapping characters for [language].
+  static Map<String, List<String>> mappingCharactersForSupportedLanguage(
+          SupportedLanguage? language) =>
+      language == null
+          ? LanguageSettings.fallbackMappingCharacters
+          : LanguageSettings.mappingCharacters[language]!;
 
   static const _numberWords = [
     'one',
