@@ -1,25 +1,10 @@
 import '../configs/default_settings.dart';
-import '../configs/language_settings.dart';
 import '../enums/supported_input_file_type.dart';
 import '../enums/supported_language.dart';
 import '../enums/text_expansion_format.dart';
 
 /// A class of utils used for the package
 class Utils {
-  /// Returns a list of special characters for a given [SupportLanguage]
-  static List<String>? specialCharactersForSupportedLanguage(
-          SupportedLanguage? language) =>
-      language == null
-          ? LanguageSettings.fallbackSpecialCharacters
-          : LanguageSettings.specialCharacters[language];
-
-  /// Returns mapping characters for a given [SupportLanguage]
-  static Map<String, List<String>>? mappingCharactersForSupportedLanguage(
-          SupportedLanguage? language) =>
-      language == null
-          ? LanguageSettings.fallbackMappingCharacters
-          : LanguageSettings.mappingCharacters[language];
-
   /// Converts a list of strings ['de', 'pl] into [SupportedLanguage.de, SupportedLanguage.pl]
   static List<SupportedLanguage>? covertSupportedLangugesFromListString(
       List<String>? inputList) {
@@ -35,7 +20,7 @@ class Utils {
       }
     }
 
-    return returnArray;
+    return returnArray.isNotEmpty ? returnArray : null;
   }
 
   /// Converts a string into SupportedLanguage

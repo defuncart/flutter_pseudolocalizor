@@ -1,9 +1,11 @@
 import 'dart:math';
 
+import 'package:meta/meta.dart';
+
+import '../configs/language_settings.dart';
 import '../enums/supported_language.dart';
 import '../enums/text_expansion_format.dart';
 import '../extensions/string_extensions.dart';
-import '../utils/utils.dart';
 
 /// Base pseudolocalization generation logic which can be utilized by file generators
 mixin PseudoGenerator {
@@ -20,37 +22,46 @@ mixin PseudoGenerator {
   }) {
     final pseudoTextLength = textExpansionRate != null
         ? (baseText.length * textExpansionRate).ceil()
-        : _pseudotranslationLengthForText(baseText);
+        : pseudotranslationLengthForText(baseText);
     final numberOfExpansionCharactersToGenerate =
         pseudoTextLength - baseText.length;
     var _baseText = baseText;
     var textExpansion = '';
 
     if (numberOfExpansionCharactersToGenerate > 0) {
-      if (textExpansionFormat == TextExpansionFormat.repeatVowels) {
-        var count = 0;
-        while (count < numberOfExpansionCharactersToGenerate) {
-          _baseText = patternToIgnore != null
-              ? _baseText.splitMapJoin(
-                  patternToIgnore,
-                  onNonMatch: (value) => repeatVowels(value,
-                      count: (numberOfExpansionCharactersToGenerate *
-                              (value.length / baseText.length))
-                          .floor()),
-                )
-              : repeatVowels(
-                  _baseText,
-                  count: numberOfExpansionCharactersToGenerate - count,
-                );
-          count = _baseText.length - baseText.length;
-        }
-      } else {
-        textExpansion = numberOfExpansionCharactersToGenerate > 0
-            ? _generateXRandomSpecialCharacters(
-                numberOfExpansionCharactersToGenerate,
-                language: languageToGenerate,
-              )
-            : '';
+      switch (textExpansionFormat) {
+        case TextExpansionFormat.append:
+          textExpansion = generateRandomSpecialCharacters(
+            numberOfExpansionCharactersToGenerate,
+            language: languageToGenerate,
+          );
+          break;
+        case TextExpansionFormat.repeatVowels:
+          var count = 0;
+          while (count < numberOfExpansionCharactersToGenerate) {
+            _baseText = patternToIgnore != null
+                ? _baseText.splitMapJoin(
+                    patternToIgnore,
+                    onNonMatch: (value) => repeatVowels(value,
+                        count: (numberOfExpansionCharactersToGenerate *
+                                (value.length / baseText.length))
+                            .floor()),
+                  )
+                : repeatVowels(
+                    _baseText,
+                    count: numberOfExpansionCharactersToGenerate - count,
+                  );
+            count = _baseText.length - baseText.length;
+          }
+          break;
+        case TextExpansionFormat.numberWords:
+          textExpansion = generateNumberWords(
+            expansionCount: numberOfExpansionCharactersToGenerate,
+          );
+          break;
+        case TextExpansionFormat.exclamationMarks:
+          // nothing to do
+          break;
       }
     }
 
@@ -58,20 +69,26 @@ mixin PseudoGenerator {
     final characterReplacement = patternToIgnore != null
         ? _baseText.splitMapJoin(
             patternToIgnore,
-            onNonMatch: (value) => _addSpecialCharactersToText(
+            onNonMatch: (value) => addSpecialCharactersToText(
               value,
               language: languageToGenerate,
             ),
           )
-        : _addSpecialCharactersToText(baseText, language: languageToGenerate);
+        : addSpecialCharactersToText(baseText, language: languageToGenerate);
+
+    final useExclamationMarks =
+        textExpansionFormat == TextExpansionFormat.exclamationMarks;
 
     return (useBrackets ? '[' : '') +
+        (useExclamationMarks ? '!!! ' : '') +
         characterReplacement +
         (textExpansion.isNotEmpty ? ' $textExpansion' : '') +
+        (useExclamationMarks ? ' !!!' : '') +
         (useBrackets ? ']' : '');
   }
 
   /// Repeats [count] vowels in [text], i.e. Hello => Heelloo
+  @visibleForTesting
   static String repeatVowels(
     String text, {
     required int count,
@@ -109,14 +126,14 @@ mixin PseudoGenerator {
   }
 
   /// Returns a string containing mapped special characters (a => ä) for the selected language.
-  static String _addSpecialCharactersToText(
+  @visibleForTesting
+  static String addSpecialCharactersToText(
     String text, {
     required SupportedLanguage? language,
   }) {
     final sb = StringBuffer();
     final characters = text.split('');
-    final mappingCharacters =
-        Utils.mappingCharactersForSupportedLanguage(language)!;
+    final mappingCharacters = mappingCharactersForSupportedLanguage(language);
     final keys = mappingCharacters.keys.toList();
     for (final character in characters) {
       final index = keys.indexOf(character);
@@ -131,31 +148,86 @@ mixin PseudoGenerator {
     return sb.toString();
   }
 
-  /// Returns a string contain X random special characters for the selected language.
-  static String _generateXRandomSpecialCharacters(
+  /// Returns a string containing [count] random special characters for the selected language.
+  @visibleForTesting
+  static String generateRandomSpecialCharacters(
     int count, {
     required SupportedLanguage? language,
   }) {
+    if (count < 1) {
+      return '';
+    }
+
     final sb = StringBuffer();
     for (var i = 0; i < count; i++) {
-      sb.write(_randomSpecialCharacter(language: language));
+      sb.write(randomSpecialCharacter(language: language));
     }
     return sb.toString();
   }
 
-  /// Returns a random special character for the selected language.
-  static String _randomSpecialCharacter({
+  /// Returns a random special character for [language].
+  @visibleForTesting
+  static String randomSpecialCharacter({
     required SupportedLanguage? language,
   }) {
-    final specialCharacters =
-        Utils.specialCharactersForSupportedLanguage(language)!;
+    final specialCharacters = specialCharactersForSupportedLanguage(language);
     return specialCharacters[_random.nextInt(specialCharacters.length)];
+  }
+
+  /// Returns a list of special characters for [language].
+  @visibleForTesting
+  static List<String> specialCharactersForSupportedLanguage(
+          SupportedLanguage? language) =>
+      language == null
+          ? LanguageSettings.fallbackSpecialCharacters
+          : LanguageSettings.specialCharacters[language]!;
+
+  /// Returns mapping characters for [language].
+  @visibleForTesting
+  static Map<String, List<String>> mappingCharactersForSupportedLanguage(
+          SupportedLanguage? language) =>
+      language == null
+          ? LanguageSettings.fallbackMappingCharacters
+          : LanguageSettings.mappingCharacters[language]!;
+
+  static const _numberWords = [
+    'one',
+    'two',
+    'three',
+    'four',
+    'five',
+    'six',
+    'seven',
+    'eight',
+    'nine',
+  ];
+
+  /// Generates the required words for [expansionCount], i.e. `one two`.
+  @visibleForTesting
+  static String generateNumberWords({required int expansionCount}) {
+    if (expansionCount < 1) {
+      return '';
+    }
+
+    var index = 0;
+    final sb = StringBuffer();
+
+    do {
+      if (index != 0) {
+        sb.write(' ');
+      }
+      sb.write(_numberWords[index]);
+      index++;
+    } while (index < _numberWords.length && sb.length < expansionCount);
+
+    return sb.toString();
   }
 
   /// Determines the Pseudotranslation length for a given text string.
   ///
   /// As a quick rule of thumb, using [IGDA Localization SIG](https://www.gamasutra.com/blogs/IGDALocalizationSIG/20180504/317560/PseudoLocalization__A_Must_in_Video_Gaming.php)'s suggestion.
-  static int _pseudotranslationLengthForText(String text) {
+  @visibleForTesting
+  static int pseudotranslationLengthForText(String text) {
     if (text.length > 20) {
       return (text.length * 1.3).ceil();
     } else if (text.length > 10) {

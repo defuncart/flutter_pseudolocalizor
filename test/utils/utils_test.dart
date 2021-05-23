@@ -5,6 +5,26 @@ import 'package:flutter_pseudolocalizor/src/utils/utils.dart';
 import 'package:test/test.dart';
 
 void main() {
+  test('covertSupportedLangugesFromListString', () {
+    expect(Utils.covertSupportedLangugesFromListString(null), isNull);
+    expect(Utils.covertSupportedLangugesFromListString(<String>[]), isNull);
+
+    expect(
+      Utils.covertSupportedLangugesFromListString(['de', 'pl']),
+      [SupportedLanguage.de, SupportedLanguage.pl],
+    );
+
+    expect(
+      Utils.covertSupportedLangugesFromListString(['de', 'bla']),
+      [SupportedLanguage.de],
+    );
+
+    expect(
+      Utils.covertSupportedLangugesFromListString(['bla']),
+      isNull,
+    );
+  });
+
   test('Convert string to $SupportedLanguage', () {
     final strings = SupportedLanguage.values.map(Utils.describeEnum).toList();
 
