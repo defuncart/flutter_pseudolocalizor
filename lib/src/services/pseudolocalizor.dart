@@ -38,11 +38,14 @@ class Pseudolocalizor {
     if (filetype == SupportedInputFileType.csv) {
       final outputFile = File(
         packageSettings.csvSettings.outputFilepath ??
-            Utils.generateOutputFilePath(
+            Utils.generateCSVOutputFilePath(
                 inputFilepath: packageSettings.inputFilepath),
       );
       final fileContents = CSVGenerator.generate(file, packageSettings);
       if (fileContents != null) {
+        if (!outputFile.existsSync()) {
+          outputFile.createSync(recursive: true);
+        }
         outputFile.writeAsStringSync(fileContents);
 
         print('All done! Wrote to ${outputFile.path}');
@@ -50,11 +53,16 @@ class Pseudolocalizor {
     } else if (filetype == SupportedInputFileType.arb) {
       // TODO multiple files
       final outputFile = File(
-        Utils.generateOutputFilePath(
-            inputFilepath: packageSettings.inputFilepath),
+        Utils.generateARBOutputFilepath(
+          outputDirectory: packageSettings.arbSettings.outputDirectory,
+          language: 'en',
+        ),
       );
       final fileContents = ARBGenerator.generate(file, packageSettings);
       if (fileContents != null) {
+        if (!outputFile.existsSync()) {
+          outputFile.createSync(recursive: true);
+        }
         outputFile.writeAsStringSync(fileContents);
 
         print('All done! Wrote to ${outputFile.path}');

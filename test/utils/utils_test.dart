@@ -126,20 +126,50 @@ void main() {
     expect(supportedInputFileTypes, isNull);
   });
 
-  test('Generate output file', () {
-    // incorrect input, expect null output
-    expect(
-      () => Utils.generateOutputFilePath(inputFilepath: 'bla'),
-      throwsArgumentError,
-    );
+  group('generateARBOutputFilepath', () {
+    test('Given valid input, expect generated output', () {
+      expect(
+        Utils.generateARBOutputFilepath(
+          outputDirectory: 'pseudo',
+          language: 'en',
+        ),
+        'pseudo/intl_en.arb',
+      );
+    });
 
-    // correct input, expect generated output
-    var outputFilepath =
-        Utils.generateOutputFilePath(inputFilepath: 'test.csv');
-    expect(outputFilepath, 'test_PSEUDO.csv');
+    test('Given valid input, expect generated output', () {
+      expect(
+        Utils.generateARBOutputFilepath(
+          outputDirectory: null,
+          language: 'en',
+        ),
+        'l10n_pseudo/intl_en.arb',
+      );
+    });
+  });
 
-    // correct input (multiple fullspots), expect generated output
-    outputFilepath = Utils.generateOutputFilePath(inputFilepath: 'my.test.csv');
-    expect(outputFilepath, 'my.test_PSEUDO.csv');
+  group('generateCSVOutputFilePath', () {
+    test('Given invalid filepath, expect argument error', () {
+      expect(
+        () => Utils.generateCSVOutputFilePath(inputFilepath: 'bla'),
+        throwsArgumentError,
+      );
+    });
+
+    test('Given valid filepath, expect generated output', () {
+      expect(
+        Utils.generateCSVOutputFilePath(inputFilepath: 'test.csv'),
+        'test_PSEUDO.csv',
+      );
+    });
+
+    test(
+        'Given valid filepath with multiple fullstops, expect generated output',
+        () {
+      expect(
+        Utils.generateCSVOutputFilePath(inputFilepath: 'my.test.csv'),
+        'my.test_PSEUDO.csv',
+      );
+    });
   });
 }
