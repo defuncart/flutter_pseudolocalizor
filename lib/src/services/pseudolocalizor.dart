@@ -57,7 +57,7 @@ class Pseudolocalizor {
       if (fileContents != null) {
         outputFile.writeAsStringSync(fileContents);
 
-        print('All done! Wrote to ${file.path}');
+        print('All done! Wrote to ${outputFile.path}');
       }
     }
   }
