@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import '../enums/supported_language.dart';
 import '../models/package_settings.dart';
 import 'pseudo_generator.dart';
 
@@ -13,8 +14,9 @@ class ARBGenerator with PseudoGenerator {
   /// Generates pseudo localizations with a given [file] and [packageSettings]
   static String? generate(
     File file,
-    PackageSettings packageSettings,
-  ) {
+    PackageSettings packageSettings, {
+    SupportedLanguage? supportedLanguage,
+  }) {
     // decode arb into a map
     final stringContents = file.readAsStringSync();
     final arbContents = json.decode(stringContents);
@@ -26,8 +28,6 @@ class ARBGenerator with PseudoGenerator {
       print('Error! No keys found!');
       return null;
     }
-
-    // TODO simply base replace for now
 
     for (final key in keys) {
       final shouldReplace =
@@ -44,7 +44,7 @@ class ARBGenerator with PseudoGenerator {
           for (final match in matches) {
             final psuedoSelect = PseudoGenerator.generatePseudoTranslation(
               match.text,
-              languageToGenerate: null,
+              languageToGenerate: supportedLanguage,
               useBrackets: packageSettings.useBrackets,
               textExpansionFormat: packageSettings.textExpansionFormat,
               textExpansionRate: packageSettings.textExpansionRatio,
@@ -60,7 +60,7 @@ class ARBGenerator with PseudoGenerator {
         } else {
           pseudoText = PseudoGenerator.generatePseudoTranslation(
             value,
-            languageToGenerate: null,
+            languageToGenerate: supportedLanguage,
             useBrackets: packageSettings.useBrackets,
             textExpansionFormat: packageSettings.textExpansionFormat,
             textExpansionRate: packageSettings.textExpansionRatio,

@@ -51,21 +51,54 @@ class Pseudolocalizor {
         print('All done! Wrote to ${outputFile.path}');
       }
     } else if (filetype == SupportedInputFileType.arb) {
-      // TODO multiple files
-      final outputFile = File(
-        Utils.generateARBOutputFilepath(
+      if (packageSettings.replaceBase) {
+        final outputFile = File(
+          Utils.generateARBOutputFilepath(
+            outputDirectory: packageSettings.arbSettings.outputDirectory,
+            language: 'en',
+          ),
+        );
+        final fileContents = ARBGenerator.generate(file, packageSettings);
+        if (fileContents != null) {
+          if (!outputFile.existsSync()) {
+            outputFile.createSync(recursive: true);
+          }
+          outputFile.writeAsStringSync(fileContents);
+
+          print('All done! Wrote to ${outputFile.path}');
+        }
+      } else {
+        final outputFilepath = Utils.generateARBOutputFilepath(
           outputDirectory: packageSettings.arbSettings.outputDirectory,
           language: 'en',
-        ),
-      );
-      final fileContents = ARBGenerator.generate(file, packageSettings);
-      if (fileContents != null) {
-        if (!outputFile.existsSync()) {
-          outputFile.createSync(recursive: true);
+        );
+        if (!File(outputFilepath).existsSync()) {
+          File(outputFilepath).createSync(recursive: true);
         }
-        outputFile.writeAsStringSync(fileContents);
 
-        print('All done! Wrote to ${outputFile.path}');
+        file.copySync(outputFilepath);
+
+        for (final language in packageSettings.languagesToGenerate!) {
+          final outputFile = File(
+            Utils.generateARBOutputFilepath(
+              outputDirectory: packageSettings.arbSettings.outputDirectory,
+              language: Utils.describeEnum(language),
+            ),
+          );
+          final fileContents = ARBGenerator.generate(
+            file,
+            packageSettings,
+            supportedLanguage: language,
+          );
+          if (fileContents != null) {
+            if (!outputFile.existsSync()) {
+              outputFile.createSync(recursive: true);
+            }
+            outputFile.writeAsStringSync(fileContents);
+
+            print('All done! Wrote to ${outputFile.path}');
+          }
+        }
       }
     }
   }
