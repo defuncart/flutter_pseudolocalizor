@@ -229,4 +229,5 @@ void main() {
   });
 }
 
-String _generateStringWithLength(int length) => String.fromCharCodes(List.generate(length, (_) => 89));
+String _generateStringWithLength(int length) =>
+    String.fromCharCodes(List.generate(length, (_) => 89));

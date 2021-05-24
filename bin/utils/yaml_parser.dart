@@ -7,7 +7,6 @@ import 'package:yaml/yaml.dart';
 /// A class of arguments which the user can specify in pubspec.yaml
 class YamlArguments {
   static const inputFilepath = 'input_filepath';
-  static const outputFilepath = 'output_filepath';
   static const replaceBase = 'replace_base';
   static const languagesToGenerate = 'languages_to_generate';
   static const useBrackets = 'use_brackets';
@@ -20,6 +19,7 @@ class YamlArguments {
 
 /// A class of arguments which the user can specify in pubspec.yaml for csv_settings object
 class YamlCSVArguments {
+  static const outputFilepath = 'output_filepath';
   static const delimiter = 'delimiter';
   static const columnIndex = 'column_index';
 }
@@ -49,7 +49,6 @@ class YamlParser {
 
       return PackageSettings(
         inputFilepath: inputFilepath,
-        outputFilepath: yamlMap[YamlArguments.outputFilepath],
         replaceBase: yamlMap[YamlArguments.replaceBase],
         languagesToGenerate:
             _yamlListToStringList(yamlMap[YamlArguments.languagesToGenerate]),
@@ -73,6 +72,7 @@ class YamlParser {
     if (yamlMap.containsKey(YamlArguments.csvSettings)) {
       final csvSettingsAsYamlMap = yamlMap[YamlArguments.csvSettings];
       return CSVSettings(
+        outputFilepath: csvSettingsAsYamlMap[YamlCSVArguments.outputFilepath],
         delimiter: csvSettingsAsYamlMap[YamlCSVArguments.delimiter],
         columnIndex: csvSettingsAsYamlMap[YamlCSVArguments.columnIndex],
       );

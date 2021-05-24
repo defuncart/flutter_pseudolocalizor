@@ -5,7 +5,6 @@ void main() {
   test('When nullable constructor params are null, expect defaults', () {
     final packageSettings = PackageSettings(
       inputFilepath: 'loca.csv',
-      outputFilepath: null,
       replaceBase: null,
       languagesToGenerate: null,
       useBrackets: null,
@@ -18,7 +17,6 @@ void main() {
 
     expect(packageSettings, isNotNull);
     expect(packageSettings.inputFilepath, 'loca.csv');
-    expect(packageSettings.outputFilepath, isNotNull);
     expect(packageSettings.replaceBase, isNotNull);
     expect(packageSettings.languagesToGenerate, isNull);
     expect(packageSettings.useBrackets, isNotNull);
@@ -32,7 +30,6 @@ void main() {
   test('When languagesToGenerate constructor param non-null, expect given', () {
     final packageSettings = PackageSettings(
       inputFilepath: 'loca.csv',
-      outputFilepath: null,
       replaceBase: null,
       languagesToGenerate: ['de'],
       useBrackets: null,
@@ -44,7 +41,6 @@ void main() {
     );
 
     expect(packageSettings.inputFilepath, isNotNull);
-    expect(packageSettings.outputFilepath, isNotNull);
     expect(packageSettings.replaceBase, isNotNull);
     expect(packageSettings.languagesToGenerate, isNotNull);
     expect(packageSettings.useBrackets, isNotNull);
@@ -58,7 +54,6 @@ void main() {
   test('Expect toString is overridden', () {
     final packageSettings = PackageSettings(
       inputFilepath: 'loca.csv',
-      outputFilepath: null,
       replaceBase: null,
       languagesToGenerate: null,
       useBrackets: null,

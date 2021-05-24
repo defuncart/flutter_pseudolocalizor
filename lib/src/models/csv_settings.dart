@@ -2,6 +2,9 @@ import '../configs/csv_default_settings.dart';
 
 /// A model representing CSV File parsing settings
 class CSVSettings {
+  /// A filepath for the output file. Defaults to `<input_filename>_PSEUDO.<extension>`.
+  final String? outputFilepath;
+
   /// The delimiter to use. Defaults to `,`.
   final String delimiter;
 
@@ -10,18 +13,18 @@ class CSVSettings {
 
   /// Constructs a new instance of [CSVSettings]
   ///
-  /// The parameter `delimiter` is required. If null, defaults to `CSVDefaultSettings.delimiter`.
-  /// The parameter `columnIndex` is required. If null, defaults to `CSVDefaultSettings.columnIndex`.
-  const CSVSettings({
-    required String? delimiter,
-    required int? columnIndex,
-  })   : delimiter = delimiter ?? CSVDefaultSettings.delimiter,
+  /// [outputFilepath] is required. If null, defaults to `CSVDefaultSettings.delimiter`.
+  /// [delimiter] is required. If null, defaults to `CSVDefaultSettings.delimiter`.
+  /// [columnIndex] is required. If null, defaults to `CSVDefaultSettings.columnIndex`.
+  CSVSettings({
+    this.outputFilepath,
+    String? delimiter,
+    int? columnIndex,
+  })  : delimiter = delimiter ?? CSVDefaultSettings.delimiter,
         columnIndex = columnIndex ?? CSVDefaultSettings.columnIndex;
-
-  /// Consts a new instance of `CSVSettings` whose parameters are given default values.
-  CSVSettings.withDefaultSettings() : this(delimiter: null, columnIndex: null);
 
   /// Returns a String representation of the model.
   @override
-  String toString() => '{delimiter: $delimiter, columnIndex: $columnIndex}';
+  String toString() =>
+      '{outputFilepath: $outputFilepath, delimiter: $delimiter, columnIndex: $columnIndex}';
 }
