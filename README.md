@@ -94,7 +94,7 @@ flutter_pseudolocalizor:
 
 | CSV Setting                | Description                                                                                                             |
 | -------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| output_filepath            | A path for the generated output file. Defaults to `<input_filename>-PSEUDO.<extension>`.                                |
+| output_filepath            | A path for the generated output file. Defaults to `<input_filename>_PSEUDO.<extension>`.                                |
 | delimiter                  | A delimiter to separate columns in the input CSV file. Defaults to `,`.                                                 |
 | column_index               | The column index of the base language (en) in the input CSV file. Defaults to `1`.                                      |
 
