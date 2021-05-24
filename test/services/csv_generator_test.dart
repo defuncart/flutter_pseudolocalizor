@@ -18,12 +18,12 @@ subtitle;A subtitle
 
     // initialize settings
     final csvSettings = CSVSettings(
+      outputFilepath: null,
       delimiter: ';',
       columnIndex: 1,
     );
     final packageSettings = PackageSettings(
       inputFilepath: '../../example/test.csv',
-      outputFilepath: null,
       replaceBase: true,
       languagesToGenerate: null,
       useBrackets: true,
@@ -52,12 +52,12 @@ subtitle;A subtitle
 
     // initialize settings
     final csvSettings = CSVSettings(
+      outputFilepath: null,
       delimiter: ';',
       columnIndex: 1,
     );
     final packageSettings = PackageSettings(
       inputFilepath: '../../example/test.csv',
-      outputFilepath: null,
       replaceBase: false,
       languagesToGenerate: ['de', 'es', 'pl'],
       useBrackets: true,

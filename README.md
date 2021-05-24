@@ -69,29 +69,34 @@ flutter_pseudolocalizor:
     - pl
     - ru
   csv_settings:
+    output_filepath: 'test_PSEUDO.csv'
     delimiter: ";"
     column_index: 1
   patterns_to_ignore:
     - '%(\S*?)\$[ds]'
     - 'Flutter'
-  line_numbers_to_ignore:
-    - 2
+  keys_to_ignore:
+    - 'title'
 ```
 
 | Setting                    | Description                                                                                                             |
 | -------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
 | input_filepath             | A path to the input localization file.                                                                                  |
-| output_filepath            | A path for the generated output file. Defaults to `<input_filename>-PSEUDO.<extension>`.                                |
 | replace_base               | Whether the base language (en) should be replaced. Defaults to `false`.                                                 |
 | text_expansion_format      | The format of the text expansion. Defaults to `repeatVowels`, alternatives `append`, `numberWords`, `exclamationMarks`. |
 | text_expansion_ratio       | The ratio (between 1 and 3) of text expansion. If `null`, uses a linear function.                                       |
 | languages_to_generate      | An array of languages to generate. Ignored if `replace_base` is true.                                                   |
-| csv_settings: delimiter    | A delimiter to separate columns in the input CSV file. Defaults to `,`.                                                 |
-| csv_settings: column_index | The column index of the base language (en) in the input CSV file. Defaults to `1`.                                      |
+| csv_settings               | Optional settings when the input file is a csv, please see below for more info.                                         |
 | patterns_to_ignore         | A list of patterns to ignore during text replacement.                                                                   |
 | keys_to_ignore             | A list of keys which should be ignored.                                                                                 |
 
-`input_filepath` must be given, all other settings are optional. If Latin-1 Supplement and Latin Extended-A letters should be tested, set `replace_base` to true. To test specific languages, set `languages_to_generate` with an array of languages.
+`input_filepath` must be given, all other settings are optional. If Latin-1 Supplement and Latin Extended-A letters should be tested, set `replace_base` to true. To test specific languages, set `languages_to_generate` with an array of languages. `patterns_to_ignore` is especially useful to avoid text replacement for certain know constructs, for instance a product name or a pattern `%myVar$d` used to parse variables from text.
+
+| CSV Setting                | Description                                                                                                             |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| output_filepath            | A path for the generated output file. Defaults to `<input_filename>_PSEUDO.<extension>`.                                |
+| delimiter                  | A delimiter to separate columns in the input CSV file. Defaults to `,`.                                                 |
+| column_index               | The column index of the base language (en) in the input CSV file. Defaults to `1`.                                      |
 
 Ensure that your current working directory is the project root. Given the localization file `test.csv`, simply run the terminal command:
 
@@ -106,8 +111,6 @@ flutter pub run flutter_pseudolocalizor
 ```
 
 to generate `test-PSEUDO.csv`. This generated file can then be incorporated into your dev build using a package like [flappy_translator](https://pub.dev/packages/flappy_translator).
-
-Note that `patterns_to_ignore` is especially useful to avoid text replacement for certain know constructs, for instance a product name or a pattern `%myVar$d` used to parse variables from text.
 
 ## Limitations
 

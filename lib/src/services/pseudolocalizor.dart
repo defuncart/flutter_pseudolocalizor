@@ -35,13 +35,17 @@ class Pseudolocalizor {
     }
 
     // generate output
-    final outputFile = File(packageSettings.outputFilepath);
     if (filetype == SupportedInputFileType.csv) {
+      final outputFile = File(
+        packageSettings.csvSettings.outputFilepath ??
+            Utils.generateOutputFilePath(
+                inputFilepath: packageSettings.inputFilepath),
+      );
       final fileContents = CSVGenerator.generate(file, packageSettings);
       if (fileContents != null) {
         outputFile.writeAsStringSync(fileContents);
 
-        print('All done! Wrote to ${packageSettings.outputFilepath}');
+        print('All done! Wrote to ${outputFile.path}');
       }
     }
   }

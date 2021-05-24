@@ -128,15 +128,18 @@ void main() {
 
   test('Generate output file', () {
     // incorrect input, expect null output
-    var outputFilepath = Utils.generateOutputFilePath(inputFilepath: 'bla');
-    expect(outputFilepath, isNull);
+    expect(
+      () => Utils.generateOutputFilePath(inputFilepath: 'bla'),
+      throwsArgumentError,
+    );
 
     // correct input, expect generated output
-    outputFilepath = Utils.generateOutputFilePath(inputFilepath: 'test.csv');
-    expect(outputFilepath, 'test-PSEUDO.csv');
+    var outputFilepath =
+        Utils.generateOutputFilePath(inputFilepath: 'test.csv');
+    expect(outputFilepath, 'test_PSEUDO.csv');
 
     // correct input (multiple fullspots), expect generated output
     outputFilepath = Utils.generateOutputFilePath(inputFilepath: 'my.test.csv');
-    expect(outputFilepath, 'my.test-PSEUDO.csv');
+    expect(outputFilepath, 'my.test_PSEUDO.csv');
   });
 }

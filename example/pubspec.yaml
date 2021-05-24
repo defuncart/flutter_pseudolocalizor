@@ -27,6 +27,7 @@ flutter_pseudolocalizor:
     - ru
     - tr
   csv_settings:
+    output_filepath: 'test_PSEUDO.csv'
     delimiter: ";"
     column_index: 1
   patterns_to_ignore:

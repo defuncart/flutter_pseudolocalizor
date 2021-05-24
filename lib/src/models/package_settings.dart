@@ -10,9 +10,6 @@ class PackageSettings {
   /// The filepath for the input localization file. This must be supplied.
   final String inputFilepath;
 
-  /// A filepath for the output file. Defaults to `<input_filename>-PSEUDO.<extension>`.
-  final String outputFilepath;
-
   /// Whether to replace the base langauge. Defaults to `false`.
   final bool replaceBase;
 
@@ -40,7 +37,6 @@ class PackageSettings {
   /// Constructs a new instance of [PackageSettings]
   PackageSettings({
     required this.inputFilepath,
-    required String? outputFilepath,
     required bool? replaceBase,
     required List<String>? languagesToGenerate,
     required bool? useBrackets,
@@ -49,9 +45,7 @@ class PackageSettings {
     required List<String>? patternsToIgnore,
     required this.keysToIgnore,
     CSVSettings? csvSettings,
-  })  : outputFilepath = outputFilepath ??
-            Utils.generateOutputFilePath(inputFilepath: inputFilepath)!,
-        replaceBase = replaceBase ?? DefaultSettings.replaceBase,
+  })  : replaceBase = replaceBase ?? DefaultSettings.replaceBase,
         languagesToGenerate =
             Utils.covertSupportedLangugesFromListString(languagesToGenerate),
         useBrackets = useBrackets ?? DefaultSettings.useBrackets,
@@ -59,10 +53,10 @@ class PackageSettings {
             Utils.convertTextExpansionFormatFromString(textExpansionFormat) ??
                 DefaultSettings.textExpansionFormat,
         patternToIgnore = RegExpUtils.combinePatterns(patternsToIgnore),
-        csvSettings = csvSettings ?? CSVSettings.withDefaultSettings();
+        csvSettings = csvSettings ?? CSVSettings();
 
   /// Returns a String representation of the model.
   @override
   String toString() =>
-      '{inputFilepath: $inputFilepath, outputFilepath: $outputFilepath, replaceBase: $replaceBase, languagesToGenerate: $languagesToGenerate, useBrackets: $useBrackets, textExpansionFormat: $textExpansionFormat, textExpansionRatio: $textExpansionRatio, patternToIgnore: $patternToIgnore, keysToIgnore: $keysToIgnore}';
+      '{inputFilepath: $inputFilepath, replaceBase: $replaceBase, languagesToGenerate: $languagesToGenerate, useBrackets: $useBrackets, textExpansionFormat: $textExpansionFormat, textExpansionRatio: $textExpansionRatio, patternToIgnore: $patternToIgnore, keysToIgnore: $keysToIgnore}';
 }

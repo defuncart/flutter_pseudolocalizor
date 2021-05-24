@@ -48,15 +48,15 @@ class Utils {
   }
 
   /// Returns a generated output filepath for a given inputfiepath
-  static String? generateOutputFilePath({required String inputFilepath}) {
+  static String generateOutputFilePath({required String inputFilepath}) {
     final index = inputFilepath.lastIndexOf('.');
-    if (index != -1) {
-      return '${inputFilepath.substring(0, index)}-${DefaultSettings.outputFilenamePrependText}${inputFilepath.substring(index, inputFilepath.length)}';
-    }
-    print(
-        'ERROR! input filepath does not contain an extension! $inputFilepath');
 
-    return null;
+    if (index == -1) {
+      throw ArgumentError(
+          'inputFilepath $inputFilepath does not contain an extension!');
+    }
+
+    return '${inputFilepath.substring(0, index)}_${DefaultSettings.outputFilenamePrependText}${inputFilepath.substring(index, inputFilepath.length)}';
   }
 
   ///
