@@ -2,6 +2,8 @@
 
 * Added repeated vowels, number words and exclamation marks as text expansion formats.
 * Added ability to completely ignore certain keys during text replacement. This is a breaking change as previously line numbers were used.
+* Moved outputFilepath setting to CSVSettings. This is a minor breaking change.
+* Improved code coverage.
 
 ## [0.4.0] - 07/04/2021
 
