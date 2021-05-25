@@ -56,5 +56,17 @@ void main() {
         );
       });
     });
+
+    group('hasVowels', () {
+      test('Text contains at least one vowel, expect true', () {
+        expect('Vowel'.hasVowels, isTrue);
+        expect('a'.hasVowels, isTrue);
+      });
+
+      test('Text contains no vowels, expect false', () {
+        expect('N Vwl'.hasVowels, isFalse);
+        expect('b'.hasVowels, isFalse);
+      });
+    });
   });
 }
