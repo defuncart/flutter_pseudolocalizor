@@ -37,21 +37,28 @@ mixin PseudoGenerator {
           );
           break;
         case TextExpansionFormat.repeatVowels:
-          var count = 0;
-          while (count < numberOfExpansionCharactersToGenerate) {
-            _baseText = patternToIgnore != null
-                ? _baseText.splitMapJoin(
-                    patternToIgnore,
-                    onNonMatch: (value) => repeatVowels(value,
-                        count: (numberOfExpansionCharactersToGenerate *
-                                (value.length / baseText.length))
-                            .floor()),
-                  )
-                : repeatVowels(
-                    _baseText,
-                    count: numberOfExpansionCharactersToGenerate - count,
-                  );
-            count = _baseText.length - baseText.length;
+          if (baseText.hasVowels) {
+            var count = 0;
+            while (count < numberOfExpansionCharactersToGenerate) {
+              _baseText = patternToIgnore != null
+                  ? _baseText.splitMapJoin(
+                      patternToIgnore,
+                      onNonMatch: (value) => repeatVowels(value,
+                          count: (numberOfExpansionCharactersToGenerate *
+                                  (value.length / baseText.length))
+                              .floor()),
+                    )
+                  : repeatVowels(
+                      _baseText,
+                      count: numberOfExpansionCharactersToGenerate - count,
+                    );
+              count = _baseText.length - baseText.length;
+            }
+          } else {
+            textExpansion = generateRandomSpecialCharacters(
+              numberOfExpansionCharactersToGenerate,
+              language: languageToGenerate,
+            );
           }
           break;
         case TextExpansionFormat.numberWords:
