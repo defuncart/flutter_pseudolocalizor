@@ -11,4 +11,15 @@ extension StringExtensions on String {
 
     return _vowels.contains(toLowerCase());
   }
+
+  /// Determines if a String contains at least one vowel
+  bool get hasVowels {
+    for (final char in split('')) {
+      if (char.isVowel) {
+        return true;
+      }
+    }
+
+    return false;
+  }
 }
