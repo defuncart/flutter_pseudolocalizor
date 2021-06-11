@@ -39,7 +39,6 @@ class ARBGenerator with PseudoGenerator {
         if (_regExPluralSelect.hasMatch(value)) {
           pseudoText = value;
 
-          // final matches = _regExFnComponent.allMatches(value);
           final matches = _matches(value);
           for (final match in matches) {
             final psuedoSelect = PseudoGenerator.generatePseudoTranslation(
