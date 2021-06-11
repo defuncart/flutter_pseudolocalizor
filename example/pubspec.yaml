@@ -12,7 +12,7 @@ dev_dependencies:
     path: ../
 
 flutter_pseudolocalizor:
-  input_filepath: "test.csv"
+  input_filepath: "test.arb"
   replace_base: false
   use_brackets: true
   text_expansion_format: 'repeatVowels'
@@ -26,12 +26,14 @@ flutter_pseudolocalizor:
     - pt
     - ru
     - tr
-  csv_settings:
-    output_filepath: 'test_PSEUDO.csv'
-    delimiter: ";"
-    column_index: 1
   patterns_to_ignore:
     - '%(\S*?)\$[ds]'
     - 'Flutter'
   keys_to_ignore:
     - 'title'
+  arb_settings:
+    output_directory: 'l10n_pseudo'
+  csv_settings:
+    output_filepath: 'test_PSEUDO.csv'
+    delimiter: ";"
+    column_index: 1

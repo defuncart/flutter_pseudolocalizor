@@ -4,12 +4,12 @@ import '../enums/supported_input_file_type.dart';
 import '../models/package_settings.dart';
 import '../services/csv_generator.dart';
 import '../utils/utils.dart';
+import 'arb_generator.dart';
 
 /// A service which generates pseudolocalization files
 class Pseudolocalizor {
   /// Generates an output pseudolocalization file
   static void generate(
-    File file,
     PackageSettings packageSettings,
   ) {
     // check that the file exists
@@ -38,14 +38,67 @@ class Pseudolocalizor {
     if (filetype == SupportedInputFileType.csv) {
       final outputFile = File(
         packageSettings.csvSettings.outputFilepath ??
-            Utils.generateOutputFilePath(
+            Utils.generateCSVOutputFilePath(
                 inputFilepath: packageSettings.inputFilepath),
       );
       final fileContents = CSVGenerator.generate(file, packageSettings);
       if (fileContents != null) {
+        if (!outputFile.existsSync()) {
+          outputFile.createSync(recursive: true);
+        }
         outputFile.writeAsStringSync(fileContents);
 
         print('All done! Wrote to ${outputFile.path}');
+      }
+    } else if (filetype == SupportedInputFileType.arb) {
+      if (packageSettings.replaceBase) {
+        final outputFile = File(
+          Utils.generateARBOutputFilepath(
+            outputDirectory: packageSettings.arbSettings.outputDirectory,
+            language: 'en',
+          ),
+        );
+        final fileContents = ARBGenerator.generate(file, packageSettings);
+        if (fileContents != null) {
+          if (!outputFile.existsSync()) {
+            outputFile.createSync(recursive: true);
+          }
+          outputFile.writeAsStringSync(fileContents);
+
+          print('All done! Wrote to ${outputFile.path}');
+        }
+      } else {
+        final outputFilepath = Utils.generateARBOutputFilepath(
+          outputDirectory: packageSettings.arbSettings.outputDirectory,
+          language: 'en',
+        );
+        if (!File(outputFilepath).existsSync()) {
+          File(outputFilepath).createSync(recursive: true);
+        }
+
+        file.copySync(outputFilepath);
+
+        for (final language in packageSettings.languagesToGenerate!) {
+          final outputFile = File(
+            Utils.generateARBOutputFilepath(
+              outputDirectory: packageSettings.arbSettings.outputDirectory,
+              language: Utils.describeEnum(language),
+            ),
+          );
+          final fileContents = ARBGenerator.generate(
+            file,
+            packageSettings,
+            supportedLanguage: language,
+          );
+          if (fileContents != null) {
+            if (!outputFile.existsSync()) {
+              outputFile.createSync(recursive: true);
+            }
+            outputFile.writeAsStringSync(fileContents);
+
+            print('All done! Wrote to ${outputFile.path}');
+          }
+        }
       }
     }
   }

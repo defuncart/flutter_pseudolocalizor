@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter_pseudolocalizor/flutter_pseudolocalizor.dart'
-    show CSVSettings, PackageSettings;
+    show ARBSettings, CSVSettings, PackageSettings;
 import 'package:yaml/yaml.dart';
 
 /// A class of arguments which the user can specify in pubspec.yaml
@@ -12,9 +12,15 @@ class YamlArguments {
   static const useBrackets = 'use_brackets';
   static const textExpansionFormat = 'text_expansion_format';
   static const textExpansionRatio = 'text_expansion_ratio';
-  static const csvSettings = 'csv_settings';
   static const patternsToIgnore = 'patterns_to_ignore';
   static const keysToIgnore = 'keys_to_ignore';
+  static const arbSettings = 'arb_settings';
+  static const csvSettings = 'csv_settings';
+}
+
+/// A class of arguments which the user can specify in pubspec.yaml for csv_settings object
+class YamlARBArguments {
+  static const outputDirectory = 'output_directory';
 }
 
 /// A class of arguments which the user can specify in pubspec.yaml for csv_settings object
@@ -42,11 +48,6 @@ class YamlParser {
         exit(0);
       }
 
-      final csvSettings = _csvSettingsFromPubspec(yamlMap);
-      if (csvSettings == null) {
-        print('Warning! No CSV settings supplied, using defaults.');
-      }
-
       return PackageSettings(
         inputFilepath: inputFilepath,
         replaceBase: yamlMap[YamlArguments.replaceBase],
@@ -56,11 +57,24 @@ class YamlParser {
         textExpansionFormat: yamlMap[YamlArguments.textExpansionFormat],
         textExpansionRatio:
             _dynamicToDouble(yamlMap[YamlArguments.textExpansionRatio]),
-        csvSettings: csvSettings,
         patternsToIgnore:
             _yamlListToStringList(yamlMap[YamlArguments.patternsToIgnore]),
         keysToIgnore:
             _yamlListToStringList(yamlMap[YamlArguments.keysToIgnore]),
+        arbSettings: _arbSettingsFromPubspec(yamlMap),
+        csvSettings: _csvSettingsFromPubspec(yamlMap),
+      );
+    }
+
+    return null;
+  }
+
+  /// Returns the csv settings from pubspec
+  static ARBSettings? _arbSettingsFromPubspec(Map<dynamic, dynamic> yamlMap) {
+    if (yamlMap.containsKey(YamlArguments.arbSettings)) {
+      final arbSettingsAsYamlMap = yamlMap[YamlArguments.arbSettings];
+      return ARBSettings(
+        outputDirectory: arbSettingsAsYamlMap[YamlARBArguments.outputDirectory],
       );
     }
 

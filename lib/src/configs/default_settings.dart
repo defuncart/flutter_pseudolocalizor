@@ -2,9 +2,6 @@ import '../enums/text_expansion_format.dart';
 
 /// A config of default settings for the package
 abstract class DefaultSettings {
-  /// Prepend text when autogenerating output filename.
-  static const outputFilenamePrependText = 'PSEUDO';
-
   /// The base language
   static const baseLanguage = 'en';
 

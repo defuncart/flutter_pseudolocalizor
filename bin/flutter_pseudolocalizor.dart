@@ -11,13 +11,6 @@ void main() {
     exit(0);
   }
 
-  // if the input file doesn't exist, quit
-  final file = File(packageSettings.inputFilepath);
-  if (!file.existsSync()) {
-    print('Error! File ${packageSettings.inputFilepath} does not exist!');
-    exit(0);
-  }
-
   if (packageSettings.replaceBase == true &&
       packageSettings.languagesToGenerate != null &&
       packageSettings.languagesToGenerate!.isNotEmpty) {
@@ -39,5 +32,5 @@ void main() {
     exit(0);
   }
 
-  Pseudolocalizor.generate(file, packageSettings);
+  Pseudolocalizor.generate(packageSettings);
 }

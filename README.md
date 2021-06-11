@@ -59,7 +59,7 @@ Next define settings in `pubspec.yaml` for the package:
 
 ```yaml
 flutter_pseudolocalizor:
-  input_filepath: "test.csv"
+  input_filepath: "test.arb"
   replace_base: false
   use_brackets: true
   text_expansion_format: 'repeatVowels'
@@ -68,15 +68,17 @@ flutter_pseudolocalizor:
     - de
     - pl
     - ru
-  csv_settings:
-    output_filepath: 'test_PSEUDO.csv'
-    delimiter: ";"
-    column_index: 1
   patterns_to_ignore:
     - '%(\S*?)\$[ds]'
     - 'Flutter'
   keys_to_ignore:
     - 'title'
+  arb_settings:
+    output_directory: 'l10n_pseudo'
+  csv_settings:
+    output_filepath: 'test_PSEUDO.csv'
+    delimiter: ";"
+    column_index: 1
 ```
 
 | Setting                    | Description                                                                                                             |
@@ -86,11 +88,16 @@ flutter_pseudolocalizor:
 | text_expansion_format      | The format of the text expansion. Defaults to `repeatVowels`, alternatives `append`, `numberWords`, `exclamationMarks`. |
 | text_expansion_ratio       | The ratio (between 1 and 3) of text expansion. If `null`, uses a linear function.                                       |
 | languages_to_generate      | An array of languages to generate. Ignored if `replace_base` is true.                                                   |
-| csv_settings               | Optional settings when the input file is a csv, please see below for more info.                                         |
 | patterns_to_ignore         | A list of patterns to ignore during text replacement.                                                                   |
 | keys_to_ignore             | A list of keys which should be ignored.                                                                                 |
+| arb_settings               | Optional settings when the input file is an arb, please see below for more info.                                        |
+| csv_settings               | Optional settings when the input file is a csv file, please see below for more info.                                    |
 
 `input_filepath` must be given, all other settings are optional. If Latin-1 Supplement and Latin Extended-A letters should be tested, set `replace_base` to true. To test specific languages, set `languages_to_generate` with an array of languages. `patterns_to_ignore` is especially useful to avoid text replacement for certain know constructs, for instance a product name or a pattern `%myVar$d` used to parse variables from text.
+
+| ARB Setting                | Description                                                                                                             |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| output_directory           | An optional directory for generated files. Defaults to `l10n_pseudo`.                                                   |
 
 | CSV Setting                | Description                                                                                                             |
 | -------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
@@ -98,23 +105,22 @@ flutter_pseudolocalizor:
 | delimiter                  | A delimiter to separate columns in the input CSV file. Defaults to `,`.                                                 |
 | column_index               | The column index of the base language (en) in the input CSV file. Defaults to `1`.                                      |
 
-Ensure that your current working directory is the project root. Given the localization file `test.csv`, simply run the terminal command:
+Ensure that your current working directory is the project root, then run the terminal command:
 
-```
+```sh
 dart run flutter_pseudolocalizor
 ```
 
 or
 
-```
+```sh
 flutter pub run flutter_pseudolocalizor
 ```
 
-to generate `test-PSEUDO.csv`. This generated file can then be incorporated into your dev build using a package like [flappy_translator](https://pub.dev/packages/flappy_translator).
+to generate output files.
 
 ## Limitations
 
-- Only CSV input files are supported.
 - Supports Latin-1 Supplement and Latin Extended-A but not Latin Extended-B or Latin Extended-C.
 - The following languages are supported: de, es, fr, it, pl, pt, ru and tr.
 - Only one character replacement style.

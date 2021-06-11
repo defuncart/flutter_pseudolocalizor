@@ -1,0 +1,27 @@
+{
+  "@@locale": "en",
+  "myKey": "Hello world!",
+  "@myKey": {
+    "description": "The conventional newborn programmer greeting"
+  },
+  "welcome": "Welcome {firstName}!",
+  "@welcome": {
+    "description": "A welcome message"
+  },
+  "numberMessages": "{count, plural, zero{You have no new messages} one{You have 1 new message} other{You have {count} new messages}}",
+  "@numberMessages": {
+    "description": "An info message about new messages count"
+  },
+  "whoseBook": "{sex, select, male{His book} female{Her book} other{Their book}}",
+  "@whoseBook": {
+    "description": "A message determine whose book it is"
+  },
+  "unreadEmails": "{howMany, plural, zero{There are no unread emails for {userName}} one{There is 1 unread email for {userName}} other{There are {howMany} unread emails for {userName}}}",
+  "@unreadEmails": {
+    "description": "How many unread emails for user"
+  },
+  "weatherReaction": "{weatherType, select, sunny{Woohoo} cloudy{Meh} rainy{Weeh} other{Other}}",
+  "@weatherReaction": {
+    "description": "Reaction to types of weather"
+  }
+}

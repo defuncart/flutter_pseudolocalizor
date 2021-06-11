@@ -1,4 +1,5 @@
-import '../configs/default_settings.dart';
+import '../configs/arb_default_settings.dart';
+import '../configs/csv_default_settings.dart';
 import '../enums/supported_input_file_type.dart';
 import '../enums/supported_language.dart';
 import '../enums/text_expansion_format.dart';
@@ -47,8 +48,18 @@ class Utils {
     return values.isNotEmpty ? values.first : null;
   }
 
-  /// Returns a generated output filepath for a given inputfiepath
-  static String generateOutputFilePath({required String inputFilepath}) {
+  /// Returns a generated arb output filepath for [outputDirectory] and [language]
+  ///
+  /// When [outputDirectory] is null, `ARBDefaultSettings.outputDirectory` is used
+  /// Assumes that [language] is a well-formated locale
+  static String generateARBOutputFilepath({
+    required String? outputDirectory,
+    required String language,
+  }) =>
+      '${outputDirectory ?? ARBDefaultSettings.outputDirectory}/intl_$language.arb';
+
+  /// Returns a generated csv output filepath for [inputFilepath]
+  static String generateCSVOutputFilePath({required String inputFilepath}) {
     final index = inputFilepath.lastIndexOf('.');
 
     if (index == -1) {
@@ -56,10 +67,10 @@ class Utils {
           'inputFilepath $inputFilepath does not contain an extension!');
     }
 
-    return '${inputFilepath.substring(0, index)}_${DefaultSettings.outputFilenamePrependText}${inputFilepath.substring(index, inputFilepath.length)}';
+    return '${inputFilepath.substring(0, index)}_${CSVDefaultSettings.outputFilenameAppendText}${inputFilepath.substring(index, inputFilepath.length)}';
   }
 
-  ///
+  /// Taken from flutter
   static String describeEnum(Object enumEntry) {
     final description = enumEntry.toString();
     final indexOfDot = description.indexOf('.');
