@@ -23,7 +23,7 @@ subtitle;A subtitle
       columnIndex: 1,
     );
     final packageSettings = PackageSettings(
-      inputFilepath: '../../example/test.csv',
+      inputFilepath: '_.csv',
       replaceBase: true,
       languagesToGenerate: null,
       useBrackets: true,
@@ -35,8 +35,8 @@ subtitle;A subtitle
     );
 
     final contents = CSVGenerator.generate(file, packageSettings)!;
-    final rowCount = rowCountFromCSVContents(contents);
-    final columnCount = columnCountFromCSVContents(contents);
+    final rowCount = _rowCountFromCSVContents(contents);
+    final columnCount = _columnCountFromCSVContents(contents);
 
     expect(rowCount, 3);
     expect(columnCount, 2);
@@ -57,7 +57,7 @@ subtitle;A subtitle
       columnIndex: 1,
     );
     final packageSettings = PackageSettings(
-      inputFilepath: '../../example/test.csv',
+      inputFilepath: '_.csv',
       replaceBase: false,
       languagesToGenerate: ['de', 'es', 'pl'],
       useBrackets: true,
@@ -69,8 +69,8 @@ subtitle;A subtitle
     );
 
     final contents = CSVGenerator.generate(file, packageSettings)!;
-    final rowCount = rowCountFromCSVContents(contents);
-    final columnCount = columnCountFromCSVContents(contents);
+    final rowCount = _rowCountFromCSVContents(contents);
+    final columnCount = _columnCountFromCSVContents(contents);
 
     expect(rowCount, 3);
     expect(columnCount, 5);
@@ -80,9 +80,9 @@ subtitle;A subtitle
   });
 }
 
-int rowCountFromCSVContents(String contents) => contents.split('\n').length;
+int _rowCountFromCSVContents(String contents) => contents.split('\n').length;
 
-int columnCountFromCSVContents(String contents) {
+int _columnCountFromCSVContents(String contents) {
   final firstRow = contents.split('\n').first;
   return firstRow.split(';').length;
 }
