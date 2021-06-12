@@ -3,6 +3,7 @@ import 'dart:io';
 
 import '../enums/supported_language.dart';
 import '../models/package_settings.dart';
+import '../utils/utils.dart';
 import 'pseudo_generator.dart';
 
 final _regExVariableName = RegExp(r'\{[a-z_]\w*\}');
@@ -27,6 +28,10 @@ class ARBGenerator with PseudoGenerator {
     if (keys.isEmpty) {
       print('Error! No keys found!');
       return null;
+    }
+
+    if (supportedLanguage != null) {
+      arbContents['@@locale'] = Utils.describeEnum(supportedLanguage);
     }
 
     for (final key in keys) {
