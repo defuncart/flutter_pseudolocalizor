@@ -1,13 +1,13 @@
 import 'package:collection/collection.dart';
 import 'package:flutter_pseudolocalizor/src/configs/language_settings.dart';
-import 'package:flutter_pseudolocalizor/src/enums/latin_extended_block.dart';
+import 'package:flutter_pseudolocalizor/src/enums/unicode_block.dart';
 import 'package:test/test.dart';
 
 void main() {
   group('$Fallback', () {
     group('specialCharacters', () {
       test('For each block, expect their own chars', () {
-        for (final block in LatinExtendedBlock.values) {
+        for (final block in unicodeBlock.values) {
           final specialCharacters = Fallback.specialCharacters(blocks: [
             block,
           ]);
@@ -24,8 +24,8 @@ void main() {
 
       test('', () {
         final specialCharacters = Fallback.specialCharacters(blocks: [
-          LatinExtendedBlock.supplement,
-          LatinExtendedBlock.extendedA,
+          unicodeBlock.latinSupplement,
+          unicodeBlock.latinExtendedA,
         ]);
 
         expect(
@@ -230,7 +230,7 @@ void main() {
 
     group('mappingCharacters', () {
       test('For each block, expect their own mapping chars', () {
-        for (final block in LatinExtendedBlock.values) {
+        for (final block in unicodeBlock.values) {
           final mappingCharacters = Fallback.mappingCharacters(blocks: [
             block,
           ]);
@@ -247,8 +247,8 @@ void main() {
 
       test('', () {
         final mappingCharacters = Fallback.mappingCharacters(blocks: [
-          LatinExtendedBlock.supplement,
-          LatinExtendedBlock.extendedA,
+          unicodeBlock.latinSupplement,
+          unicodeBlock.latinExtendedA,
         ]);
 
         expect(

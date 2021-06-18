@@ -1,5 +1,5 @@
-/// Settings for LatinExtendedBlock.supplement
-class ExtendedA {
+/// Settings for LatinExtendedBlock.latinExtendedA
+class LatinExtendedA {
   /// An array of special characters
   static const specialCharacters = [
     'ā',

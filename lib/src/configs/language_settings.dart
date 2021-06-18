@@ -1,7 +1,9 @@
 import 'package:meta/meta.dart';
 
-import '../enums/latin_extended_block.dart';
 import '../enums/supported_language.dart';
+import '../enums/unicode_block.dart';
+import 'blocks/latin_extended_a.dart';
+import 'blocks/latin_supplement.dart';
 import 'languages/de.dart';
 import 'languages/es.dart';
 import 'languages/fr.dart';
@@ -11,8 +13,6 @@ import 'languages/pl.dart';
 import 'languages/pt.dart';
 import 'languages/ru.dart';
 import 'languages/tr.dart';
-import 'latin_extended/extended_a.dart';
-import 'latin_extended/supplement.dart';
 
 /// A config of language settings for the package
 class LanguageSettings {
@@ -51,21 +51,21 @@ abstract class Fallback {
   /// A map of special characters to supported language
   @visibleForTesting
   static const mapSpecialCharacters = {
-    LatinExtendedBlock.supplement: Supplement.specialCharacters,
-    LatinExtendedBlock.extendedA: ExtendedA.specialCharacters,
-    LatinExtendedBlock.extendedB: <String>[],
+    unicodeBlock.latinSupplement: LatinSupplement.specialCharacters,
+    unicodeBlock.latinExtendedA: LatinExtendedA.specialCharacters,
+    unicodeBlock.latinExtendedB: <String>[],
   };
 
   /// A map of mapping characters to supported language
   @visibleForTesting
   static const mapMappingCharacters = {
-    LatinExtendedBlock.supplement: Supplement.mappingCharacters,
-    LatinExtendedBlock.extendedA: ExtendedA.mappingCharacters,
-    LatinExtendedBlock.extendedB: <String, List<String>>{},
+    unicodeBlock.latinSupplement: LatinSupplement.mappingCharacters,
+    unicodeBlock.latinExtendedA: LatinExtendedA.mappingCharacters,
+    unicodeBlock.latinExtendedB: <String, List<String>>{},
   };
 
   static List<String> specialCharacters({
-    List<LatinExtendedBlock> blocks = LatinExtendedBlock.values,
+    List<unicodeBlock> blocks = unicodeBlock.values,
   }) {
     if (blocks.isEmpty) {
       throw ArgumentError('Expected blocks to be non-empty');
@@ -75,7 +75,7 @@ abstract class Fallback {
   }
 
   static Map<String, List<String>> mappingCharacters({
-    List<LatinExtendedBlock> blocks = LatinExtendedBlock.values,
+    List<unicodeBlock> blocks = unicodeBlock.values,
   }) {
     if (blocks.isEmpty) {
       throw ArgumentError('Expected blocks to be non-empty');
