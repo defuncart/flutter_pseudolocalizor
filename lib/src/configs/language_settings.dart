@@ -41,10 +41,12 @@ class LanguageSettings {
   };
 
   /// A fallback value for special characters
-  static List<String> get fallbackSpecialCharacters => LatinExtended.specialCharacters;
+  static List<String> get fallbackSpecialCharacters =>
+      LatinExtended.specialCharacters;
 
   /// A fallback value for mapping characters
-  static Map<String, List<String>> get fallbackMappingCharacters => LatinExtended.mappingCharacters;
+  static Map<String, List<String>> get fallbackMappingCharacters =>
+      LatinExtended.mappingCharacters;
 }
 
 abstract class Fallback {
@@ -71,7 +73,10 @@ abstract class Fallback {
       throw ArgumentError('Expected blocks to be non-empty');
     }
 
-    return blocks.map((block) => mapSpecialCharacters[block]!).expand((element) => element).toList(growable: false);
+    return blocks
+        .map((block) => mapSpecialCharacters[block]!)
+        .expand((element) => element)
+        .toList(growable: false);
   }
 
   static Map<String, List<String>> mappingCharacters({

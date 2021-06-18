@@ -1,10 +1,5 @@
-import '../../enums/supported_language.dart';
-
-/// Language settings for SupportedLanguage.pl
-class PL {
-  /// The language
-  static const language = SupportedLanguage.pl;
-
+/// Settings for SupportedLanguage.pl
+abstract class PL {
   /// An array of special characters
   static const specialCharacters = [
     'ą',

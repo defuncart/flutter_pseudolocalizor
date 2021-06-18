@@ -1,10 +1,5 @@
-import '../../enums/supported_language.dart';
-
-/// Language settings for SupportedLanguage.tr
-class TR {
-  /// The language
-  static const language = SupportedLanguage.tr;
-
+/// Settings for SupportedLanguage.tr
+abstract class TR {
   /// An array of special characters
   static const specialCharacters = [
     'ç',
