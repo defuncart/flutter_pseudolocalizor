@@ -63,7 +63,9 @@ class CSVGenerator with PseudoGenerator {
               outputLines[i].replaceFirst(locaBase[i - 1], pseudoText);
         }
       }
-    } else {
+    }
+    if (packageSettings.languagesToGenerate != null &&
+        packageSettings.languagesToGenerate!.isNotEmpty) {
       final generatedAll = <List<String>>[];
       generatedAll.add(packageSettings.languagesToGenerate!
           .map(Utils.describeEnum)
