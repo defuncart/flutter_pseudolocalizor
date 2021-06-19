@@ -1,4 +1,5 @@
 import 'package:flutter_pseudolocalizor/src/configs/blocks/latin_extended_a.dart';
+import 'package:flutter_pseudolocalizor/src/configs/blocks/latin_extended_b.dart';
 import 'package:flutter_pseudolocalizor/src/configs/blocks/latin_supplement.dart';
 import 'package:flutter_pseudolocalizor/src/configs/blocks/superscripts_subscripts.dart';
 import 'package:flutter_pseudolocalizor/src/enums/unicode_block.dart';
@@ -19,7 +20,7 @@ void main() {
         );
         expect(
           UnicodeBlock.latinExtendedB.specialCharacters,
-          <String>[],
+          LatinExtendedB.specialCharacters,
         );
         expect(
           UnicodeBlock.superscriptsSubscripts.specialCharacters,
@@ -40,7 +41,7 @@ void main() {
         );
         expect(
           UnicodeBlock.latinExtendedB.mappingCharacters,
-          <String, List<String>>{},
+          LatinExtendedB.mappingCharacters,
         );
         expect(
           UnicodeBlock.superscriptsSubscripts.mappingCharacters,
