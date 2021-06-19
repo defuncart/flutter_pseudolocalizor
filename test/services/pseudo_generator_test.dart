@@ -1,5 +1,6 @@
 import 'package:flutter_pseudolocalizor/src/configs/language_settings.dart';
 import 'package:flutter_pseudolocalizor/src/enums/supported_language.dart';
+import 'package:flutter_pseudolocalizor/src/extensions/supported_language_extensions.dart';
 import 'package:flutter_pseudolocalizor/src/services/pseudo_generator.dart';
 import 'package:test/test.dart';
 
@@ -148,7 +149,7 @@ void main() {
           );
           expect(
             PseudoGenerator.specialCharactersForSupportedLanguage(language),
-            LanguageSettings.specialCharacters[language]!,
+            language.specialCharacters,
           );
         }
       });
@@ -176,7 +177,7 @@ void main() {
           );
           expect(
             PseudoGenerator.mappingCharactersForSupportedLanguage(language),
-            LanguageSettings.mappingCharacters[language]!,
+            language.mappingCharacters,
           );
         }
       });

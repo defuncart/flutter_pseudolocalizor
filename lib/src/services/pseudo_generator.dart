@@ -6,6 +6,7 @@ import '../configs/language_settings.dart';
 import '../enums/supported_language.dart';
 import '../enums/text_expansion_format.dart';
 import '../extensions/string_extensions.dart';
+import '../extensions/supported_language_extensions.dart';
 
 /// Base pseudolocalization generation logic which can be utilized by file generators
 mixin PseudoGenerator {
@@ -187,7 +188,7 @@ mixin PseudoGenerator {
           SupportedLanguage? language) =>
       language == null
           ? LanguageSettings.fallbackSpecialCharacters
-          : LanguageSettings.specialCharacters[language]!;
+          : language.specialCharacters;
 
   /// Returns mapping characters for [language].
   @visibleForTesting
@@ -195,7 +196,7 @@ mixin PseudoGenerator {
           SupportedLanguage? language) =>
       language == null
           ? LanguageSettings.fallbackMappingCharacters
-          : LanguageSettings.mappingCharacters[language]!;
+          : language.mappingCharacters;
 
   static const _numberWords = [
     'one',
