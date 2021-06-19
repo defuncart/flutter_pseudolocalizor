@@ -53,21 +53,21 @@ abstract class Fallback {
   /// A map of special characters to supported language
   @visibleForTesting
   static const mapSpecialCharacters = {
-    unicodeBlock.latinSupplement: LatinSupplement.specialCharacters,
-    unicodeBlock.latinExtendedA: LatinExtendedA.specialCharacters,
-    unicodeBlock.latinExtendedB: <String>[],
+    UnicodeBlock.latinSupplement: LatinSupplement.specialCharacters,
+    UnicodeBlock.latinExtendedA: LatinExtendedA.specialCharacters,
+    UnicodeBlock.latinExtendedB: <String>[],
   };
 
   /// A map of mapping characters to supported language
   @visibleForTesting
   static const mapMappingCharacters = {
-    unicodeBlock.latinSupplement: LatinSupplement.mappingCharacters,
-    unicodeBlock.latinExtendedA: LatinExtendedA.mappingCharacters,
-    unicodeBlock.latinExtendedB: <String, List<String>>{},
+    UnicodeBlock.latinSupplement: LatinSupplement.mappingCharacters,
+    UnicodeBlock.latinExtendedA: LatinExtendedA.mappingCharacters,
+    UnicodeBlock.latinExtendedB: <String, List<String>>{},
   };
 
   static List<String> specialCharacters({
-    List<unicodeBlock> blocks = unicodeBlock.values,
+    List<UnicodeBlock> blocks = UnicodeBlock.values,
   }) {
     if (blocks.isEmpty) {
       throw ArgumentError('Expected blocks to be non-empty');
@@ -80,7 +80,7 @@ abstract class Fallback {
   }
 
   static Map<String, List<String>> mappingCharacters({
-    List<unicodeBlock> blocks = unicodeBlock.values,
+    List<UnicodeBlock> blocks = UnicodeBlock.values,
   }) {
     if (blocks.isEmpty) {
       throw ArgumentError('Expected blocks to be non-empty');

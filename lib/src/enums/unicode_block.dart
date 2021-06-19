@@ -1,4 +1,4 @@
-enum unicodeBlock {
+enum UnicodeBlock {
   latinSupplement,
   latinExtendedA,
   latinExtendedB,

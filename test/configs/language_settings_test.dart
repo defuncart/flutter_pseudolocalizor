@@ -7,7 +7,7 @@ void main() {
   group('$Fallback', () {
     group('specialCharacters', () {
       test('For each block, expect their own chars', () {
-        for (final block in unicodeBlock.values) {
+        for (final block in UnicodeBlock.values) {
           final specialCharacters = Fallback.specialCharacters(blocks: [
             block,
           ]);
@@ -24,8 +24,8 @@ void main() {
 
       test('', () {
         final specialCharacters = Fallback.specialCharacters(blocks: [
-          unicodeBlock.latinSupplement,
-          unicodeBlock.latinExtendedA,
+          UnicodeBlock.latinSupplement,
+          UnicodeBlock.latinExtendedA,
         ]);
 
         expect(
@@ -230,7 +230,7 @@ void main() {
 
     group('mappingCharacters', () {
       test('For each block, expect their own mapping chars', () {
-        for (final block in unicodeBlock.values) {
+        for (final block in UnicodeBlock.values) {
           final mappingCharacters = Fallback.mappingCharacters(blocks: [
             block,
           ]);
@@ -247,8 +247,8 @@ void main() {
 
       test('', () {
         final mappingCharacters = Fallback.mappingCharacters(blocks: [
-          unicodeBlock.latinSupplement,
-          unicodeBlock.latinExtendedA,
+          UnicodeBlock.latinSupplement,
+          UnicodeBlock.latinExtendedA,
         ]);
 
         expect(
