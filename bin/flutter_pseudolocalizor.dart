@@ -11,17 +11,10 @@ void main() {
     exit(0);
   }
 
-  if (packageSettings.replaceBase == true &&
-      packageSettings.languagesToGenerate != null &&
-      packageSettings.languagesToGenerate!.isNotEmpty) {
-    print(
-        'Warning! Ignoring ${YamlArguments.languagesToGenerate} as ${YamlArguments.replaceBase} is true!');
-  }
-
   if (packageSettings.replaceBase == false &&
       (packageSettings.languagesToGenerate == null ||
           packageSettings.languagesToGenerate!.isEmpty)) {
-    print('Error! No languages to generate specified!');
+    print('Error! Nothing to do! Please specify languages in pubspec.');
     exit(0);
   }
 
