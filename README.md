@@ -87,13 +87,13 @@ flutter_pseudolocalizor:
 | replace_base               | Whether the base language (en) should be replaced. Defaults to `false`.                                                 |
 | text_expansion_format      | The format of the text expansion. Defaults to `repeatVowels`, alternatives `append`, `numberWords`, `exclamationMarks`. |
 | text_expansion_ratio       | The ratio (between 1 and 3) of text expansion. If `null`, uses a linear function.                                       |
-| languages_to_generate      | An array of languages to generate. Ignored if `replace_base` is true.                                                   |
+| languages_to_generate      | A list of languages to generate. Defaults to empty.                                                                     |
 | patterns_to_ignore         | A list of patterns to ignore during text replacement.                                                                   |
 | keys_to_ignore             | A list of keys which should be ignored.                                                                                 |
 | arb_settings               | Optional settings when the input file is an arb, please see below for more info.                                        |
 | csv_settings               | Optional settings when the input file is a csv file, please see below for more info.                                    |
 
-`input_filepath` must be given, all other settings are optional. If Latin-1 Supplement and Latin Extended-A letters should be tested, set `replace_base` to true. To test specific languages, set `languages_to_generate` with an array of languages. `patterns_to_ignore` is especially useful to avoid text replacement for certain know constructs, for instance a product name or a pattern `%myVar$d` used to parse variables from text.
+`input_filepath` must be given, all other settings are optional. `replace_base` replaces the base language (en) with Latin-1 Supplement and Latin Extended-A characters. To test specific languages, set `languages_to_generate` with an array of languages. `patterns_to_ignore` is especially useful to avoid text replacement for certain know constructs, for instance a product name or a pattern `%myVar$d` used to parse variables from text.
 
 | ARB Setting                | Description                                                                                                             |
 | -------------------------- | ----------------------------------------------------------------------------------------------------------------------- |

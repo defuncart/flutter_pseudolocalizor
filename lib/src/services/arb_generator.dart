@@ -13,7 +13,7 @@ final _regExFnComponent = RegExp(r'([a-z_]\w*\{([a-zA-Z0-9_ ]*)\})');
 /// Generates pseudo localizations for an arb file
 class ARBGenerator with PseudoGenerator {
   /// Generates pseudo localizations with a given [file] and [packageSettings]
-  static String? generate(
+  static String generate(
     File file,
     PackageSettings packageSettings, {
     SupportedLanguage? supportedLanguage,
@@ -27,7 +27,7 @@ class ARBGenerator with PseudoGenerator {
       ..sort();
     if (keys.isEmpty) {
       print('Error! No keys found!');
-      return null;
+      exit(0);
     }
 
     if (supportedLanguage != null) {

@@ -8,7 +8,7 @@ import 'pseudo_generator.dart';
 /// Generates pseudo localizations for a csv file
 class CSVGenerator with PseudoGenerator {
   /// Generates pseudo localizations with a given [file] and [packageSettings]
-  static String? generate(
+  static String generate(
     File file,
     PackageSettings packageSettings,
   ) {
@@ -22,7 +22,7 @@ class CSVGenerator with PseudoGenerator {
         packageSettings.csvSettings.columnIndex >= firstLineElements.length) {
       print(
           "Error! Column index ${packageSettings.csvSettings.columnIndex} in ${packageSettings.inputFilepath} doesn't exist.");
-      return null;
+      exit(0);
     }
 
     // ensure that the column `DefaultSettings.baseLanguage` is as specified in settings
@@ -30,7 +30,7 @@ class CSVGenerator with PseudoGenerator {
         DefaultSettings.baseLanguage) {
       print(
           'Error! Langauge ${DefaultSettings.baseLanguage} not found at column ${packageSettings.csvSettings.columnIndex} in ${packageSettings.inputFilepath}');
-      return null;
+      exit(0);
     }
 
     final locaBase = <String>[];
@@ -63,7 +63,9 @@ class CSVGenerator with PseudoGenerator {
               outputLines[i].replaceFirst(locaBase[i - 1], pseudoText);
         }
       }
-    } else {
+    }
+    if (packageSettings.languagesToGenerate != null &&
+        packageSettings.languagesToGenerate!.isNotEmpty) {
       final generatedAll = <List<String>>[];
       generatedAll.add(packageSettings.languagesToGenerate!
           .map(Utils.describeEnum)
