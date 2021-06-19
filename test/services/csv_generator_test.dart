@@ -34,7 +34,7 @@ subtitle;A subtitle
       keysToIgnore: null,
     );
 
-    final contents = CSVGenerator.generate(file, packageSettings)!;
+    final contents = CSVGenerator.generate(file, packageSettings);
     final rowCount = _rowCountFromCSVContents(contents);
     final columnCount = _columnCountFromCSVContents(contents);
 
@@ -68,7 +68,7 @@ subtitle;A subtitle
       keysToIgnore: null,
     );
 
-    final contents = CSVGenerator.generate(file, packageSettings)!;
+    final contents = CSVGenerator.generate(file, packageSettings);
     final rowCount = _rowCountFromCSVContents(contents);
     final columnCount = _columnCountFromCSVContents(contents);
 

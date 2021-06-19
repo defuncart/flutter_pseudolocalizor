@@ -37,7 +37,7 @@ void main() {
 
     final contents = ARBGenerator.generate(file, packageSettings);
     expect(contents, isNotNull);
-    final decodedContents = jsonDecode(contents!);
+    final decodedContents = jsonDecode(contents);
     expect(decodedContents['@@locale'], 'en');
     expect(decodedContents['myKey'], isNotNull);
     expect(decodedContents['myKey'], isNot('Hello world!'));
@@ -73,7 +73,7 @@ void main() {
         supportedLanguage: language,
       );
       expect(contents, isNotNull);
-      final decodedContents = jsonDecode(contents!);
+      final decodedContents = jsonDecode(contents);
       expect(decodedContents['@@locale'], isNot('en'));
       expect(decodedContents['@@locale'], Utils.describeEnum(language));
       expect(decodedContents['myKey'], isNotNull);
