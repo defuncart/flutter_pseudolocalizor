@@ -1,43 +1,47 @@
-// import 'dart:io';
+import 'dart:io';
 
-// import 'package:flutter_pseudolocalizor/src/extensions/file_extensions.dart';
-// import 'package:test/test.dart';
+import 'package:flutter_pseudolocalizor/src/extensions/file_extensions.dart';
+import 'package:test/test.dart';
 
-// void main() {
-//   group('FileExtensions', () {
-//     late File file;
-//     group('createRecursivelyAndWriteContents', () {
-//       group('When current directory', () {
-//         // create temp file
-//         file = File('_.csv');
-//         print('A');
+void main() {
+  group('FileExtensions', () {
+    late File file;
+    group('createRecursivelyAndWriteContents', () {
+      test(
+          'When file to create is in current directory, '
+          'and file does not initially exist, '
+          'when method invoked, expect that file exists', () {
+        // create temp file
+        file = File('_.csv');
 
-//         test('expect file does not yet exist', () async {
-//           print('B');
-//           expect(await file.exists(), isFalse);
-//         });
+        expect(file.existsSync(), isFalse);
 
-//         group('when method invoked', () {
-//           file.createRecursivelyAndWriteContents('');
-//           print('C');
+        file.createRecursivelyAndWriteContents('');
+        expect(file.existsSync(), isTrue);
+        expect(file.readAsStringSync(), isEmpty);
 
-//           test('expect that file exists', () {
-//             print('D');
-//             expect(file.existsSync(), isTrue);
-//             expect(file.readAsStringSync(), isEmpty);
-//           });
-//         });
+        // clear up and delete file
+        file.deleteSync();
+      });
 
-//         test('tidy up', () async {
-//           // clear up and delete file
-//           print('E');
-//           await Future.delayed(Duration(seconds: 1));
-//           print('F');
-//           file.deleteSync();
-//         });
-//       });
-//     });
-//   });
-// }
+      test(
+          'When file to create is not in current directory, '
+          'and file does not initially exist, '
+          'when method invoked, expect that file exists', () {
+        // create temp file
+        file = File('_/_.csv');
 
-void main() {}
+        expect(file.existsSync(), isFalse);
+
+        file.createRecursivelyAndWriteContents('');
+        expect(file.existsSync(), isTrue);
+        expect(file.readAsStringSync(), isEmpty);
+
+        // clear up and delete file
+        file.deleteSync(recursive: true);
+      });
+    });
+  });
+}
+
+// void main() {}
