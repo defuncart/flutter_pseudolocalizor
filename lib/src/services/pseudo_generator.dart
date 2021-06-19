@@ -2,11 +2,11 @@ import 'dart:math';
 
 import 'package:meta/meta.dart';
 
-import '../configs/language_settings.dart';
 import '../enums/supported_language.dart';
 import '../enums/text_expansion_format.dart';
 import '../extensions/string_extensions.dart';
 import '../extensions/supported_language_extensions.dart';
+import 'unicode_fallback.dart';
 
 /// Base pseudolocalization generation logic which can be utilized by file generators
 mixin PseudoGenerator {
@@ -186,17 +186,17 @@ mixin PseudoGenerator {
   @visibleForTesting
   static List<String> specialCharactersForSupportedLanguage(
           SupportedLanguage? language) =>
-      language == null
-          ? LanguageSettings.fallbackSpecialCharacters
-          : language.specialCharacters;
+      language != null
+          ? language.specialCharacters
+          : UnicodeFallback.specialCharacters();
 
   /// Returns mapping characters for [language].
   @visibleForTesting
   static Map<String, List<String>> mappingCharactersForSupportedLanguage(
           SupportedLanguage? language) =>
-      language == null
-          ? LanguageSettings.fallbackMappingCharacters
-          : language.mappingCharacters;
+      language != null
+          ? language.mappingCharacters
+          : UnicodeFallback.mappingCharacters();
 
   static const _numberWords = [
     'one',

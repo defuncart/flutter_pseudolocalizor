@@ -1,21 +1,29 @@
 import 'package:collection/collection.dart';
-import 'package:flutter_pseudolocalizor/src/configs/language_settings.dart';
 import 'package:flutter_pseudolocalizor/src/enums/unicode_block.dart';
+import 'package:flutter_pseudolocalizor/src/extensions/unicode_block_extensions.dart';
+import 'package:flutter_pseudolocalizor/src/services/unicode_fallback.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('$Fallback', () {
+  group('$UnicodeFallback', () {
     group('specialCharacters', () {
+      test('When blocks is empty, expect argument error', () {
+        expect(
+          () => UnicodeFallback.specialCharacters(blocks: []),
+          throwsArgumentError,
+        );
+      });
+
       test('For each block, expect their own chars', () {
         for (final block in UnicodeBlock.values) {
-          final specialCharacters = Fallback.specialCharacters(blocks: [
+          final specialCharacters = UnicodeFallback.specialCharacters(blocks: [
             block,
           ]);
 
           expect(
             ListEquality().equals(
               specialCharacters,
-              Fallback.mapSpecialCharacters[block]!,
+              block.specialCharacters,
             ),
             isTrue,
           );
@@ -23,7 +31,7 @@ void main() {
       });
 
       test('', () {
-        final specialCharacters = Fallback.specialCharacters(blocks: [
+        final specialCharacters = UnicodeFallback.specialCharacters(blocks: [
           UnicodeBlock.latinSupplement,
           UnicodeBlock.latinExtendedA,
         ]);
@@ -229,16 +237,23 @@ void main() {
     });
 
     group('mappingCharacters', () {
+      test('When blocks is empty, expect argument error', () {
+        expect(
+          () => UnicodeFallback.mappingCharacters(blocks: []),
+          throwsArgumentError,
+        );
+      });
+
       test('For each block, expect their own mapping chars', () {
         for (final block in UnicodeBlock.values) {
-          final mappingCharacters = Fallback.mappingCharacters(blocks: [
+          final mappingCharacters = UnicodeFallback.mappingCharacters(blocks: [
             block,
           ]);
 
           expect(
             DeepCollectionEquality().equals(
               mappingCharacters,
-              Fallback.mapMappingCharacters[block]!,
+              block.mappingCharacters,
             ),
             isTrue,
           );
@@ -246,7 +261,7 @@ void main() {
       });
 
       test('', () {
-        final mappingCharacters = Fallback.mappingCharacters(blocks: [
+        final mappingCharacters = UnicodeFallback.mappingCharacters(blocks: [
           UnicodeBlock.latinSupplement,
           UnicodeBlock.latinExtendedA,
         ]);
