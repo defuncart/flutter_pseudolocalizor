@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import '../enums/supported_input_file_type.dart';
+import '../extensions/file_extensions.dart';
 import '../models/package_settings.dart';
 import '../services/csv_generator.dart';
 import '../utils/utils.dart';
@@ -42,42 +43,26 @@ class Pseudolocalizor {
                 inputFilepath: packageSettings.inputFilepath),
       );
       final fileContents = CSVGenerator.generate(file, packageSettings);
-      if (fileContents != null) {
-        if (!outputFile.existsSync()) {
-          outputFile.createSync(recursive: true);
-        }
-        outputFile.writeAsStringSync(fileContents);
-
-        print('All done! Wrote to ${outputFile.path}');
-      }
+      outputFile.createRecursivelyAndWriteContents(fileContents);
     } else if (filetype == SupportedInputFileType.arb) {
-      if (packageSettings.replaceBase) {
-        final outputFile = File(
-          Utils.generateARBOutputFilepath(
-            outputDirectory: packageSettings.arbSettings.outputDirectory,
-            language: 'en',
-          ),
-        );
-        final fileContents = ARBGenerator.generate(file, packageSettings);
-        if (fileContents != null) {
-          if (!outputFile.existsSync()) {
-            outputFile.createSync(recursive: true);
-          }
-          outputFile.writeAsStringSync(fileContents);
-
-          print('All done! Wrote to ${outputFile.path}');
-        }
-      } else {
-        final outputFilepath = Utils.generateARBOutputFilepath(
+      // firstly deal with base
+      var outputFile = File(
+        Utils.generateARBOutputFilepath(
           outputDirectory: packageSettings.arbSettings.outputDirectory,
           language: 'en',
-        );
-        if (!File(outputFilepath).existsSync()) {
-          File(outputFilepath).createSync(recursive: true);
-        }
+        ),
+      );
+      if (packageSettings.replaceBase) {
+        final fileContents = ARBGenerator.generate(file, packageSettings);
+        outputFile.createRecursivelyAndWriteContents(fileContents);
+      } else {
+        file.copySync(outputFile.path);
+        print('Wrote to ${outputFile.path}');
+      }
 
-        file.copySync(outputFilepath);
-
+      // then generate any additional languages
+      if (packageSettings.languagesToGenerate != null &&
+          packageSettings.languagesToGenerate!.isNotEmpty) {
         for (final language in packageSettings.languagesToGenerate!) {
           final outputFile = File(
             Utils.generateARBOutputFilepath(
@@ -90,16 +75,11 @@ class Pseudolocalizor {
             packageSettings,
             supportedLanguage: language,
           );
-          if (fileContents != null) {
-            if (!outputFile.existsSync()) {
-              outputFile.createSync(recursive: true);
-            }
-            outputFile.writeAsStringSync(fileContents);
-
-            print('All done! Wrote to ${outputFile.path}');
-          }
+          outputFile.createRecursivelyAndWriteContents(fileContents);
         }
       }
     }
+
+    print('All Done!');
   }
 }
