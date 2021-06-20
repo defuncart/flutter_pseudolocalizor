@@ -57,12 +57,15 @@ class PackageSettings {
     CSVSettings? csvSettings,
   })  : replaceBase = replaceBase ?? DefaultSettings.replaceBase,
         unicodeBlocks = (replaceBase ?? DefaultSettings.replaceBase)
-            ? (Utils.covertUnicodeBlocksFromListString(unicodeBlocks) ?? DefaultSettings.unicodeBlocks)
+            ? (Utils.covertUnicodeBlocksFromListString(unicodeBlocks) ??
+                DefaultSettings.unicodeBlocks)
             : null,
-        languagesToGenerate = Utils.covertSupportedLangugesFromListString(languagesToGenerate),
+        languagesToGenerate =
+            Utils.covertSupportedLangugesFromListString(languagesToGenerate),
         useBrackets = useBrackets ?? DefaultSettings.useBrackets,
         textExpansionFormat =
-            Utils.convertTextExpansionFormatFromString(textExpansionFormat) ?? DefaultSettings.textExpansionFormat,
+            Utils.convertTextExpansionFormatFromString(textExpansionFormat) ??
+                DefaultSettings.textExpansionFormat,
         patternToIgnore = RegExpUtils.combinePatterns(patternsToIgnore),
         arbSettings = arbSettings ?? ARBSettings(),
         csvSettings = csvSettings ?? CSVSettings();
