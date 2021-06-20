@@ -13,7 +13,10 @@ dev_dependencies:
 
 flutter_pseudolocalizor:
   input_filepath: "test.arb"
-  replace_base: false
+  replace_base: true
+  unicode_blocks:
+    - latinSupplement
+    - latinExtendedA
   use_brackets: true
   text_expansion_format: 'repeatVowels'
   text_expansion_ratio: 1.4
