@@ -54,6 +54,7 @@ class CSVGenerator with PseudoGenerator {
           final pseudoText = PseudoGenerator.generatePseudoTranslation(
             locaBase[i - 1],
             languageToGenerate: null,
+            unicodeBlocks: packageSettings.unicodeBlocks,
             useBrackets: packageSettings.useBrackets,
             textExpansionFormat: packageSettings.textExpansionFormat,
             textExpansionRate: packageSettings.textExpansionRatio,
@@ -81,6 +82,7 @@ class CSVGenerator with PseudoGenerator {
               ? PseudoGenerator.generatePseudoTranslation(
                   baseText,
                   languageToGenerate: languageToGenerate,
+                  unicodeBlocks: packageSettings.unicodeBlocks,
                   useBrackets: packageSettings.useBrackets,
                   textExpansionFormat: packageSettings.textExpansionFormat,
                   textExpansionRate: packageSettings.textExpansionRatio,

@@ -3,7 +3,7 @@ import '../extensions/unicode_block_extensions.dart';
 
 abstract class UnicodeFallback {
   static List<String> specialCharacters({
-    List<UnicodeBlock> blocks = UnicodeBlock.values,
+    required List<UnicodeBlock> blocks,
   }) {
     if (blocks.isEmpty) {
       throw ArgumentError('Expected blocks to be non-empty');
@@ -16,7 +16,7 @@ abstract class UnicodeFallback {
   }
 
   static Map<String, List<String>> mappingCharacters({
-    List<UnicodeBlock> blocks = UnicodeBlock.values,
+    required List<UnicodeBlock> blocks,
   }) {
     if (blocks.isEmpty) {
       throw ArgumentError('Expected blocks to be non-empty');

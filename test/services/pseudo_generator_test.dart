@@ -1,4 +1,5 @@
 import 'package:flutter_pseudolocalizor/src/enums/supported_language.dart';
+import 'package:flutter_pseudolocalizor/src/enums/unicode_block.dart';
 import 'package:flutter_pseudolocalizor/src/extensions/supported_language_extensions.dart';
 import 'package:flutter_pseudolocalizor/src/services/pseudo_generator.dart';
 import 'package:flutter_pseudolocalizor/src/services/unicode_fallback.dart';
@@ -12,6 +13,7 @@ void main() {
           PseudoGenerator.addSpecialCharactersToText(
             'hello',
             language: null,
+            blocks: UnicodeBlock.values,
           ).length,
           5,
         );
@@ -111,7 +113,11 @@ void main() {
     group('generateRandomSpecialCharacters', () {
       test('When count < 1, expect empty string', () {
         expect(
-          PseudoGenerator.generateRandomSpecialCharacters(-1, language: null),
+          PseudoGenerator.generateRandomSpecialCharacters(
+            -1,
+            language: null,
+            blocks: UnicodeBlock.values,
+          ),
           isEmpty,
         );
       });
@@ -121,6 +127,7 @@ void main() {
           PseudoGenerator.generateRandomSpecialCharacters(
             1,
             language: null,
+            blocks: UnicodeBlock.values,
           ).length,
           1,
         );
@@ -130,12 +137,18 @@ void main() {
     group('specialCharactersForSupportedLanguage', () {
       test('when null is passed, expect default', () {
         expect(
-          PseudoGenerator.specialCharactersForSupportedLanguage(null),
+          PseudoGenerator.specialCharactersForSupportedLanguage(
+            null,
+            blocks: UnicodeBlock.values,
+          ),
           isNotNull,
         );
         expect(
-          PseudoGenerator.specialCharactersForSupportedLanguage(null),
-          UnicodeFallback.specialCharacters(),
+          PseudoGenerator.specialCharactersForSupportedLanguage(
+            null,
+            blocks: UnicodeBlock.values,
+          ),
+          UnicodeFallback.specialCharacters(blocks: UnicodeBlock.values),
         );
       });
 
@@ -144,11 +157,17 @@ void main() {
           'for that language', () {
         for (final language in SupportedLanguage.values) {
           expect(
-            PseudoGenerator.specialCharactersForSupportedLanguage(language),
+            PseudoGenerator.specialCharactersForSupportedLanguage(
+              language,
+              blocks: UnicodeBlock.values,
+            ),
             isNotNull,
           );
           expect(
-            PseudoGenerator.specialCharactersForSupportedLanguage(language),
+            PseudoGenerator.specialCharactersForSupportedLanguage(
+              language,
+              blocks: UnicodeBlock.values,
+            ),
             language.specialCharacters,
           );
         }
@@ -158,12 +177,20 @@ void main() {
     group('mappingCharactersForSupportedLanguage', () {
       test('when null is passed, expect default', () {
         expect(
-          PseudoGenerator.mappingCharactersForSupportedLanguage(null),
+          PseudoGenerator.mappingCharactersForSupportedLanguage(
+            null,
+            blocks: UnicodeBlock.values,
+          ),
           isNotNull,
         );
         expect(
-          PseudoGenerator.mappingCharactersForSupportedLanguage(null),
-          UnicodeFallback.mappingCharacters(),
+          PseudoGenerator.mappingCharactersForSupportedLanguage(
+            null,
+            blocks: UnicodeBlock.values,
+          ),
+          UnicodeFallback.mappingCharacters(
+            blocks: UnicodeBlock.values,
+          ),
         );
       });
 
@@ -172,11 +199,17 @@ void main() {
           'for that language', () {
         for (final language in SupportedLanguage.values) {
           expect(
-            PseudoGenerator.mappingCharactersForSupportedLanguage(language),
+            PseudoGenerator.mappingCharactersForSupportedLanguage(
+              language,
+              blocks: UnicodeBlock.values,
+            ),
             isNotNull,
           );
           expect(
-            PseudoGenerator.mappingCharactersForSupportedLanguage(language),
+            PseudoGenerator.mappingCharactersForSupportedLanguage(
+              language,
+              blocks: UnicodeBlock.values,
+            ),
             language.mappingCharacters,
           );
         }
@@ -186,13 +219,19 @@ void main() {
     group('randomSpecialCharacter', () {
       test('Regardless of language, expect single character', () {
         expect(
-          PseudoGenerator.randomSpecialCharacter(language: null).length,
+          PseudoGenerator.randomSpecialCharacter(
+            language: null,
+            blocks: UnicodeBlock.values,
+          ).length,
           1,
         );
 
         for (final language in SupportedLanguage.values) {
           expect(
-            PseudoGenerator.randomSpecialCharacter(language: language).length,
+            PseudoGenerator.randomSpecialCharacter(
+              language: language,
+              blocks: UnicodeBlock.values,
+            ).length,
             1,
           );
         }

@@ -2,8 +2,10 @@ import 'dart:math';
 
 import 'package:meta/meta.dart';
 
+import '../configs/default_settings.dart';
 import '../enums/supported_language.dart';
 import '../enums/text_expansion_format.dart';
+import '../enums/unicode_block.dart';
 import '../extensions/string_extensions.dart';
 import '../extensions/supported_language_extensions.dart';
 import 'unicode_fallback.dart';
@@ -15,12 +17,14 @@ mixin PseudoGenerator {
 
   static String generatePseudoTranslation(
     String baseText, {
+    List<UnicodeBlock>? unicodeBlocks,
     SupportedLanguage? languageToGenerate,
     required bool useBrackets,
     required TextExpansionFormat textExpansionFormat,
     double? textExpansionRate,
     RegExp? patternToIgnore,
   }) {
+    final blocks = unicodeBlocks ?? DefaultSettings.unicodeBlocks;
     final pseudoTextLength = textExpansionRate != null
         ? (baseText.length * textExpansionRate).ceil()
         : pseudotranslationLengthForText(baseText);
@@ -35,6 +39,7 @@ mixin PseudoGenerator {
           textExpansion = generateRandomSpecialCharacters(
             numberOfExpansionCharactersToGenerate,
             language: languageToGenerate,
+            blocks: blocks,
           );
           break;
         case TextExpansionFormat.repeatVowels:
@@ -59,6 +64,7 @@ mixin PseudoGenerator {
             textExpansion = generateRandomSpecialCharacters(
               numberOfExpansionCharactersToGenerate,
               language: languageToGenerate,
+              blocks: blocks,
             );
           }
           break;
@@ -80,9 +86,14 @@ mixin PseudoGenerator {
             onNonMatch: (value) => addSpecialCharactersToText(
               value,
               language: languageToGenerate,
+              blocks: blocks,
             ),
           )
-        : addSpecialCharactersToText(baseText, language: languageToGenerate);
+        : addSpecialCharactersToText(
+            baseText,
+            language: languageToGenerate,
+            blocks: blocks,
+          );
 
     final useExclamationMarks =
         textExpansionFormat == TextExpansionFormat.exclamationMarks;
@@ -138,10 +149,12 @@ mixin PseudoGenerator {
   static String addSpecialCharactersToText(
     String text, {
     required SupportedLanguage? language,
+    required List<UnicodeBlock> blocks,
   }) {
     final sb = StringBuffer();
     final characters = text.split('');
-    final mappingCharacters = mappingCharactersForSupportedLanguage(language);
+    final mappingCharacters =
+        mappingCharactersForSupportedLanguage(language, blocks: blocks);
     final keys = mappingCharacters.keys.toList();
     for (final character in characters) {
       final index = keys.indexOf(character);
@@ -161,6 +174,7 @@ mixin PseudoGenerator {
   static String generateRandomSpecialCharacters(
     int count, {
     required SupportedLanguage? language,
+    required List<UnicodeBlock> blocks,
   }) {
     if (count < 1) {
       return '';
@@ -168,7 +182,10 @@ mixin PseudoGenerator {
 
     final sb = StringBuffer();
     for (var i = 0; i < count; i++) {
-      sb.write(randomSpecialCharacter(language: language));
+      sb.write(randomSpecialCharacter(
+        language: language,
+        blocks: blocks,
+      ));
     }
     return sb.toString();
   }
@@ -177,26 +194,34 @@ mixin PseudoGenerator {
   @visibleForTesting
   static String randomSpecialCharacter({
     required SupportedLanguage? language,
+    required List<UnicodeBlock> blocks,
   }) {
-    final specialCharacters = specialCharactersForSupportedLanguage(language);
+    final specialCharacters = specialCharactersForSupportedLanguage(
+      language,
+      blocks: blocks,
+    );
     return specialCharacters[_random.nextInt(specialCharacters.length)];
   }
 
   /// Returns a list of special characters for [language].
   @visibleForTesting
   static List<String> specialCharactersForSupportedLanguage(
-          SupportedLanguage? language) =>
+    SupportedLanguage? language, {
+    required List<UnicodeBlock> blocks,
+  }) =>
       language != null
           ? language.specialCharacters
-          : UnicodeFallback.specialCharacters();
+          : UnicodeFallback.specialCharacters(blocks: blocks);
 
   /// Returns mapping characters for [language].
   @visibleForTesting
   static Map<String, List<String>> mappingCharactersForSupportedLanguage(
-          SupportedLanguage? language) =>
+    SupportedLanguage? language, {
+    required List<UnicodeBlock> blocks,
+  }) =>
       language != null
           ? language.mappingCharacters
-          : UnicodeFallback.mappingCharacters();
+          : UnicodeFallback.mappingCharacters(blocks: blocks);
 
   static const _numberWords = [
     'one',
