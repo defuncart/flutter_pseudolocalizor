@@ -1,8 +1,7 @@
-import 'package:flutter_pseudolocalizor/src/enums/unicode_block.dart';
-
 import '../configs/default_settings.dart';
 import '../enums/supported_language.dart';
 import '../enums/text_expansion_format.dart';
+import '../enums/unicode_block.dart';
 import '../utils/reg_exp_utils.dart';
 import '../utils/utils.dart';
 import 'arb_settings.dart';
@@ -58,15 +57,12 @@ class PackageSettings {
     CSVSettings? csvSettings,
   })  : replaceBase = replaceBase ?? DefaultSettings.replaceBase,
         unicodeBlocks = (replaceBase ?? DefaultSettings.replaceBase)
-            ? (Utils.covertUnicodeBlocksFromListString(unicodeBlocks) ??
-                DefaultSettings.unicodeBlocks)
+            ? (Utils.covertUnicodeBlocksFromListString(unicodeBlocks) ?? DefaultSettings.unicodeBlocks)
             : null,
-        languagesToGenerate =
-            Utils.covertSupportedLangugesFromListString(languagesToGenerate),
+        languagesToGenerate = Utils.covertSupportedLangugesFromListString(languagesToGenerate),
         useBrackets = useBrackets ?? DefaultSettings.useBrackets,
         textExpansionFormat =
-            Utils.convertTextExpansionFormatFromString(textExpansionFormat) ??
-                DefaultSettings.textExpansionFormat,
+            Utils.convertTextExpansionFormatFromString(textExpansionFormat) ?? DefaultSettings.textExpansionFormat,
         patternToIgnore = RegExpUtils.combinePatterns(patternsToIgnore),
         arbSettings = arbSettings ?? ARBSettings(),
         csvSettings = csvSettings ?? CSVSettings();

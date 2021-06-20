@@ -1,6 +1,5 @@
-import 'package:flutter_pseudolocalizor/src/enums/unicode_block.dart';
-
 import '../enums/text_expansion_format.dart';
+import '../enums/unicode_block.dart';
 
 /// A config of default settings for the package
 abstract class DefaultSettings {
