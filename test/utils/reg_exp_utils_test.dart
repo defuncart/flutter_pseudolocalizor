@@ -1,6 +1,8 @@
 import 'package:flutter_pseudolocalizor/src/utils/reg_exp_utils.dart';
 import 'package:test/test.dart';
 
+// ignore_for_file: unnecessary_string_escapes
+
 void main() {
   test('combinePatterns: patterns is null, expect null RegExp', () {
     final regExp = RegExpUtils.combinePatterns(null);
