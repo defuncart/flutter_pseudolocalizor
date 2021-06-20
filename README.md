@@ -125,14 +125,10 @@ flutter pub run flutter_pseudolocalizor
 
 to generate output files.
 
-## Limitations
-
-- Supports Latin-1 Supplement and Latin Extended-A but not Latin Extended-B or Latin Extended-C.
-- The following languages are supported: de, es, fr, it, pl, pt, ru and tr.
-- Except for Spanish, punctuation isn't considered for text expansion.
-
 ## Future Plans
 
+- Presently 500 non-basic latin characters are available. 
+  - IPA Extensions, Phonetic Extensions, Latin Extended Additional, Latin Extended Additional, Letterlike symbols will be considered in future versions.
 - Although 8 languages are currently supported, some of the world's most spoken languages like Arabic, Chinese and Hindi are not supported. 
   - For languages with their own alphabets (like Arabic, Armenian, Georgian, Hindi, Korean etc.), one approach could be to append random letters from the alphabet onto the original English text.
   - For character based writing systems like Chinese, Japanese etc., maybe random characters could be appended to the original English text.
