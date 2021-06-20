@@ -39,6 +39,9 @@ abstract class SuperscriptsSubscripts {
     'ₒ',
     'ₓ',
     'ₔ',
+    'ª',
+    'º',
+    '°',
   ];
 
   /// A dictionary of mapping characters
@@ -58,11 +61,11 @@ abstract class SuperscriptsSubscripts {
     '=': ['⁼', '₌'],
     '(': ['⁽', '₍'],
     ')': ['⁾', '₎'],
-    'a': ['ₐ'],
+    'a': ['ₐ', 'ª'],
     'e': ['ₑ', 'ₔ'],
     'i': ['ⁱ'],
     'n': ['ⁿ'],
-    'o': ['ₒ'],
+    'o': ['ₒ', 'º', '°'],
     'x': ['ₓ'],
   };
 }
