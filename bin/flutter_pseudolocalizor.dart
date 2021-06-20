@@ -18,6 +18,13 @@ void main() {
     exit(0);
   }
 
+  if (packageSettings.replaceBase == false &&
+      packageSettings.unicodeBlocks != null &&
+      packageSettings.unicodeBlocks!.isNotEmpty) {
+    print('Warning! Ignoring unicode_blocks as replace_base is false.');
+    exit(0);
+  }
+
   if (packageSettings.textExpansionRatio != null &&
       (packageSettings.textExpansionRatio! < 1 ||
           packageSettings.textExpansionRatio! > 3)) {

@@ -26,6 +26,7 @@ void main() {
     final packageSettings = PackageSettings(
       inputFilepath: '_.arb',
       replaceBase: true,
+      unicodeBlocks: null,
       languagesToGenerate: null,
       useBrackets: true,
       textExpansionFormat: null,
@@ -57,6 +58,7 @@ void main() {
     final packageSettings = PackageSettings(
       inputFilepath: '_.arb',
       replaceBase: false,
+      unicodeBlocks: null,
       languagesToGenerate: ['de', 'es', 'pl'],
       useBrackets: true,
       textExpansionFormat: null,

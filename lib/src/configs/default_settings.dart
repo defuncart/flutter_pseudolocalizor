@@ -1,3 +1,5 @@
+import 'package:flutter_pseudolocalizor/src/enums/unicode_block.dart';
+
 import '../enums/text_expansion_format.dart';
 
 /// A config of default settings for the package
@@ -7,6 +9,9 @@ abstract class DefaultSettings {
 
   /// Whether to replace the base langauge.
   static const replaceBase = false;
+
+  /// A list of unicode blocks to use
+  static const unicodeBlocks = UnicodeBlock.values;
 
   /// Whether the pseudo text should be wrapped in square brackets.
   static const useBrackets = true;
