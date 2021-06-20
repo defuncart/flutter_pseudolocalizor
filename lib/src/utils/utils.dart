@@ -3,6 +3,7 @@ import '../configs/csv_default_settings.dart';
 import '../enums/supported_input_file_type.dart';
 import '../enums/supported_language.dart';
 import '../enums/text_expansion_format.dart';
+import '../enums/unicode_block.dart';
 
 /// A class of utils used for the package
 class Utils {
@@ -29,6 +30,32 @@ class Utils {
       String? language) {
     final values = SupportedLanguage.values
         .where((item) => describeEnum(item) == language?.toLowerCase());
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  /// Converts a list of strings ['latinSupplement', 'latinExtendedA'] into
+  /// [UnicodeBlock.latinSupplement, UnicodeBlock.latinExtendedA]
+  static List<UnicodeBlock>? covertUnicodeBlocksFromListString(
+      List<String>? inputList) {
+    if (inputList == null || inputList.isEmpty) {
+      return null;
+    }
+
+    final returnArray = <UnicodeBlock>[];
+    for (final block in inputList) {
+      final temp = convertUnicodeBlockFromString(block);
+      if (temp != null) {
+        returnArray.add(temp);
+      }
+    }
+
+    return returnArray.isNotEmpty ? returnArray : null;
+  }
+
+  /// Converts a string into UnicodeBlock
+  static UnicodeBlock? convertUnicodeBlockFromString(String? block) {
+    final values = UnicodeBlock.values.where(
+        (item) => describeEnum(item).toLowerCase() == block?.toLowerCase());
     return values.isNotEmpty ? values.first : null;
   }
 
