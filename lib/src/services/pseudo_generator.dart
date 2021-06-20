@@ -190,7 +190,7 @@ mixin PseudoGenerator {
     return sb.toString();
   }
 
-  /// Returns a random special character for [language].
+  /// Returns a random special character for [language] and [blocks].
   @visibleForTesting
   static String randomSpecialCharacter({
     required SupportedLanguage? language,
@@ -203,7 +203,7 @@ mixin PseudoGenerator {
     return specialCharacters[_random.nextInt(specialCharacters.length)];
   }
 
-  /// Returns a list of special characters for [language].
+  /// Returns a list of special characters for [language] and [blocks].
   @visibleForTesting
   static List<String> specialCharactersForSupportedLanguage(
     SupportedLanguage? language, {
@@ -213,7 +213,7 @@ mixin PseudoGenerator {
           ? language.specialCharacters
           : UnicodeFallback.specialCharacters(blocks: blocks);
 
-  /// Returns mapping characters for [language].
+  /// Returns mapping characters for [language] and [blocks].
   @visibleForTesting
   static Map<String, List<String>> mappingCharactersForSupportedLanguage(
     SupportedLanguage? language, {

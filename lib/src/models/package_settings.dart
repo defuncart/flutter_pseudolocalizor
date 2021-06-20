@@ -16,7 +16,7 @@ class PackageSettings {
   /// Whether to replace the base langauge. Defaults to `false`.
   final bool replaceBase;
 
-  /// When [replaceBase] is true, a list of blocks to use. Defaults to all.
+  /// When [replaceBase] is true, a list of unicode blocks to use. Defaults to all.
   final List<UnicodeBlock>? unicodeBlocks;
 
   /// A list of languages to generate.
