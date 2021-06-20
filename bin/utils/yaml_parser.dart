@@ -8,6 +8,7 @@ import 'package:yaml/yaml.dart';
 class YamlArguments {
   static const inputFilepath = 'input_filepath';
   static const replaceBase = 'replace_base';
+  static const unicodeBlocks = 'unicode_blocks';
   static const languagesToGenerate = 'languages_to_generate';
   static const useBrackets = 'use_brackets';
   static const textExpansionFormat = 'text_expansion_format';
@@ -51,6 +52,8 @@ class YamlParser {
       return PackageSettings(
         inputFilepath: inputFilepath,
         replaceBase: yamlMap[YamlArguments.replaceBase],
+        unicodeBlocks:
+            _yamlListToStringList(yamlMap[YamlArguments.unicodeBlocks]),
         languagesToGenerate:
             _yamlListToStringList(yamlMap[YamlArguments.languagesToGenerate]),
         useBrackets: yamlMap[YamlArguments.useBrackets],

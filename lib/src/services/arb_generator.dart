@@ -49,6 +49,7 @@ class ARBGenerator with PseudoGenerator {
             final psuedoSelect = PseudoGenerator.generatePseudoTranslation(
               match.text,
               languageToGenerate: supportedLanguage,
+              unicodeBlocks: packageSettings.unicodeBlocks,
               useBrackets: packageSettings.useBrackets,
               textExpansionFormat: packageSettings.textExpansionFormat,
               textExpansionRate: packageSettings.textExpansionRatio,
@@ -65,6 +66,7 @@ class ARBGenerator with PseudoGenerator {
           pseudoText = PseudoGenerator.generatePseudoTranslation(
             value,
             languageToGenerate: supportedLanguage,
+            unicodeBlocks: packageSettings.unicodeBlocks,
             useBrackets: packageSettings.useBrackets,
             textExpansionFormat: packageSettings.textExpansionFormat,
             textExpansionRate: packageSettings.textExpansionRatio,

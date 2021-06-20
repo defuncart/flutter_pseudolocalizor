@@ -1,4 +1,5 @@
 import '../enums/text_expansion_format.dart';
+import '../enums/unicode_block.dart';
 
 /// A config of default settings for the package
 abstract class DefaultSettings {
@@ -7,6 +8,9 @@ abstract class DefaultSettings {
 
   /// Whether to replace the base langauge.
   static const replaceBase = false;
+
+  /// A list of unicode blocks to use
+  static const unicodeBlocks = UnicodeBlock.values;
 
   /// Whether the pseudo text should be wrapped in square brackets.
   static const useBrackets = true;

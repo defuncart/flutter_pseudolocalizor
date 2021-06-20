@@ -1,6 +1,7 @@
 import 'package:flutter_pseudolocalizor/src/enums/supported_input_file_type.dart';
 import 'package:flutter_pseudolocalizor/src/enums/supported_language.dart';
 import 'package:flutter_pseudolocalizor/src/enums/text_expansion_format.dart';
+import 'package:flutter_pseudolocalizor/src/enums/unicode_block.dart';
 import 'package:flutter_pseudolocalizor/src/utils/utils.dart';
 import 'package:test/test.dart';
 
@@ -51,7 +52,7 @@ void main() {
     expect(supportedLanguage, isNull);
   });
 
-  test('Convert $List<string> to $List<SupportedLanguage>', () {
+  test('Convert List<string> to List<$SupportedLanguage>', () {
     final strings = SupportedLanguage.values.map(Utils.describeEnum).toList();
 
     // strings (lower case) should be correctly converted
@@ -67,6 +68,71 @@ void main() {
     // null input should generate null output
     supportedLanguages = Utils.covertSupportedLangugesFromListString(null);
     expect(supportedLanguages, isNull);
+  });
+
+  group('covertUnicodeBlocksFromListString', () {
+    test('covertUnicodeBlocksFromListString', () {
+      expect(Utils.covertUnicodeBlocksFromListString(null), isNull);
+      expect(Utils.covertUnicodeBlocksFromListString(<String>[]), isNull);
+
+      expect(
+        Utils.covertUnicodeBlocksFromListString(
+            ['latinSupplement', 'latinExtendedA']),
+        [UnicodeBlock.latinSupplement, UnicodeBlock.latinExtendedA],
+      );
+
+      expect(
+        Utils.covertUnicodeBlocksFromListString(['latinSupplement', 'bla']),
+        [UnicodeBlock.latinSupplement],
+      );
+
+      expect(
+        Utils.covertUnicodeBlocksFromListString(['bla']),
+        isNull,
+      );
+    });
+
+    test('Convert List<string> to List<$UnicodeBlock>', () {
+      final strings = UnicodeBlock.values.map(Utils.describeEnum).toList();
+
+      // strings (lower case) should be correctly converted
+      var blocks = Utils.covertUnicodeBlocksFromListString(strings);
+      expect(blocks, UnicodeBlock.values);
+
+      // strings (upper case) should be correctly converted
+      blocks = Utils.covertUnicodeBlocksFromListString(
+          strings.map((x) => x.toUpperCase()).toList());
+      expect(blocks, UnicodeBlock.values);
+
+      // null input should generate null output
+      blocks = Utils.covertUnicodeBlocksFromListString(null);
+      expect(blocks, isNull);
+    });
+  });
+
+  test('Convert string to $UnicodeBlock', () {
+    final strings = UnicodeBlock.values.map(Utils.describeEnum).toList();
+
+    // strings (lower case) should be correctly converted
+    for (var i = 0; i < strings.length; i++) {
+      final blocks = Utils.convertUnicodeBlockFromString(strings[i]);
+      expect(blocks, UnicodeBlock.values[i]);
+    }
+
+    // strings (upper case) should be correctly converted
+    for (var i = 0; i < strings.length; i++) {
+      final blocks =
+          Utils.convertUnicodeBlockFromString(strings[i].toUpperCase());
+      expect(blocks, UnicodeBlock.values[i]);
+    }
+
+    // null input, expect null output
+    var supportedLanguage = Utils.convertUnicodeBlockFromString(null);
+    expect(supportedLanguage, isNull);
+
+    // incorrect input, expect null output
+    supportedLanguage = Utils.convertUnicodeBlockFromString('bla');
+    expect(supportedLanguage, isNull);
   });
 
   test('Convert string to $SupportedInputFileType', () {

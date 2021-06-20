@@ -25,6 +25,7 @@ subtitle;A subtitle
     final packageSettings = PackageSettings(
       inputFilepath: '_.csv',
       replaceBase: true,
+      unicodeBlocks: null,
       languagesToGenerate: null,
       useBrackets: true,
       textExpansionFormat: null,
@@ -59,6 +60,7 @@ subtitle;A subtitle
     final packageSettings = PackageSettings(
       inputFilepath: '_.csv',
       replaceBase: false,
+      unicodeBlocks: null,
       languagesToGenerate: ['de', 'es', 'pl'],
       useBrackets: true,
       textExpansionFormat: null,

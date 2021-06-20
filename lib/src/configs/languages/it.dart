@@ -1,10 +1,5 @@
-import '../../enums/supported_language.dart';
-
-/// Language settings for SupportedLanguage.it
-class IT {
-  /// The language
-  static const language = SupportedLanguage.it;
-
+/// Settings for SupportedLanguage.it
+abstract class IT {
   /// An array of special characters
   static const specialCharacters = [
     'à',
