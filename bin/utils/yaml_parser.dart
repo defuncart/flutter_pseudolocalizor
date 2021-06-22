@@ -108,9 +108,7 @@ class YamlParser {
 
   /// Converts a YamlList? into a List<String>?
   static List<String>? _yamlListToStringList(YamlList? inputList) =>
-      inputList != null
-          ? inputList.map((item) => item.toString()).toList()
-          : null;
+      inputList?.map((item) => item.toString()).toList();
 
   /// Converts a dynamic to a double?
   static double? _dynamicToDouble(dynamic input) {

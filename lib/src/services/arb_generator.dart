@@ -104,8 +104,9 @@ class ARBGenerator with PseudoGenerator {
     final matchAllCases =
         RegExp(r'\{[a-z_]\w*, (plural|select){1}, (.*)\}').allMatches(value);
     var matchesWithVariables = matchAllCases.first.group(2)!;
-    exps.forEach((exp) =>
-        matchesWithVariables = matchesWithVariables.replaceAll(exp, ''));
+    for (final exp in exps) {
+      matchesWithVariables = matchesWithVariables.replaceAll(exp, '');
+    }
     matchesWithVariables = matchesWithVariables.trim();
 
     if (matchesWithVariables.isNotEmpty) {
