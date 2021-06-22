@@ -1,8 +1,8 @@
 {
   "@@locale": "en",
-  "myKey": "Hello world!",
+  "myKey": "Quick fox jumps nightly above wizard.",
   "@myKey": {
-    "description": "The conventional newborn programmer greeting"
+    "description": "A pangram containing all 26 letters"
   },
   "welcome": "Welcome {firstName}!",
   "@welcome": {
