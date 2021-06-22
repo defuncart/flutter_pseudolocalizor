@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import '../enums/supported_language.dart';
+import '../extensions/reg_exp_extensions.dart';
 import '../models/package_settings.dart';
 import '../utils/utils.dart';
 import 'pseudo_generator.dart';
@@ -41,6 +42,9 @@ class ARBGenerator with PseudoGenerator {
         final String value = arbContents[key];
         String pseudoText;
 
+        final patternToIgnore = packageSettings.patternToIgnore != null
+            ? _regExVariableName.combine(packageSettings.patternToIgnore!)
+            : _regExVariableName;
         if (_regExPluralSelect.hasMatch(value)) {
           pseudoText = value;
 
@@ -53,8 +57,7 @@ class ARBGenerator with PseudoGenerator {
               useBrackets: packageSettings.useBrackets,
               textExpansionFormat: packageSettings.textExpansionFormat,
               textExpansionRate: packageSettings.textExpansionRatio,
-              // patternToIgnore: packageSettings.patternToIgnore,
-              patternToIgnore: _regExVariableName,
+              patternToIgnore: patternToIgnore,
             );
 
             pseudoText = pseudoText.replaceFirst(
@@ -70,8 +73,7 @@ class ARBGenerator with PseudoGenerator {
             useBrackets: packageSettings.useBrackets,
             textExpansionFormat: packageSettings.textExpansionFormat,
             textExpansionRate: packageSettings.textExpansionRatio,
-            // patternToIgnore: packageSettings.patternToIgnore,
-            patternToIgnore: _regExVariableName,
+            patternToIgnore: patternToIgnore,
           );
         }
 
