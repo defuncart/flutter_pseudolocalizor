@@ -31,7 +31,8 @@ flutter_pseudolocalizor:
     - tr
   patterns_to_ignore:
     - '%(\S*?)\$[ds]'
-    - 'Flutter'
+    - Flutter
+    - message
   keys_to_ignore:
     - 'title'
   arb_settings:
