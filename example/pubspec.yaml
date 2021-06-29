@@ -1,6 +1,6 @@
 name: example
 description: An example for flutter_pseudolocalizor package.
-version: 0.5.0-dev
+version: 0.5.0
 publish_to: 'none'
 homepage: https://github.com/defuncart/flutter_pseudolocalizor
 
@@ -35,6 +35,7 @@ flutter_pseudolocalizor:
     - message
   keys_to_ignore:
     - 'title'
+    - 'welcome'
   arb_settings:
     output_directory: 'l10n_pseudo'
   csv_settings:
