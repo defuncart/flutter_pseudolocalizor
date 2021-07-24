@@ -1,3 +1,7 @@
+## [0.5.1] - 24/07/2021
+
+* Fixes a bug where in the case of generating languages and not replacing base, when output directory did not exist, generation would fail.
+
 ## [0.5.0] - 29/06/2021
 
 * Added ARB file support.
