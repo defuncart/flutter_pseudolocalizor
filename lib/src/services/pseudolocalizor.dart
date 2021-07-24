@@ -56,7 +56,7 @@ class Pseudolocalizor {
         final fileContents = ARBGenerator.generate(file, packageSettings);
         outputFile.createRecursivelyAndWriteContents(fileContents);
       } else {
-        file.copySync(outputFile.path);
+        outputFile.createRecursivelyAndWriteContents(file.readAsStringSync());
         print('Wrote to ${outputFile.path}');
       }
 
