@@ -6,7 +6,7 @@ abstract class DefaultSettings {
   /// The base language
   static const baseLanguage = 'en';
 
-  /// Whether to replace the base langauge.
+  /// Whether to replace the base language.
   static const replaceBase = false;
 
   /// A list of unicode blocks to use
