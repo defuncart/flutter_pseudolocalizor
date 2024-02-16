@@ -33,6 +33,7 @@ flutter_pseudolocalizor:
     - '%(\S*?)\$[ds]'
     - Flutter
     - message
+  seed: 0
   keys_to_ignore:
     - 'title'
     - 'welcome'

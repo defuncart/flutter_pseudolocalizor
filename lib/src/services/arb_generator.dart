@@ -19,6 +19,8 @@ class ARBGenerator with PseudoGenerator {
     PackageSettings packageSettings, {
     SupportedLanguage? supportedLanguage,
   }) {
+    PseudoGenerator.setSeed(packageSettings.seed);
+
     // decode arb into a map
     final stringContents = file.readAsStringSync();
     final arbContents = json.decode(stringContents);

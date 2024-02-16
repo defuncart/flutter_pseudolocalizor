@@ -13,7 +13,13 @@ import 'unicode_fallback.dart';
 /// Base pseudolocalization generation logic which can be utilized by file generators
 mixin PseudoGenerator {
   /// A random number generator
-  static final _random = Random();
+  static var _random = Random();
+
+  static void setSeed(int? seed) {
+    if (seed != null) {
+      _random = Random(seed);
+    }
+  }
 
   static String generatePseudoTranslation(
     String baseText, {
