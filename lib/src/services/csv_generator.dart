@@ -11,6 +11,8 @@ class CSVGenerator with PseudoGenerator {
     File file,
     PackageSettings packageSettings,
   ) {
+    PseudoGenerator.setSeed(packageSettings.seed);
+
     // read all lines into a list
     final lines = file.readAsLinesSync();
 

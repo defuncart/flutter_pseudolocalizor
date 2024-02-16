@@ -21,6 +21,13 @@ class PackageSettings {
   /// A list of languages to generate.
   final List<SupportedLanguage>? languagesToGenerate;
 
+  /// A seed for random generators.
+  ///
+  /// This should ensure that psuedo strings are generated identically each run.
+  ///
+  /// Note that new releases of dart may update random seed algorithm.
+  final int? seed;
+
   /// Whether the pseudo text should be wrapped in square brackets. Defaults to `true`.
   final bool useBrackets;
 
@@ -52,6 +59,7 @@ class PackageSettings {
     required String? textExpansionFormat,
     required this.textExpansionRatio,
     required List<String>? patternsToIgnore,
+    this.seed,
     required this.keysToIgnore,
     ARBSettings? arbSettings,
     CSVSettings? csvSettings,
@@ -70,8 +78,8 @@ class PackageSettings {
         arbSettings = arbSettings ?? ARBSettings(),
         csvSettings = csvSettings ?? CSVSettings();
 
-  /// Returns a String representation of the model.
   @override
-  String toString() =>
-      '{inputFilepath: $inputFilepath, replaceBase: $replaceBase, unicodeBlocks, $unicodeBlocks, languagesToGenerate: $languagesToGenerate, useBrackets: $useBrackets, textExpansionFormat: $textExpansionFormat, textExpansionRatio: $textExpansionRatio, patternToIgnore: $patternToIgnore, keysToIgnore: $keysToIgnore, arbSettings: $arbSettings, csvSettings: $csvSettings}';
+  String toString() {
+    return 'PackageSettings(inputFilepath: $inputFilepath, replaceBase: $replaceBase, unicodeBlocks: $unicodeBlocks, languagesToGenerate: $languagesToGenerate, useBrackets: $useBrackets, textExpansionFormat: $textExpansionFormat, textExpansionRatio: $textExpansionRatio, patternToIgnore: $patternToIgnore, seed: $seed, keysToIgnore: $keysToIgnore, arbSettings: $arbSettings, csvSettings: $csvSettings)';
+  }
 }

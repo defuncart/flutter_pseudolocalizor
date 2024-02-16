@@ -64,6 +64,7 @@ flutter_pseudolocalizor:
   unicode_blocks:
     - latinSupplement
     - latinExtendedA
+  seed: 0
   use_brackets: true
   text_expansion_format: 'repeatVowels'
   text_expansion_ratio: null
@@ -89,6 +90,7 @@ flutter_pseudolocalizor:
 | input_filepath             | A path to the input localization file.                                                                                  |
 | replace_base               | Whether the base language (en) should be replaced. Defaults to `false`.                                                 |
 | unicode_blocks             | When replace_base is true, a list of unicode blocks to use. Defaults to all.                                            |
+| seed                       | A seed for random generators. This should ensure that psuedo strings are generated identically each run.                |
 | text_expansion_format      | The format of the text expansion. Defaults to `repeatVowels`, alternatives `append`, `numberWords`, `exclamationMarks`. |
 | text_expansion_ratio       | The ratio (between 1 and 3) of text expansion. If `null`, uses a linear function.                                       |
 | languages_to_generate      | A list of languages to generate. Defaults to empty.                                                                     |
