@@ -26,7 +26,7 @@ class PackageSettings {
   /// This should ensure that psuedo strings are generated identically each run.
   ///
   /// Note that new releases of dart may update random seed algorithm.
-  final int? seed;
+  final int seed;
 
   /// Whether the pseudo text should be wrapped in square brackets. Defaults to `true`.
   final bool useBrackets;
@@ -55,11 +55,11 @@ class PackageSettings {
     required bool? replaceBase,
     required List<String>? unicodeBlocks,
     required List<String>? languagesToGenerate,
+    required int? seed,
     required bool? useBrackets,
     required String? textExpansionFormat,
     required this.textExpansionRatio,
     required List<String>? patternsToIgnore,
-    this.seed,
     required this.keysToIgnore,
     ARBSettings? arbSettings,
     CSVSettings? csvSettings,
@@ -70,6 +70,7 @@ class PackageSettings {
             : null,
         languagesToGenerate =
             Utils.covertSupportedLanguagesFromListString(languagesToGenerate),
+        seed = seed ?? DefaultSettings.seed,
         useBrackets = useBrackets ?? DefaultSettings.useBrackets,
         textExpansionFormat =
             Utils.convertTextExpansionFormatFromString(textExpansionFormat) ??
@@ -80,6 +81,6 @@ class PackageSettings {
 
   @override
   String toString() {
-    return 'PackageSettings(inputFilepath: $inputFilepath, replaceBase: $replaceBase, unicodeBlocks: $unicodeBlocks, languagesToGenerate: $languagesToGenerate, useBrackets: $useBrackets, textExpansionFormat: $textExpansionFormat, textExpansionRatio: $textExpansionRatio, patternToIgnore: $patternToIgnore, seed: $seed, keysToIgnore: $keysToIgnore, arbSettings: $arbSettings, csvSettings: $csvSettings)';
+    return 'PackageSettings(inputFilepath: $inputFilepath, replaceBase: $replaceBase, unicodeBlocks: $unicodeBlocks, languagesToGenerate: $languagesToGenerate, seed: $seed, useBrackets: $useBrackets, textExpansionFormat: $textExpansionFormat, textExpansionRatio: $textExpansionRatio, patternToIgnore: $patternToIgnore, keysToIgnore: $keysToIgnore, arbSettings: $arbSettings, csvSettings: $csvSettings)';
   }
 }

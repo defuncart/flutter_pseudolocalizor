@@ -12,6 +12,13 @@ abstract class DefaultSettings {
   /// A list of unicode blocks to use
   static const unicodeBlocks = UnicodeBlock.values;
 
+  /// A seed for random generators.
+  ///
+  /// This should ensure that psuedo strings are generated identically each run.
+  ///
+  /// Note that new releases of dart may update random seed algorithm.
+  static const seed = 0;
+
   /// Whether the pseudo text should be wrapped in square brackets.
   static const useBrackets = true;
 

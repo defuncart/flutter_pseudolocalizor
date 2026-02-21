@@ -15,11 +15,7 @@ mixin PseudoGenerator {
   /// A random number generator
   static var _random = Random();
 
-  static void setSeed(int? seed) {
-    if (seed != null) {
-      _random = Random(seed);
-    }
-  }
+  static void setSeed(int seed) => _random = Random(seed);
 
   static String generatePseudoTranslation(
     String baseText, {
