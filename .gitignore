@@ -74,3 +74,6 @@ build/
 
 # dart package
 pubspec.lock
+
+# FVM Version Cache
+.fvm/
