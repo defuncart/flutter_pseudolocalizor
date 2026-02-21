@@ -26,6 +26,37 @@ class PseudoGenerator {
     double? textExpansionRate,
     RegExp? patternToIgnore,
   }) {
+    // POC
+    if (languageToGenerate == SupportedLanguage.zh) {
+      final words = [
+        '文件',
+        '系统',
+        '设置',
+        '用户',
+        '数据',
+        '网络',
+        '错误',
+        '加载',
+        '更新',
+        '状态',
+        '安全',
+        '配置',
+        '服务',
+        '信息',
+        '管理'
+      ];
+
+      final textWithNoSpaces = baseText.replaceAll(' ', '');
+      final textLength = (textWithNoSpaces.length * 0.55).round();
+
+      var newText = '';
+      do {
+        newText += words[_random.nextInt(words.length)];
+      } while (newText.length < textLength);
+
+      return newText;
+    }
+
     final blocks = unicodeBlocks ?? DefaultSettings.unicodeBlocks;
     final pseudoTextLength = textExpansionRate != null
         ? (baseText.length * textExpansionRate).ceil()

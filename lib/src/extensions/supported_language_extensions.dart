@@ -18,7 +18,9 @@ extension SupportedLanguageExtensions on SupportedLanguage {
         SupportedLanguage.pl => PL.specialCharacters,
         SupportedLanguage.pt => PT.specialCharacters,
         SupportedLanguage.ru => RU.specialCharacters,
-        SupportedLanguage.tr => TR.specialCharacters
+        SupportedLanguage.tr => TR.specialCharacters,
+        SupportedLanguage.zh =>
+          throw StateError('$this does not use character replacement'),
       };
 
   /// A dictionary of mapping characters
@@ -30,6 +32,8 @@ extension SupportedLanguageExtensions on SupportedLanguage {
         SupportedLanguage.pl => PL.mappingCharacters,
         SupportedLanguage.pt => PT.mappingCharacters,
         SupportedLanguage.ru => RU.mappingCharacters,
-        SupportedLanguage.tr => TR.mappingCharacters
+        SupportedLanguage.tr => TR.mappingCharacters,
+        SupportedLanguage.zh =>
+          throw StateError('$this does not use character replacement'),
       };
 }
