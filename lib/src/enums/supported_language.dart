@@ -23,4 +23,7 @@ enum SupportedLanguage {
 
   /// Turkish
   tr,
+
+  /// Chinese
+  zh
 }
