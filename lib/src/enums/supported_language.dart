@@ -3,7 +3,7 @@ enum SupportedLanguage {
   /// German
   de,
 
-  /// Spannish
+  /// Spanish
   es,
 
   /// French
