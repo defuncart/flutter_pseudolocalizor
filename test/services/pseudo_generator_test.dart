@@ -1,4 +1,6 @@
+import 'package:flutter_pseudolocalizor/src/configs/default_settings.dart';
 import 'package:flutter_pseudolocalizor/src/enums/supported_language.dart';
+import 'package:flutter_pseudolocalizor/src/enums/text_expansion_format.dart';
 import 'package:flutter_pseudolocalizor/src/enums/unicode_block.dart';
 import 'package:flutter_pseudolocalizor/src/extensions/supported_language_extensions.dart';
 import 'package:flutter_pseudolocalizor/src/services/pseudo_generator.dart';
@@ -7,6 +9,31 @@ import 'package:test/test.dart';
 
 void main() {
   group('$PseudoGenerator', () {
+    group('generatePseudoTranslation', () {
+      test('When seed is given, expect same output', () {
+        PseudoGenerator.setSeed(0);
+        expect(
+          PseudoGenerator.generatePseudoTranslation(
+            'A beautiful oasis invites eager curious minds to imagine unique adventures.',
+            languageToGenerate: SupportedLanguage.fr,
+            useBrackets: false,
+            textExpansionFormat: TextExpansionFormat.repeatVowels,
+          ),
+          'À bèaûtïfùl œasîs ïnvïtès ëagêr çùrïôûs mïnds tô ïmagïnë ùnïqùê advèntûrés.',
+        );
+
+        expect(
+          PseudoGenerator.generatePseudoTranslation(
+            'The quick brown fox jumps over the lazy dog.',
+            unicodeBlocks: DefaultSettings.unicodeBlocks,
+            useBrackets: false,
+            textExpansionFormat: TextExpansionFormat.repeatVowels,
+          ),
+          'Ŧĥę ɋǖȉȼĸ ȸŕºⱳǌ ſô× ɉµmƥș øⱴěř ťƕę ŀaƶȳ ǳœǥ.',
+        );
+      });
+    });
+
     group('addSpecialCharactersToText', () {
       test('Expect return length same as input length', () {
         expect(
