@@ -5,13 +5,13 @@ import '../models/package_settings.dart';
 import 'pseudo_generator.dart';
 
 /// Generates pseudo localizations for a csv file
-class CSVGenerator with PseudoGenerator {
+class CSVGenerator {
   /// Generates pseudo localizations with a given [file] and [packageSettings]
   static String generate(
     File file,
     PackageSettings packageSettings,
   ) {
-    PseudoGenerator.setSeed(packageSettings.seed);
+    final pseudoGenerator = PseudoGenerator(seed: packageSettings.seed);
 
     // read all lines into a list
     final lines = file.readAsLinesSync();
@@ -52,7 +52,7 @@ class CSVGenerator with PseudoGenerator {
         final shouldReplace =
             !(packageSettings.keysToIgnore?.contains(locaKeys[i]) ?? false);
         if (shouldReplace) {
-          final pseudoText = PseudoGenerator.generatePseudoTranslation(
+          final pseudoText = pseudoGenerator.generatePseudoTranslation(
             locaBase[i - 1],
             languageToGenerate: null,
             unicodeBlocks: packageSettings.unicodeBlocks,
@@ -80,7 +80,7 @@ class CSVGenerator with PseudoGenerator {
 
         for (final languageToGenerate in packageSettings.languagesToGenerate!) {
           final pseudoTranslation = shouldReplace
-              ? PseudoGenerator.generatePseudoTranslation(
+              ? pseudoGenerator.generatePseudoTranslation(
                   baseText,
                   languageToGenerate: languageToGenerate,
                   unicodeBlocks: packageSettings.unicodeBlocks,
