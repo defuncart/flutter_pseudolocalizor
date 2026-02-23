@@ -92,7 +92,7 @@ class PseudoGenerator {
             ),
           )
         : addSpecialCharactersToText(
-            baseText,
+            _baseText,
             language: languageToGenerate,
             blocks: blocks,
           );
