@@ -1,6 +1,6 @@
 /// A config of default settings for csv files
 class CSVDefaultSettings {
-  /// Append text when autogenerating output filename.
+  /// Append text when auto-generating output filename.
   static const outputFilenameAppendText = 'PSEUDO';
 
   /// The delimiter used to parse the csv file.

@@ -67,7 +67,7 @@ class Pseudolocalizor {
           final outputFile = File(
             Utils.generateARBOutputFilepath(
               outputDirectory: packageSettings.arbSettings.outputDirectory,
-              language: Utils.describeEnum(language),
+              language: language.name,
             ),
           );
           final fileContents = ARBGenerator.generate(

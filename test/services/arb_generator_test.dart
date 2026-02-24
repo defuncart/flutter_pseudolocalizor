@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:flutter_pseudolocalizor/flutter_pseudolocalizor.dart';
 import 'package:flutter_pseudolocalizor/src/services/arb_generator.dart';
-import 'package:flutter_pseudolocalizor/src/utils/utils.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -77,7 +76,7 @@ void main() {
       expect(contents, isNotNull);
       final decodedContents = jsonDecode(contents);
       expect(decodedContents['@@locale'], isNot('en'));
-      expect(decodedContents['@@locale'], Utils.describeEnum(language));
+      expect(decodedContents['@@locale'], language.name);
       expect(decodedContents['myKey'], isNotNull);
       expect(decodedContents['myKey'], isNot('Hello world!'));
       expect(decodedContents['welcome'], isNotNull);

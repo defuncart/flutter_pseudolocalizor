@@ -6,67 +6,67 @@ import 'package:flutter_pseudolocalizor/src/utils/utils.dart';
 import 'package:test/test.dart';
 
 void main() {
-  test('covertSupportedLangugesFromListString', () {
-    expect(Utils.covertSupportedLangugesFromListString(null), isNull);
-    expect(Utils.covertSupportedLangugesFromListString(<String>[]), isNull);
+  test('covertSupportedLanguagesFromListString', () {
+    expect(Utils.covertSupportedLanguagesFromListString(null), isNull);
+    expect(Utils.covertSupportedLanguagesFromListString(<String>[]), isNull);
 
     expect(
-      Utils.covertSupportedLangugesFromListString(['de', 'pl']),
+      Utils.covertSupportedLanguagesFromListString(['de', 'pl']),
       [SupportedLanguage.de, SupportedLanguage.pl],
     );
 
     expect(
-      Utils.covertSupportedLangugesFromListString(['de', 'bla']),
+      Utils.covertSupportedLanguagesFromListString(['de', 'bla']),
       [SupportedLanguage.de],
     );
 
     expect(
-      Utils.covertSupportedLangugesFromListString(['bla']),
+      Utils.covertSupportedLanguagesFromListString(['bla']),
       isNull,
     );
   });
 
   test('Convert string to $SupportedLanguage', () {
-    final strings = SupportedLanguage.values.map(Utils.describeEnum).toList();
+    final strings = SupportedLanguage.values.map((lang) => lang.name).toList();
 
     // strings (lower case) should be correctly converted
     for (var i = 0; i < strings.length; i++) {
       final supportedLanguage =
-          Utils.convertSupportedLangaugeFromString(strings[i]);
+          Utils.convertSupportedLanguageFromString(strings[i]);
       expect(supportedLanguage, SupportedLanguage.values[i]);
     }
 
     // strings (upper case) should be correctly converted
     for (var i = 0; i < strings.length; i++) {
       final supportedLanguage =
-          Utils.convertSupportedLangaugeFromString(strings[i].toUpperCase());
+          Utils.convertSupportedLanguageFromString(strings[i].toUpperCase());
       expect(supportedLanguage, SupportedLanguage.values[i]);
     }
 
     // null input, expect null output
-    var supportedLanguage = Utils.convertSupportedLangaugeFromString(null);
+    var supportedLanguage = Utils.convertSupportedLanguageFromString(null);
     expect(supportedLanguage, isNull);
 
     // incorrect input, expect null output
-    supportedLanguage = Utils.convertSupportedLangaugeFromString('bla');
+    supportedLanguage = Utils.convertSupportedLanguageFromString('bla');
     expect(supportedLanguage, isNull);
   });
 
   test('Convert List<string> to List<$SupportedLanguage>', () {
-    final strings = SupportedLanguage.values.map(Utils.describeEnum).toList();
+    final strings = SupportedLanguage.values.map((lang) => lang.name).toList();
 
     // strings (lower case) should be correctly converted
     var supportedLanguages =
-        Utils.covertSupportedLangugesFromListString(strings);
+        Utils.covertSupportedLanguagesFromListString(strings);
     expect(supportedLanguages, SupportedLanguage.values);
 
     // strings (upper case) should be correctly converted
-    supportedLanguages = Utils.covertSupportedLangugesFromListString(
+    supportedLanguages = Utils.covertSupportedLanguagesFromListString(
         strings.map((x) => x.toUpperCase()).toList());
     expect(supportedLanguages, SupportedLanguage.values);
 
     // null input should generate null output
-    supportedLanguages = Utils.covertSupportedLangugesFromListString(null);
+    supportedLanguages = Utils.covertSupportedLanguagesFromListString(null);
     expect(supportedLanguages, isNull);
   });
 
@@ -93,7 +93,7 @@ void main() {
     });
 
     test('Convert List<string> to List<$UnicodeBlock>', () {
-      final strings = UnicodeBlock.values.map(Utils.describeEnum).toList();
+      final strings = UnicodeBlock.values.map((lang) => lang.name).toList();
 
       // strings (lower case) should be correctly converted
       var blocks = Utils.covertUnicodeBlocksFromListString(strings);
@@ -111,7 +111,7 @@ void main() {
   });
 
   test('Convert string to $UnicodeBlock', () {
-    final strings = UnicodeBlock.values.map(Utils.describeEnum).toList();
+    final strings = UnicodeBlock.values.map((lang) => lang.name).toList();
 
     // strings (lower case) should be correctly converted
     for (var i = 0; i < strings.length; i++) {
@@ -137,7 +137,7 @@ void main() {
 
   test('Convert string to $SupportedInputFileType', () {
     final strings =
-        SupportedInputFileType.values.map(Utils.describeEnum).toList();
+        SupportedInputFileType.values.map((lang) => lang.name).toList();
 
     // strings (lower case) should be correctly converted
     for (var i = 0; i < strings.length; i++) {
@@ -166,7 +166,8 @@ void main() {
   });
 
   test('Convert string to $TextExpansionFormat', () {
-    final strings = TextExpansionFormat.values.map(Utils.describeEnum).toList();
+    final strings =
+        TextExpansionFormat.values.map((lang) => lang.name).toList();
 
     // strings (lower case) should be correctly converted
     for (var i = 0; i < strings.length; i++) {

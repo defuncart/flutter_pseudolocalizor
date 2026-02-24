@@ -4,7 +4,6 @@ import 'dart:io';
 import '../enums/supported_language.dart';
 import '../extensions/reg_exp_extensions.dart';
 import '../models/package_settings.dart';
-import '../utils/utils.dart';
 import 'pseudo_generator.dart';
 
 final _regExVariableName = RegExp(r'\{[a-z_]\w*\}');
@@ -32,7 +31,7 @@ class ARBGenerator with PseudoGenerator {
     }
 
     if (supportedLanguage != null) {
-      arbContents['@@locale'] = Utils.describeEnum(supportedLanguage);
+      arbContents['@@locale'] = supportedLanguage.name;
     }
 
     for (final key in keys) {

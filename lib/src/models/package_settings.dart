@@ -12,7 +12,7 @@ class PackageSettings {
   /// The filepath for the input localization file. This must be supplied.
   final String inputFilepath;
 
-  /// Whether to replace the base langauge. Defaults to `false`.
+  /// Whether to replace the base language. Defaults to `false`.
   final bool replaceBase;
 
   /// When [replaceBase] is true, a list of unicode blocks to use. Defaults to all.
@@ -61,7 +61,7 @@ class PackageSettings {
                 DefaultSettings.unicodeBlocks)
             : null,
         languagesToGenerate =
-            Utils.covertSupportedLangugesFromListString(languagesToGenerate),
+            Utils.covertSupportedLanguagesFromListString(languagesToGenerate),
         useBrackets = useBrackets ?? DefaultSettings.useBrackets,
         textExpansionFormat =
             Utils.convertTextExpansionFormatFromString(textExpansionFormat) ??

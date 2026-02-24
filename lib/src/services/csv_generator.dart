@@ -2,7 +2,6 @@ import 'dart:io';
 
 import '../configs/default_settings.dart';
 import '../models/package_settings.dart';
-import '../utils/utils.dart';
 import 'pseudo_generator.dart';
 
 /// Generates pseudo localizations for a csv file
@@ -29,7 +28,7 @@ class CSVGenerator with PseudoGenerator {
     if (firstLineElements[packageSettings.csvSettings.columnIndex] !=
         DefaultSettings.baseLanguage) {
       print(
-          'Error! Langauge ${DefaultSettings.baseLanguage} not found at column ${packageSettings.csvSettings.columnIndex} in ${packageSettings.inputFilepath}');
+          'Error! Language ${DefaultSettings.baseLanguage} not found at column ${packageSettings.csvSettings.columnIndex} in ${packageSettings.inputFilepath}');
       exit(0);
     }
 
@@ -69,7 +68,7 @@ class CSVGenerator with PseudoGenerator {
         packageSettings.languagesToGenerate!.isNotEmpty) {
       final generatedAll = <List<String>>[];
       generatedAll.add(packageSettings.languagesToGenerate!
-          .map(Utils.describeEnum)
+          .map((lang) => lang.name)
           .toList());
       for (var i = 0; i < locaBase.length; i++) {
         final baseText = locaBase[i];
