@@ -10,6 +10,7 @@ class YamlArguments {
   static const replaceBase = 'replace_base';
   static const unicodeBlocks = 'unicode_blocks';
   static const languagesToGenerate = 'languages_to_generate';
+  static const seed = 'seed';
   static const useBrackets = 'use_brackets';
   static const textExpansionFormat = 'text_expansion_format';
   static const textExpansionRatio = 'text_expansion_ratio';
@@ -56,6 +57,7 @@ class YamlParser {
             _yamlListToStringList(yamlMap[YamlArguments.unicodeBlocks]),
         languagesToGenerate:
             _yamlListToStringList(yamlMap[YamlArguments.languagesToGenerate]),
+        seed: yamlMap[YamlArguments.seed],
         useBrackets: yamlMap[YamlArguments.useBrackets],
         textExpansionFormat: yamlMap[YamlArguments.textExpansionFormat],
         textExpansionRatio:

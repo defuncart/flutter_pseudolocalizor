@@ -1,4 +1,6 @@
+import 'package:flutter_pseudolocalizor/src/configs/default_settings.dart';
 import 'package:flutter_pseudolocalizor/src/enums/supported_language.dart';
+import 'package:flutter_pseudolocalizor/src/enums/text_expansion_format.dart';
 import 'package:flutter_pseudolocalizor/src/enums/unicode_block.dart';
 import 'package:flutter_pseudolocalizor/src/extensions/supported_language_extensions.dart';
 import 'package:flutter_pseudolocalizor/src/services/pseudo_generator.dart';
@@ -7,14 +9,46 @@ import 'package:test/test.dart';
 
 void main() {
   group('$PseudoGenerator', () {
+    late PseudoGenerator pseudoGenerator;
+
+    setUp(() {
+      pseudoGenerator = PseudoGenerator(seed: 0);
+    });
+
+    group('generatePseudoTranslation', () {
+      test('When seed is given, expect same output', () {
+        expect(
+          pseudoGenerator.generatePseudoTranslation(
+            'A beautiful oasis invites eager curious minds to imagine unique adventures.',
+            languageToGenerate: SupportedLanguage.fr,
+            useBrackets: false,
+            textExpansionFormat: TextExpansionFormat.repeatVowels,
+          ),
+          'À bèaûtïfùl œasîs ïnvïtès ëagêr çùrïôûs mïnds tô ïmagïnë ùnïqùê advèntûrés.',
+        );
+
+        expect(
+          pseudoGenerator.generatePseudoTranslation(
+            'The quick brown fox jumps over the lazy dog.',
+            unicodeBlocks: DefaultSettings.unicodeBlocks,
+            useBrackets: false,
+            textExpansionFormat: TextExpansionFormat.repeatVowels,
+          ),
+          'Ŧĥę ɋǖȉȼĸ ȸŕºⱳǌ ſô× ɉµmƥș øⱴěř ťƕę ŀaƶȳ ǳœǥ.',
+        );
+      });
+    });
+
     group('addSpecialCharactersToText', () {
       test('Expect return length same as input length', () {
         expect(
-          PseudoGenerator.addSpecialCharactersToText(
-            'hello',
-            language: null,
-            blocks: UnicodeBlock.values,
-          ).length,
+          pseudoGenerator
+              .addSpecialCharactersToText(
+                'hello',
+                language: null,
+                blocks: UnicodeBlock.values,
+              )
+              .length,
           5,
         );
       });
@@ -23,7 +57,7 @@ void main() {
     group('elongateVowels', () {
       test('When hello count = 1, expect heello', () {
         expect(
-          PseudoGenerator.repeatVowels(
+          pseudoGenerator.repeatVowels(
             'hello',
             count: 1,
           ),
@@ -33,7 +67,7 @@ void main() {
 
       test('When hello count = 2, expect heelloo', () {
         expect(
-          PseudoGenerator.repeatVowels(
+          pseudoGenerator.repeatVowels(
             'hello',
             count: 2,
           ),
@@ -43,7 +77,7 @@ void main() {
 
       test('When hello count = 3, expect heeelloo', () {
         expect(
-          PseudoGenerator.repeatVowels(
+          pseudoGenerator.repeatVowels(
             'hello',
             count: 3,
           ),
@@ -53,7 +87,7 @@ void main() {
 
       test('When hello, goodbye count = 5, expect heelloo, goooodbyye', () {
         expect(
-          PseudoGenerator.repeatVowels(
+          pseudoGenerator.repeatVowels(
             'hello, goodbye',
             count: 5,
           ),
@@ -63,7 +97,7 @@ void main() {
 
       test('when count < 1, input', () {
         expect(
-          PseudoGenerator.repeatVowels(
+          pseudoGenerator.repeatVowels(
             'hello',
             count: 0,
           ),
@@ -75,7 +109,7 @@ void main() {
     group('generateNumberWords', () {
       test('when expansionCount = 0, expect empty', () {
         expect(
-          PseudoGenerator.generateNumberWords(
+          pseudoGenerator.generateNumberWords(
             expansionCount: 0,
           ),
           isEmpty,
@@ -84,7 +118,7 @@ void main() {
 
       test('when expansionCount < 4, expect one', () {
         expect(
-          PseudoGenerator.generateNumberWords(
+          pseudoGenerator.generateNumberWords(
             expansionCount: 3,
           ),
           'one',
@@ -93,7 +127,7 @@ void main() {
 
       test('when expansionCount < 8, expect one two', () {
         expect(
-          PseudoGenerator.generateNumberWords(
+          pseudoGenerator.generateNumberWords(
             expansionCount: 7,
           ),
           'one two',
@@ -102,7 +136,7 @@ void main() {
 
       test('when expansionCount < 13, expect one two three', () {
         expect(
-          PseudoGenerator.generateNumberWords(
+          pseudoGenerator.generateNumberWords(
             expansionCount: 13,
           ),
           'one two three',
@@ -113,7 +147,7 @@ void main() {
     group('generateRandomSpecialCharacters', () {
       test('When count < 1, expect empty string', () {
         expect(
-          PseudoGenerator.generateRandomSpecialCharacters(
+          pseudoGenerator.generateRandomSpecialCharacters(
             -1,
             language: null,
             blocks: UnicodeBlock.values,
@@ -124,11 +158,13 @@ void main() {
 
       test('When count > 0, expect correct string length', () {
         expect(
-          PseudoGenerator.generateRandomSpecialCharacters(
-            1,
-            language: null,
-            blocks: UnicodeBlock.values,
-          ).length,
+          pseudoGenerator
+              .generateRandomSpecialCharacters(
+                1,
+                language: null,
+                blocks: UnicodeBlock.values,
+              )
+              .length,
           1,
         );
       });
@@ -137,14 +173,14 @@ void main() {
     group('specialCharactersForSupportedLanguage', () {
       test('when null is passed, expect default', () {
         expect(
-          PseudoGenerator.specialCharactersForSupportedLanguage(
+          pseudoGenerator.specialCharactersForSupportedLanguage(
             null,
             blocks: UnicodeBlock.values,
           ),
           isNotNull,
         );
         expect(
-          PseudoGenerator.specialCharactersForSupportedLanguage(
+          pseudoGenerator.specialCharactersForSupportedLanguage(
             null,
             blocks: UnicodeBlock.values,
           ),
@@ -157,14 +193,14 @@ void main() {
           'for that language', () {
         for (final language in SupportedLanguage.values) {
           expect(
-            PseudoGenerator.specialCharactersForSupportedLanguage(
+            pseudoGenerator.specialCharactersForSupportedLanguage(
               language,
               blocks: UnicodeBlock.values,
             ),
             isNotNull,
           );
           expect(
-            PseudoGenerator.specialCharactersForSupportedLanguage(
+            pseudoGenerator.specialCharactersForSupportedLanguage(
               language,
               blocks: UnicodeBlock.values,
             ),
@@ -177,14 +213,14 @@ void main() {
     group('mappingCharactersForSupportedLanguage', () {
       test('when null is passed, expect default', () {
         expect(
-          PseudoGenerator.mappingCharactersForSupportedLanguage(
+          pseudoGenerator.mappingCharactersForSupportedLanguage(
             null,
             blocks: UnicodeBlock.values,
           ),
           isNotNull,
         );
         expect(
-          PseudoGenerator.mappingCharactersForSupportedLanguage(
+          pseudoGenerator.mappingCharactersForSupportedLanguage(
             null,
             blocks: UnicodeBlock.values,
           ),
@@ -199,14 +235,14 @@ void main() {
           'for that language', () {
         for (final language in SupportedLanguage.values) {
           expect(
-            PseudoGenerator.mappingCharactersForSupportedLanguage(
+            pseudoGenerator.mappingCharactersForSupportedLanguage(
               language,
               blocks: UnicodeBlock.values,
             ),
             isNotNull,
           );
           expect(
-            PseudoGenerator.mappingCharactersForSupportedLanguage(
+            pseudoGenerator.mappingCharactersForSupportedLanguage(
               language,
               blocks: UnicodeBlock.values,
             ),
@@ -219,19 +255,23 @@ void main() {
     group('randomSpecialCharacter', () {
       test('Regardless of language, expect single character', () {
         expect(
-          PseudoGenerator.randomSpecialCharacter(
-            language: null,
-            blocks: UnicodeBlock.values,
-          ).length,
+          pseudoGenerator
+              .randomSpecialCharacter(
+                language: null,
+                blocks: UnicodeBlock.values,
+              )
+              .length,
           1,
         );
 
         for (final language in SupportedLanguage.values) {
           expect(
-            PseudoGenerator.randomSpecialCharacter(
-              language: language,
-              blocks: UnicodeBlock.values,
-            ).length,
+            pseudoGenerator
+                .randomSpecialCharacter(
+                  language: language,
+                  blocks: UnicodeBlock.values,
+                )
+                .length,
             1,
           );
         }
@@ -241,7 +281,7 @@ void main() {
     group('pseudotranslationLengthForText', () {
       test('When count > 20, expect 1.3 times', () {
         expect(
-          PseudoGenerator.pseudotranslationLengthForText(
+          pseudoGenerator.pseudotranslationLengthForText(
             _generateStringWithLength(21),
           ),
           (21 * 1.3).ceil(),
@@ -250,7 +290,7 @@ void main() {
 
       test('When count > 10, expect 1.4 times', () {
         expect(
-          PseudoGenerator.pseudotranslationLengthForText(
+          pseudoGenerator.pseudotranslationLengthForText(
             _generateStringWithLength(11),
           ),
           (11 * 1.4).ceil(),
@@ -259,7 +299,7 @@ void main() {
 
       test('When count < 11, expect 1.5 times', () {
         expect(
-          PseudoGenerator.pseudotranslationLengthForText(
+          pseudoGenerator.pseudotranslationLengthForText(
             _generateStringWithLength(10),
           ),
           (10 * 1.5).ceil(),

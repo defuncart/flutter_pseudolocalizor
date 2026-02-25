@@ -11,11 +11,13 @@ import '../extensions/supported_language_extensions.dart';
 import 'unicode_fallback.dart';
 
 /// Base pseudolocalization generation logic which can be utilized by file generators
-mixin PseudoGenerator {
+class PseudoGenerator {
   /// A random number generator
-  static final _random = Random();
+  final Random _random;
 
-  static String generatePseudoTranslation(
+  PseudoGenerator({required int seed}) : _random = Random(seed);
+
+  String generatePseudoTranslation(
     String baseText, {
     List<UnicodeBlock>? unicodeBlocks,
     SupportedLanguage? languageToGenerate,
@@ -108,7 +110,7 @@ mixin PseudoGenerator {
 
   /// Repeats [count] vowels in [text], i.e. Hello => Heelloo
   @visibleForTesting
-  static String repeatVowels(
+  String repeatVowels(
     String text, {
     required int count,
   }) {
@@ -146,7 +148,7 @@ mixin PseudoGenerator {
 
   /// Returns a string containing mapped special characters (a => ä) for the selected language.
   @visibleForTesting
-  static String addSpecialCharactersToText(
+  String addSpecialCharactersToText(
     String text, {
     required SupportedLanguage? language,
     required List<UnicodeBlock> blocks,
@@ -171,7 +173,7 @@ mixin PseudoGenerator {
 
   /// Returns a string containing [count] random special characters for the selected language.
   @visibleForTesting
-  static String generateRandomSpecialCharacters(
+  String generateRandomSpecialCharacters(
     int count, {
     required SupportedLanguage? language,
     required List<UnicodeBlock> blocks,
@@ -192,7 +194,7 @@ mixin PseudoGenerator {
 
   /// Returns a random special character for [language] and [blocks].
   @visibleForTesting
-  static String randomSpecialCharacter({
+  String randomSpecialCharacter({
     required SupportedLanguage? language,
     required List<UnicodeBlock> blocks,
   }) {
@@ -205,7 +207,7 @@ mixin PseudoGenerator {
 
   /// Returns a list of special characters for [language] and [blocks].
   @visibleForTesting
-  static List<String> specialCharactersForSupportedLanguage(
+  List<String> specialCharactersForSupportedLanguage(
     SupportedLanguage? language, {
     required List<UnicodeBlock> blocks,
   }) =>
@@ -215,7 +217,7 @@ mixin PseudoGenerator {
 
   /// Returns mapping characters for [language] and [blocks].
   @visibleForTesting
-  static Map<String, List<String>> mappingCharactersForSupportedLanguage(
+  Map<String, List<String>> mappingCharactersForSupportedLanguage(
     SupportedLanguage? language, {
     required List<UnicodeBlock> blocks,
   }) =>
@@ -237,7 +239,7 @@ mixin PseudoGenerator {
 
   /// Generates the required words for [expansionCount], i.e. `one two`.
   @visibleForTesting
-  static String generateNumberWords({required int expansionCount}) {
+  String generateNumberWords({required int expansionCount}) {
     if (expansionCount < 1) {
       return '';
     }
@@ -260,7 +262,7 @@ mixin PseudoGenerator {
   ///
   /// As a quick rule of thumb, using [IGDA Localization SIG](https://www.gamasutra.com/blogs/IGDALocalizationSIG/20180504/317560/PseudoLocalization__A_Must_in_Video_Gaming.php)'s suggestion.
   @visibleForTesting
-  static int pseudotranslationLengthForText(String text) {
+  int pseudotranslationLengthForText(String text) {
     if (text.length > 20) {
       return (text.length * 1.3).ceil();
     } else if (text.length > 10) {

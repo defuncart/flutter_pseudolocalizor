@@ -1,5 +1,6 @@
 ## [0.6.0] - XX/XX/XXXX
 
+* Use seed number to ensure same random generated pseudo strings.
 * Set Dart 3 as min sdk constraint.
 
 ## [0.5.1] - 24/07/2021

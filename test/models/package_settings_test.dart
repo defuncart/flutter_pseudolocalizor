@@ -12,6 +12,7 @@ void main() {
       replaceBase: null,
       unicodeBlocks: null,
       languagesToGenerate: null,
+      seed: null,
       useBrackets: null,
       textExpansionFormat: null,
       textExpansionRatio: null,
@@ -25,6 +26,7 @@ void main() {
     expect(packageSettings.replaceBase, isNotNull);
     expect(packageSettings.unicodeBlocks, isNull);
     expect(packageSettings.languagesToGenerate, isNull);
+    expect(packageSettings.seed, isNotNull);
     expect(packageSettings.useBrackets, isNotNull);
     expect(packageSettings.textExpansionFormat, isNotNull);
     expect(packageSettings.textExpansionRatio, isNull);
@@ -39,6 +41,7 @@ void main() {
       replaceBase: true,
       unicodeBlocks: ['latinSupplement'],
       languagesToGenerate: ['de'],
+      seed: 100,
       useBrackets: true,
       textExpansionFormat: 'append',
       textExpansionRatio: 1.5,
@@ -51,6 +54,7 @@ void main() {
     expect(packageSettings.replaceBase, isTrue);
     expect(packageSettings.unicodeBlocks, [UnicodeBlock.latinSupplement]);
     expect(packageSettings.languagesToGenerate, [SupportedLanguage.de]);
+    expect(packageSettings.seed, 100);
     expect(packageSettings.useBrackets, true);
     expect(packageSettings.textExpansionFormat, TextExpansionFormat.append);
     expect(packageSettings.textExpansionRatio, 1.5);
@@ -66,6 +70,7 @@ void main() {
         replaceBase: false,
         unicodeBlocks: ['latinSupplement'],
         languagesToGenerate: null,
+        seed: null,
         useBrackets: null,
         textExpansionFormat: null,
         textExpansionRatio: null,
@@ -85,6 +90,7 @@ void main() {
         replaceBase: true,
         unicodeBlocks: null,
         languagesToGenerate: null,
+        seed: null,
         useBrackets: null,
         textExpansionFormat: null,
         textExpansionRatio: null,
@@ -104,6 +110,7 @@ void main() {
         replaceBase: true,
         unicodeBlocks: ['latinSupplement'],
         languagesToGenerate: null,
+        seed: null,
         useBrackets: null,
         textExpansionFormat: null,
         textExpansionRatio: null,
@@ -122,6 +129,7 @@ void main() {
       replaceBase: null,
       unicodeBlocks: null,
       languagesToGenerate: null,
+      seed: null,
       useBrackets: null,
       textExpansionFormat: null,
       textExpansionRatio: null,

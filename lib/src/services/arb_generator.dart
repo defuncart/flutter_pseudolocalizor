@@ -11,13 +11,15 @@ final _regExPluralSelect = RegExp(r'\{[a-z_]\w*, (plural|select){1}, .*\}');
 final _regExFnComponent = RegExp(r'([a-z_]\w*\{([a-zA-Z0-9_ ]*)\})');
 
 /// Generates pseudo localizations for an arb file
-class ARBGenerator with PseudoGenerator {
+class ARBGenerator {
   /// Generates pseudo localizations with a given [file] and [packageSettings]
   static String generate(
     File file,
     PackageSettings packageSettings, {
     SupportedLanguage? supportedLanguage,
   }) {
+    final pseudoGenerator = PseudoGenerator(seed: packageSettings.seed);
+
     // decode arb into a map
     final stringContents = file.readAsStringSync();
     final arbContents = json.decode(stringContents);
@@ -49,7 +51,7 @@ class ARBGenerator with PseudoGenerator {
 
           final matches = _matches(value);
           for (final match in matches) {
-            final psuedoSelect = PseudoGenerator.generatePseudoTranslation(
+            final psuedoSelect = pseudoGenerator.generatePseudoTranslation(
               match.text,
               languageToGenerate: supportedLanguage,
               unicodeBlocks: packageSettings.unicodeBlocks,
@@ -65,7 +67,7 @@ class ARBGenerator with PseudoGenerator {
             );
           }
         } else {
-          pseudoText = PseudoGenerator.generatePseudoTranslation(
+          pseudoText = pseudoGenerator.generatePseudoTranslation(
             value,
             languageToGenerate: supportedLanguage,
             unicodeBlocks: packageSettings.unicodeBlocks,
