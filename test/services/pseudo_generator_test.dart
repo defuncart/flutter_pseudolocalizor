@@ -54,7 +54,7 @@ void main() {
             useBrackets: false,
             textExpansionFormat: TextExpansionFormat.repeatVowels,
           ),
-          'Ŧⱨɇɇéⱸ ɋůµȗȋĩ©ƙ ƀŕⱺðⱳň ƒöƣₓ ǰµũmƥƨ øðⱱĕȩř ⱦħěƹ ⱡaaɀŷ ďôₒğ.',
+          'Ŧⱨɇɇé ɋȕůµⁱȋĩ©ƙ ƀŕⱺðⱳň ƒöƣₓ ǰµũmƥƨ øðⱱĕȩř ⱦħěƹ ⱡaaɀŷ ďôₒğ.',
         );
       });
 
@@ -68,7 +68,7 @@ void main() {
             useBrackets: true,
             textExpansionFormat: TextExpansionFormat.repeatVowels,
           ),
-          '[Ŧⱨɇɇéⱸ ɋůµȗȋĩ©ƙ ƀŕⱺðⱳň ƒöƣₓ ǰµũmƥƨ øðⱱĕȩř ⱦħěƹ ⱡaaɀŷ ďôₒğ.]',
+          '[Ŧⱨɇɇé ɋȕůµⁱȋĩ©ƙ ƀŕⱺðⱳň ƒöƣₓ ǰµũmƥƨ øðⱱĕȩř ⱦħěƹ ⱡaaɀŷ ďôₒğ.]',
         );
       });
 
@@ -189,7 +189,7 @@ void main() {
         );
       });
 
-      test('When hello, goodbye count = 5, expect heelloo, goooodbyye', () {
+      test('When hello, goodbye count = 5, expect heelloo, goooodbyee', () {
         expect(
           pseudoGenerator.repeatVowels(
             'hello, goodbye',

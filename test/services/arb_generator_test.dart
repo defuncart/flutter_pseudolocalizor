@@ -71,20 +71,23 @@ void main() {
       decodedContents,
       {
         '@@locale': 'en',
-        'myKey': '[Ȟₑɇɇéⱹⱡⱺǫ ⱳðȍɍĺǆ¡]',
+        'myKey': '[Ȟₑɇɇƪⱹöⱺǫ ⱳðȍɍĺǆ¡]',
         '@myKey': {},
-        'welcome': '[Ɯǝɇëēȇēⱸêłȼȯöȫôȣȭmȩę {firstName}¡]',
+        'welcome': '[Ɯₑėȅȴćº°mₔₑ {firstName}¡]',
         '@welcome': {},
         'numberMessages':
-            '{count, plural, zero{[¥ðǭŭµ ĥaaⱱėė ñðƣ ŋǝēŵ mĕȩśƨaaĝěƨ]} one{[Ƴºōùű ⱨaaⱽēǝ ¹ ȵēěŵ mȇǝƽȿaaǵĕ]} other{[Ȳœȍðȍűùǔ ƕaⱽɇ {count} ⁿêęₑȇŵ mĕⱸₔęșšaaağₔǝș]}}',
-        '@numberMessages': {'description': 'An info message about new messages count'},
-        'whoseBook': '{sex, select, male{[Ħïǁìȿ ƃõƣōǫⱪ]} female{[Ȟȩēêɍ ƅơȫȯȫķ]} other{[Ƭȟęęⱻǁǃɍ ƀơôŏðĸ]}}',
+            '{count, plural, zero{[¥ðǭŭµ ĥaaⱱėė ñðƣ ŋǝēŵ mĕȩśƨaaĝěƨ]} one{[Ƴºōùű ⱨaaⱽēǝ ¹ ȵēěŵ mȇǝƽȿaaǵĕ]} other{[Ȳœȍµù ħaaⱱȇ {count} ǹɇɇéŵ męₑšȿaaģⱸₔš]}}',
+        '@numberMessages': {
+          'description': 'An info message about new messages count'
+        },
+        'whoseBook':
+            '{sex, select, male{[Ⱶĩȋǀŝ ßøⱷøŏƙ]} female{[Ⱶéēₑř ßøǭœºĸ]} other{[Ťħëēȇıȋ® ßⱺȯöȫķ]}}',
         '@whoseBook': {'description': 'A message determine whose book it is'},
         'unreadEmails':
-            '{howMany, plural, zero{[Ʈħɇèęéɍȇēⱻè aaaa®ėₔēě ⁿₒǒȍó ŭůǚǜňŕⱸēaaď ȅëmaîǉș ſö® {userName}]} one{[Țĥƹéěȩřȩⱻĕȩ ǁìįⁱś ₁ ǔµưŭǹřȅⱻȩēaaaƌ ĕƹmaaȉƪ ſōŗ {userName}]} other{[Ʈƕȇĕèǝ®ⱸĕƹȇ aaŕè {howMany} ưüǘǚƞŕȩȅₑëaaaaƌ ƹⱻëmaaǁƪȿ ſǫȓ {userName}]}}',
+            '{howMany, plural, zero{[Ƭȟĕₔȑëƹ aaŗɇè ŋºȱ ǔµƞɍₑėaađ ēěmaaïⱡś ſó® {userName}]} one{[Ŧħⱻǝŕⱸē ĭĳś ¹ µũǌŕƹëaaƌ ƹémaaⁱĳƚ ſó® {userName}]} other{[Ťƕéęřéě aaȓēȅ {howMany} ŭµńřⱻȩaađ ĕĕmaaǀȉƪș ƒȍȑ {userName}]}}',
         '@unreadEmails': {'description': 'How many unread emails for user'},
         'weatherReaction':
-            '{weatherType, select, sunny{[Ⱳⱷơº°ⱨºŏǒ]} cloudy{[Ɱₑēⱸⱨ]} rainy{[Ⱳèëĕėȟ]} other{[ŌǾȪⱦⱨêëř]}}',
+            '{weatherType, select, sunny{[Ŵȯⱺȣöȟₒǒ°]} cloudy{[Ɱēèȅƕ]} rainy{[Ⱳⱸₑëȩħ]} other{[ȌÓÔťⱨëēŗ]}}',
         '@weatherReaction': {'description': 'Reaction to types of weather'}
       },
     );
@@ -115,25 +118,25 @@ void main() {
 
     final expectedValues = {
       SupportedLanguage.de: {
-        "@@locale": "de",
-        "myKey": "[Heeeellöö wöörld!]",
-        "@myKey": {},
-        "welcome": "[Weeeeeeeelcöööööömee {firstName}!]",
-        "@welcome": {}
+        '@@locale': 'de',
+        'myKey': '[Heeellööö wöörld!]',
+        '@myKey': {},
+        'welcome': '[Weeelcöömee {firstName}!]',
+        '@welcome': {}
       },
       SupportedLanguage.es: {
-        "@@locale": "es",
-        "myKey": "[Hééééllóó wóórld!]",
-        "@myKey": {},
-        "welcome": "[Wéééééééélcóóóóóóméé {firstName}!]",
-        "@welcome": {}
+        '@@locale': 'es',
+        'myKey': '[Héééllóóó wóórld!]',
+        '@myKey': {},
+        'welcome': '[Wééélcóóméé {firstName}!]',
+        '@welcome': {}
       },
       SupportedLanguage.pl: {
-        "@@locale": "pl",
-        "myKey": "[Hęęęęłłóó wóórłd!]",
-        "@myKey": {},
-        "welcome": "[Węęęęęęęęłćóóóóóómęę {firstName}!]",
-        "@welcome": {}
+        '@@locale': 'pl',
+        'myKey': '[Hęęęłłóóó wóórłd!]',
+        '@myKey': {},
+        'welcome': '[Węęęłćóómęę {firstName}!]',
+        '@welcome': {}
       }
     };
 
@@ -148,6 +151,47 @@ void main() {
       final decodedContents = jsonDecode(contents);
       expect(decodedContents, expectedValues[language]);
     }
+
+    // clear up and delete file
+    file.deleteSync();
+  });
+
+  test('test potential edge cases', () {
+    // create file
+    final file = File('_.arb');
+    file.writeAsStringSync('''{
+  "@@locale": "en",
+  "key1": "{value}%",
+  "@key1": {}
+}''');
+
+    // initialize settings
+    final packageSettings = PackageSettings(
+      inputFilepath: '_.arb',
+      replaceBase: true,
+      unicodeBlocks: null,
+      languagesToGenerate: null,
+      seed: null,
+      useBrackets: true,
+      textExpansionFormat: null,
+      textExpansionRatio: null,
+      arbSettings: null,
+      patternsToIgnore: null,
+      keysToIgnore: null,
+    );
+
+    final contents = ARBGenerator.generate(file, packageSettings);
+    expect(contents, isNotNull);
+
+    final decodedContents = jsonDecode(contents);
+    expect(
+      decodedContents,
+      {
+        '@@locale': 'en',
+        "key1": "[{value}%]",
+        "@key1": {},
+      },
+    );
 
     // clear up and delete file
     file.deleteSync();
