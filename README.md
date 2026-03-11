@@ -29,7 +29,7 @@ There are multiple ways to format the text expansion, for instance:
 - appending random special characters: `Hellö Wörld äßÜẞ`.
 - repeating all vowels multiple times: `Heellöö Wöörld`.
 - appending number words: `Hellö Wörld one two`.
-- wrapping the base text with exclamation marks:  `!!! Hellö Wörld !!!`)
+- wrapping the base text with exclamation marks:  `!!! Hellö Wörld !!!`
 
 Moreover, the text expansion is often wrapped in square brackets to easily determine UI clipping, while it may also use punctuation of the target language (i.e. ¿ and ¡ in Spanish).
 
@@ -55,7 +55,7 @@ dev_dependencies:
   flutter_pseudolocalizor: 
 ```
 
-Next define settings in `pubspec.yaml` for the package:
+Next define configuration settings in your project's `pubspec.yaml`:
 
 ```yaml
 flutter_pseudolocalizor:
@@ -113,16 +113,12 @@ flutter_pseudolocalizor:
 | delimiter                  | A delimiter to separate columns in the input CSV file. Defaults to `,`.                                                 |
 | column_index               | The column index of the base language (en) in the input CSV file. Defaults to `1`.                                      |
 
+Alternatively, these settings can be defined in `flutter_pseudolocalizor.yaml`
+
 Ensure that your current working directory is the project root, then run the terminal command:
 
 ```sh
 dart run flutter_pseudolocalizor
-```
-
-or
-
-```sh
-flutter pub run flutter_pseudolocalizor
 ```
 
 to generate output files.
