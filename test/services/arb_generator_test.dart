@@ -162,14 +162,14 @@ void main() {
     file.writeAsStringSync('''{
   "@@locale": "en",
   "key1": "{value}%",
-  "key2": "error {error}",
+  "key2": "Error: {error}",
   "key3": "{value}{unit, select, seconds{sec} minutes{min} hours{h} other{}}"
 }''');
 
     // initialize settings
     final packageSettings = PackageSettings(
       inputFilepath: '_.arb',
-      replaceBase: true,
+      replaceBase: false,
       unicodeBlocks: null,
       languagesToGenerate: null,
       seed: null,
@@ -181,18 +181,22 @@ void main() {
       keysToIgnore: null,
     );
 
-    final contents = ARBGenerator.generate(file, packageSettings);
+    final contents = ARBGenerator.generate(
+      file,
+      packageSettings,
+      supportedLanguage: SupportedLanguage.zh,
+    );
     expect(contents, isNotNull);
 
     final decodedContents = jsonDecode(contents);
     expect(
       decodedContents,
       {
-        '@@locale': 'en',
-        'key1': '[{value}%]',
-        'key2': '[ëₑɇȑŗőöŗ {error}]',
+        '@@locale': 'zh',
+        'key1': '{value}文件',
+        'key2': '管理数据{error}',
         'key3':
-            '[{value}]{unit, select, seconds{[ŝₔₔⱸ©]} minutes{[mĭïîǹ]} hours{[ĥ]} other{[]}}',
+            '{value}{unit, select, seconds{数据} minutes{错误} hours{错误} other{}}'
       },
     );
 

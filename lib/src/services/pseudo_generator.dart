@@ -28,33 +28,12 @@ class PseudoGenerator {
   }) {
     // POC
     if (languageToGenerate == SupportedLanguage.zh) {
-      final words = [
-        '文件',
-        '系统',
-        '设置',
-        '用户',
-        '数据',
-        '网络',
-        '错误',
-        '加载',
-        '更新',
-        '状态',
-        '安全',
-        '配置',
-        '服务',
-        '信息',
-        '管理'
-      ];
-
-      final textWithNoSpaces = baseText.replaceAll(' ', '');
-      final textLength = (textWithNoSpaces.length * 0.55).round();
-
-      var newText = '';
-      do {
-        newText += words[_random.nextInt(words.length)];
-      } while (newText.length < textLength);
-
-      return newText;
+      return patternToIgnore != null
+          ? baseText.splitMapJoin(
+              patternToIgnore,
+              onNonMatch: (value) => _zh(value),
+            )
+          : _zh(baseText);
     }
 
     final blocks = unicodeBlocks ?? DefaultSettings.unicodeBlocks;
@@ -160,6 +139,40 @@ class PseudoGenerator {
         (textExpansion.isNotEmpty ? ' $textExpansion' : '') +
         (useExclamationMarks ? ' !!!' : '') +
         (useBrackets ? ']' : '');
+  }
+
+  String _zh(String text) {
+    if (text.isEmpty) {
+      return text;
+    }
+
+    final words = [
+      '文件',
+      '系统',
+      '设置',
+      '用户',
+      '数据',
+      '网络',
+      '错误',
+      '加载',
+      '更新',
+      '状态',
+      '安全',
+      '配置',
+      '服务',
+      '信息',
+      '管理'
+    ];
+
+    final textWithNoSpaces = text.replaceAll(' ', '');
+    final textLength = (textWithNoSpaces.length * 0.55).round();
+
+    var newText = '';
+    do {
+      newText += words[_random.nextInt(words.length)];
+    } while (newText.length < textLength);
+
+    return newText;
   }
 
   /// Repeats [count] vowels in [text], i.e. Hello => Heelloo
