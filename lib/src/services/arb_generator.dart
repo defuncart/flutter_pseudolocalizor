@@ -7,8 +7,6 @@ import '../models/package_settings.dart';
 import 'pseudo_generator.dart';
 
 final _regExVariableName = RegExp(r'\{[a-z_]\w*\}');
-final _regExPluralSelect = RegExp(r'\{[a-z_]\w*, (plural|select){1}, .*\}');
-final _regExFnComponent = RegExp(r'([a-z_]\w*\{([a-zA-Z0-9_ ]*)\})');
 
 /// Generates pseudo localizations for an arb file
 class ARBGenerator {
@@ -41,42 +39,33 @@ class ARBGenerator {
           !(packageSettings.keysToIgnore?.contains(key) ?? false);
       if (shouldReplace) {
         final String value = arbContents[key];
-        String pseudoText;
 
         final patternToIgnore = packageSettings.patternToIgnore != null
             ? _regExVariableName.combine(packageSettings.patternToIgnore!)
             : _regExVariableName;
-        if (_regExPluralSelect.hasMatch(value)) {
-          pseudoText = value;
 
-          final matches = _matches(value);
-          for (final match in matches) {
-            final psuedoSelect = pseudoGenerator.generatePseudoTranslation(
-              match.text,
-              languageToGenerate: supportedLanguage,
-              unicodeBlocks: packageSettings.unicodeBlocks,
-              useBrackets: packageSettings.useBrackets,
-              textExpansionFormat: packageSettings.textExpansionFormat,
-              textExpansionRate: packageSettings.textExpansionRatio,
-              patternToIgnore: patternToIgnore,
-            );
-
-            pseudoText = pseudoText.replaceFirst(
-              match.function,
-              match.function.replaceAll(match.text, psuedoSelect),
-            );
-          }
-        } else {
-          pseudoText = pseudoGenerator.generatePseudoTranslation(
-            value,
-            languageToGenerate: supportedLanguage,
-            unicodeBlocks: packageSettings.unicodeBlocks,
-            useBrackets: packageSettings.useBrackets,
-            textExpansionFormat: packageSettings.textExpansionFormat,
-            textExpansionRate: packageSettings.textExpansionRatio,
-            patternToIgnore: patternToIgnore,
-          );
-        }
+        final pseudoText = _isSelectOrPlural(value)
+            ? _parseSelectPluralIcuString(
+                value,
+                (text) => pseudoGenerator.generatePseudoTranslation(
+                  text,
+                  languageToGenerate: supportedLanguage,
+                  unicodeBlocks: packageSettings.unicodeBlocks,
+                  useBrackets: packageSettings.useBrackets,
+                  textExpansionFormat: packageSettings.textExpansionFormat,
+                  textExpansionRate: packageSettings.textExpansionRatio,
+                  patternToIgnore: patternToIgnore,
+                ),
+              )
+            : pseudoGenerator.generatePseudoTranslation(
+                value,
+                languageToGenerate: supportedLanguage,
+                unicodeBlocks: packageSettings.unicodeBlocks,
+                useBrackets: packageSettings.useBrackets,
+                textExpansionFormat: packageSettings.textExpansionFormat,
+                textExpansionRate: packageSettings.textExpansionRatio,
+                patternToIgnore: patternToIgnore,
+              );
 
         arbContents[key] = pseudoText;
       }
@@ -86,83 +75,104 @@ class ARBGenerator {
     return encoder.convert(arbContents);
   }
 
-  /// TODO determine matches basic on RegExp and funky logic
-  static Iterable<_Match> _matches(String value) {
-    final returnValue = <_Match>[];
+  // Previously a regex was used to parse plural, select ICU strings
+  // This results in some issues with nested variables
+  // Manually parsing the string leads to more predictable results
+  static String _parseSelectPluralIcuString(
+    String input,
+    String Function(String) onGenerate,
+  ) {
+    final buffer = StringBuffer();
+    int i = 0;
 
-    final matchesWithoutVariables = _regExFnComponent.allMatches(value);
-    for (final match in matchesWithoutVariables) {
-      returnValue.add(
-        _Match(function: match.group(1)!, text: match.group(2)!),
-      );
-    }
-
-    final exps = <String>[];
-    for (final match in matchesWithoutVariables) {
-      if (match.groupCount > 0) {
-        exps.add(match.group(1)!);
+    while (i < input.length) {
+      if (input[i] != '{') {
+        int start = i;
+        while (i < input.length && input[i] != '{') {
+          i++;
+        }
+        buffer.write(onGenerate(input.substring(start, i)));
+        continue;
       }
-    }
 
-    final matchAllCases =
-        RegExp(r'\{[a-z_]\w*, (plural|select){1}, (.*)\}').allMatches(value);
-    var matchesWithVariables = matchAllCases.first.group(2)!;
-    for (final exp in exps) {
-      matchesWithVariables = matchesWithVariables.replaceAll(exp, '');
-    }
-    matchesWithVariables = matchesWithVariables.trim();
-
-    if (matchesWithVariables.isNotEmpty) {
-      final components = matchesWithVariables.split(RegExp(r'(?<=\}\s)'));
-
-      var function = '';
-      for (final component in components) {
-        function += component;
-        if (function.countCurlyOpenBrackets ==
-            function.countCurlyClosedBrackets) {
-          returnValue.add(
-            _Match(
-              function: function,
-              text: RegExp(r'\{(.*)\}').allMatches(function).first.group(1)!,
-            ),
-          );
-          function = '';
+      // Start of a block
+      int start = i;
+      int depth = 0;
+      while (i < input.length) {
+        if (input[i] == '{') {
+          depth++;
+        } else if (input[i] == '}') {
+          depth--;
+        }
+        i++;
+        if (depth == 0) {
+          break;
         }
       }
-    }
 
-    return returnValue;
-  }
-}
-
-class _Match {
-  const _Match({
-    required this.function,
-    required this.text,
-  });
-
-  final String function;
-  final String text;
-}
-
-extension on String {
-  int get countCurlyOpenBrackets {
-    var count = 0;
-    for (var i = 0; i < length; i++) {
-      if (this[i] == '{') {
-        count++;
+      final block = input.substring(start, i);
+      if (_isSelectOrPlural(block)) {
+        buffer.write(
+          _generatePseudoTranslationForPluralOrSelect(block, onGenerate),
+        );
+      } else {
+        buffer.write(onGenerate(block));
       }
     }
-    return count;
+
+    return buffer.toString();
   }
 
-  int get countCurlyClosedBrackets {
-    var count = 0;
-    for (var i = 0; i < length; i++) {
-      if (this[i] == '}') {
-        count++;
-      }
+  static bool _isSelectOrPlural(String block) =>
+      block.contains(', select,') || block.contains(', plural,');
+
+  static String _generatePseudoTranslationForPluralOrSelect(
+    String block,
+    String Function(String) onGenerate,
+  ) {
+    final firstComma = block.indexOf(',');
+    if (firstComma == -1) {
+      return onGenerate(block);
     }
-    return count;
+
+    final variable = block.substring(0, firstComma + 1);
+    final rest = block.substring(firstComma + 1);
+
+    final buffer = StringBuffer();
+    buffer.write(variable);
+
+    int i = 0;
+    while (i < rest.length) {
+      // copy everything until next '{'
+      while (i < rest.length && rest[i] != '{') {
+        buffer.write(rest[i]);
+        i++;
+      }
+      if (i >= rest.length) break;
+
+      // at '{', find matching '}'
+      int depth = 1;
+      i++; // skip opening '{'
+
+      int valueStart = i;
+      while (i < rest.length && depth > 0) {
+        if (rest[i] == '{') {
+          depth++;
+        } else if (rest[i] == '}') {
+          depth--;
+        }
+        i++;
+      }
+      int valueEnd = i - 1;
+
+      final innerText = rest.substring(valueStart, valueEnd);
+      final pseudoValue = onGenerate(innerText);
+
+      buffer.write('{');
+      buffer.write(pseudoValue);
+      buffer.write('}');
+    }
+
+    return buffer.toString();
   }
 }

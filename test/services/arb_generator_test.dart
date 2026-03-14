@@ -162,7 +162,8 @@ void main() {
     file.writeAsStringSync('''{
   "@@locale": "en",
   "key1": "{value}%",
-  "@key1": {}
+  "key2": "error {error}",
+  "key3": "{value}{unit, select, seconds{sec} minutes{min} hours{h} other{}}"
 }''');
 
     // initialize settings
@@ -188,8 +189,10 @@ void main() {
       decodedContents,
       {
         '@@locale': 'en',
-        "key1": "[{value}%]",
-        "@key1": {},
+        'key1': '[{value}%]',
+        'key2': '[ëₑɇȑŗőöŗ {error}]',
+        'key3':
+            '[{value}]{unit, select, seconds{[ŝₔₔⱸ©]} minutes{[mĭïîǹ]} hours{[ĥ]} other{[]}}',
       },
     );
 
