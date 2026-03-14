@@ -14,6 +14,8 @@ jobs:
           channel: ${{ steps.fvm-config-action.outputs.FLUTTER_CHANNEL }}
       - name: Install packages
         run: dart pub get
+      - name: Formatting
+        run: dart format . -l 80 --set-exit-if-changed
       - name: Lint
         run: dart analyze
       - name: Unit tests

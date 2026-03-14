@@ -16,3 +16,6 @@ dependencies:
 dev_dependencies:
   test: ^1.25.5
   lints: ^1.0.1
+  test_descriptor: ^2.0.1
+  test_process: ^2.1.0
+  path: ^1.9.0

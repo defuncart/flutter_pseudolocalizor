@@ -5,16 +5,17 @@ import 'package:flutter_pseudolocalizor/flutter_pseudolocalizor.dart';
 import 'utils/yaml_parser.dart';
 
 void main() {
-  final packageSettings = YamlParser.packageSettingsFromPubspec();
+  final packageSettings = YamlParser.packageSettingsFromPubspecOrOwnYaml();
   if (packageSettings == null) {
-    print('Error! Settings for flutter_pseudolocalizor not found in pubspec.');
+    print(
+        'Error! Settings for flutter_pseudolocalizor not found in pubspec.yaml or flutter_pseudolocalizor.yaml.');
     exit(0);
   }
 
   if (packageSettings.replaceBase == false &&
       (packageSettings.languagesToGenerate == null ||
           packageSettings.languagesToGenerate!.isEmpty)) {
-    print('Error! Nothing to do! Please specify languages in pubspec.');
+    print('Error! Nothing to do! Please specify languages.');
     exit(0);
   }
 

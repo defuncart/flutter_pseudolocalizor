@@ -34,15 +34,26 @@ class YamlCSVArguments {
 
 /// A class which parses yaml
 class YamlParser {
-  /// The path to the pubspec file path
+  /// The path to the project's pubspec file
   static const pubspecFilePath = 'pubspec.yaml';
+
+  /// The path to a yaml file containing settings
+  static const ownYamlFilePath = 'flutter_pseudolocalizor.yaml';
 
   /// The section id for package settings in the yaml file
   static const yamlPackageSectionId = 'flutter_pseudolocalizor';
 
   /// Returns the package settings from pubspec
-  static PackageSettings? packageSettingsFromPubspec() {
-    final yamlMap = _packageSettingsAsYamlMap();
+  static PackageSettings? packageSettingsFromPubspecOrOwnYaml() {
+    final yamlMapFromPubspec = _packageSettingsAsYamlMap(pubspecFilePath);
+    final yamlMapFromOwnYaml = _packageSettingsAsYamlMap(ownYamlFilePath);
+
+    if (yamlMapFromPubspec != null && yamlMapFromOwnYaml != null) {
+      print(
+          'Settings defined in both $ownYamlFilePath and $pubspecFilePath. Defaulting to $ownYamlFilePath.');
+    }
+
+    final yamlMap = yamlMapFromOwnYaml ?? yamlMapFromPubspec;
     if (yamlMap != null) {
       final inputFilepath = yamlMap[YamlArguments.inputFilepath];
       if (inputFilepath == null) {
@@ -101,11 +112,18 @@ class YamlParser {
   }
 
   /// Returns the package settings from pubspec as a yaml map
-  static Map<dynamic, dynamic>? _packageSettingsAsYamlMap() {
-    final file = File(pubspecFilePath);
-    final yamlString = file.readAsStringSync();
-    final Map<dynamic, dynamic> yamlMap = loadYaml(yamlString);
-    return yamlMap[yamlPackageSectionId];
+  static Map<dynamic, dynamic>? _packageSettingsAsYamlMap(String filepath) {
+    final file = File(filepath);
+    if (file.existsSync()) {
+      final yamlString = file.readAsStringSync();
+      try {
+        final Map<dynamic, dynamic> yamlMap = loadYaml(yamlString);
+        return yamlMap[yamlPackageSectionId];
+      } catch (e) {
+        print('Error! Unable to parse $e');
+      }
+    }
+    return null;
   }
 
   /// Converts a YamlList? into a List<String>?
