@@ -15,7 +15,7 @@ void main() {
   if (packageSettings.replaceBase == false &&
       (packageSettings.languagesToGenerate == null ||
           packageSettings.languagesToGenerate!.isEmpty)) {
-    print('Error! Nothing to do! Please specify languages in pubspec.');
+    print('Error! Nothing to do! Please specify languages.');
     exit(0);
   }
 
