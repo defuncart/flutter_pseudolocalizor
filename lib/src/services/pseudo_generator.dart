@@ -45,7 +45,7 @@ class PseudoGenerator {
           );
           break;
         case TextExpansionFormat.repeatVowels:
-          // Consider simplifying logic/moving to method
+          // consider simplifying logic/moving to method
           if (patternToIgnore == null && !baseText.hasVowels) {
             _baseText = baseText +
                 ' ' +
@@ -55,17 +55,16 @@ class PseudoGenerator {
                   blocks: blocks,
                 );
           } else {
-            // Helper to expand a single piece of text
-            String _expandSegment(String segment, int totalExpansion) {
-              if (segment.isEmpty) {
-                return segment;
+            String _expandText(String text, int totalExpansion) {
+              if (text.isEmpty) {
+                return text;
               }
 
-              if (segment.hasVowels) {
-                return repeatVowels(segment, count: totalExpansion);
+              if (text.hasVowels) {
+                return repeatVowels(text, count: totalExpansion);
               } else {
                 return addSpecialCharactersToText(
-                  segment,
+                  text,
                   language: languageToGenerate,
                   blocks: blocks,
                 );
@@ -83,11 +82,11 @@ class PseudoGenerator {
                             (value.length / baseText.length))
                         .ceil(),
                   );
-                  return _expandSegment(value, proportionalLength);
+                  return _expandText(value, proportionalLength);
                 },
               );
             } else {
-              _baseText = _expandSegment(
+              _baseText = _expandText(
                 _baseText,
                 numberOfExpansionCharactersToGenerate,
               );

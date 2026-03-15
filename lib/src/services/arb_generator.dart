@@ -95,7 +95,6 @@ class ARBGenerator {
         continue;
       }
 
-      // Start of a block
       int start = i;
       int depth = 0;
       while (i < input.length) {
