@@ -53,7 +53,7 @@ void main() {
     expect(file.readAsStringSync(), '''
 {
   "@@locale": "en",
-  "myKey": "[Ȟₑɇɇéⱹⱡⱺǫ ⱳðȍɍĺǆ¡]"
+  "myKey": "[Ȟₑɇɇƪⱹöⱺǫ ⱳðȍɍĺǆ¡]"
 }''');
   });
 
@@ -82,7 +82,7 @@ void main() {
     expect(file.readAsStringSync(), '''
 {
   "@@locale": "en",
-  "myKey": "[Ȟₑɇɇéⱹⱡⱺǫ ⱳðȍɍĺǆ¡]"
+  "myKey": "[Ȟₑɇɇƪⱹöⱺǫ ⱳðȍɍĺǆ¡]"
 }''');
   });
 
@@ -112,7 +112,7 @@ void main() {
     expect(file.readAsStringSync(), '''
 {
   "@@locale": "en",
-  "myKey": "[Ȟₑɇɇéⱹⱡⱺǫ ⱳðȍɍĺǆ¡]"
+  "myKey": "[Ȟₑɇɇƪⱹöⱺǫ ⱳðȍɍĺǆ¡]"
 }''');
   });
 }

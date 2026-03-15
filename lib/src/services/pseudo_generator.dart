@@ -45,29 +45,52 @@ class PseudoGenerator {
           );
           break;
         case TextExpansionFormat.repeatVowels:
-          if (baseText.hasVowels) {
-            var count = 0;
-            while (count < numberOfExpansionCharactersToGenerate) {
-              _baseText = patternToIgnore != null
-                  ? _baseText.splitMapJoin(
-                      patternToIgnore,
-                      onNonMatch: (value) => repeatVowels(value,
-                          count: (numberOfExpansionCharactersToGenerate *
-                                  (value.length / baseText.length))
-                              .floor()),
-                    )
-                  : repeatVowels(
-                      _baseText,
-                      count: numberOfExpansionCharactersToGenerate - count,
-                    );
-              count = _baseText.length - baseText.length;
-            }
+          // consider simplifying logic/moving to method
+          if (patternToIgnore == null && !baseText.hasVowels) {
+            _baseText = baseText +
+                ' ' +
+                generateRandomSpecialCharacters(
+                  numberOfExpansionCharactersToGenerate,
+                  language: languageToGenerate,
+                  blocks: blocks,
+                );
           } else {
-            textExpansion = generateRandomSpecialCharacters(
-              numberOfExpansionCharactersToGenerate,
-              language: languageToGenerate,
-              blocks: blocks,
-            );
+            String _expandText(String text, int totalExpansion) {
+              if (text.isEmpty) {
+                return text;
+              }
+
+              if (text.hasVowels) {
+                return repeatVowels(text, count: totalExpansion);
+              } else {
+                return addSpecialCharactersToText(
+                  text,
+                  language: languageToGenerate,
+                  blocks: blocks,
+                );
+              }
+            }
+
+            if (patternToIgnore != null) {
+              _baseText = _baseText.splitMapJoin(
+                patternToIgnore,
+                onMatch: (match) => match[0]!,
+                onNonMatch: (value) {
+                  final proportionalLength = max(
+                    1,
+                    (numberOfExpansionCharactersToGenerate *
+                            (value.length / baseText.length))
+                        .ceil(),
+                  );
+                  return _expandText(value, proportionalLength);
+                },
+              );
+            } else {
+              _baseText = _expandText(
+                _baseText,
+                numberOfExpansionCharactersToGenerate,
+              );
+            }
           }
           break;
         case TextExpansionFormat.numberWords:
@@ -92,7 +115,7 @@ class PseudoGenerator {
             ),
           )
         : addSpecialCharactersToText(
-            baseText,
+            _baseText,
             language: languageToGenerate,
             blocks: blocks,
           );
@@ -118,32 +141,29 @@ class PseudoGenerator {
       return text;
     }
 
-    var elongatedText = text;
-    var temp = <String>[];
-    var vowelsRepeated = 0;
-    while (vowelsRepeated < count) {
-      for (var i = 0; i < elongatedText.length; i++) {
-        if (elongatedText[i].isVowel) {
-          temp.add(elongatedText[i]);
-          vowelsRepeated++;
-        }
-        temp.add(elongatedText[i]);
-
-        if (vowelsRepeated == count) {
-          if (i < elongatedText.length) {
-            temp.addAll(elongatedText.substring(i + 1).split(''));
-          }
-          break;
-        }
-      }
-
-      elongatedText = temp.reduce((value, element) => value + element);
-      temp.clear();
+    final chars = text.split('');
+    final totalVowels = chars.where((c) => c.isVowel).length;
+    if (totalVowels == 0) {
+      return text;
     }
 
-    return temp.isNotEmpty
-        ? temp.reduce((value, element) => value + element)
-        : elongatedText;
+    final minRepeatPerVowel = count ~/ totalVowels;
+    var remainder = count % totalVowels;
+
+    return chars.map((c) {
+      if (!c.isVowel) {
+        return c;
+      }
+
+      var repeats = minRepeatPerVowel;
+
+      if (remainder > 0) {
+        repeats++;
+        remainder--;
+      }
+
+      return c + List.filled(repeats, c).join();
+    }).join();
   }
 
   /// Returns a string containing mapped special characters (a => ä) for the selected language.

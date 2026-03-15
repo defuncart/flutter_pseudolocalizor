@@ -16,17 +16,37 @@ void main() {
     });
 
     group('generatePseudoTranslation', () {
-      test('When seed is given, expect same output', () {
+      test(
+          'When ${TextExpansionFormat.append}, default text expansion ratio and no brackets, expect correct output',
+          () {
         expect(
           pseudoGenerator.generatePseudoTranslation(
-            'A beautiful oasis invites eager curious minds to imagine unique adventures.',
-            languageToGenerate: SupportedLanguage.fr,
+            'The quick brown fox jumps over the lazy dog.',
+            unicodeBlocks: DefaultSettings.unicodeBlocks,
             useBrackets: false,
-            textExpansionFormat: TextExpansionFormat.repeatVowels,
+            textExpansionFormat: TextExpansionFormat.append,
           ),
-          'À bèaûtïfùl œasîs ïnvïtès ëagêr çùrïôûs mïnds tô ïmagïnë ùnïqùê advèntûrés.',
+          'Ţⱨɇ ɋùǐċķ ßȑ°ⱳǹ ſð× ĵŭmȹș øⱽéɍ ƭⱨë łaȝɏ ƌōġ. ƨ⁸ǷǙ§ŅǅȃƩÔíâ£ř',
         );
+      });
 
+      test(
+          'When ${TextExpansionFormat.append}, default text expansion ratio and brackets, expect correct output',
+          () {
+        expect(
+          pseudoGenerator.generatePseudoTranslation(
+            'The quick brown fox jumps over the lazy dog.',
+            unicodeBlocks: DefaultSettings.unicodeBlocks,
+            useBrackets: true,
+            textExpansionFormat: TextExpansionFormat.append,
+          ),
+          '[Ţⱨɇ ɋùǐċķ ßȑ°ⱳǹ ſð× ĵŭmȹș øⱽéɍ ƭⱨë łaȝɏ ƌōġ. ƨ⁸ǷǙ§ŅǅȃƩÔíâ£ř]',
+        );
+      });
+
+      test(
+          'When ${TextExpansionFormat.repeatVowels}, default text expansion ratio and no brackets, expect correct output',
+          () {
         expect(
           pseudoGenerator.generatePseudoTranslation(
             'The quick brown fox jumps over the lazy dog.',
@@ -34,7 +54,91 @@ void main() {
             useBrackets: false,
             textExpansionFormat: TextExpansionFormat.repeatVowels,
           ),
-          'Ŧĥę ɋǖȉȼĸ ȸŕºⱳǌ ſô× ɉµmƥș øⱴěř ťƕę ŀaƶȳ ǳœǥ.',
+          'Ŧⱨɇɇé ɋȕůµⁱȋĩ©ƙ ƀŕⱺðⱳň ƒöƣₓ ǰµũmƥƨ øðⱱĕȩř ⱦħěƹ ⱡaaɀŷ ďôₒğ.',
+        );
+      });
+
+      test(
+          'When ${TextExpansionFormat.repeatVowels}, default text expansion ratio and brackets, expect correct output',
+          () {
+        expect(
+          pseudoGenerator.generatePseudoTranslation(
+            'The quick brown fox jumps over the lazy dog.',
+            unicodeBlocks: DefaultSettings.unicodeBlocks,
+            useBrackets: true,
+            textExpansionFormat: TextExpansionFormat.repeatVowels,
+          ),
+          '[Ŧⱨɇɇé ɋȕůµⁱȋĩ©ƙ ƀŕⱺðⱳň ƒöƣₓ ǰµũmƥƨ øðⱱĕȩř ⱦħěƹ ⱡaaɀŷ ďôₒğ.]',
+        );
+      });
+
+      test(
+          'When ${TextExpansionFormat.numberWords}, default text expansion ratio and no brackets, expect correct output',
+          () {
+        expect(
+          pseudoGenerator.generatePseudoTranslation(
+            'The quick brown fox jumps over the lazy dog.',
+            unicodeBlocks: DefaultSettings.unicodeBlocks,
+            useBrackets: false,
+            textExpansionFormat: TextExpansionFormat.numberWords,
+          ),
+          'Ŧⱨɇ ɋúȋċĸ ƀřðŵņ ſǭ× ȷűmȹƽ ⱺⱴₑȑ ƫĥĕ ȴaƺƴ ǳȯĝ. one two three four',
+        );
+      });
+
+      test(
+          'When ${TextExpansionFormat.numberWords}, default text expansion ratio and brackets, expect correct output',
+          () {
+        expect(
+          pseudoGenerator.generatePseudoTranslation(
+            'The quick brown fox jumps over the lazy dog.',
+            unicodeBlocks: DefaultSettings.unicodeBlocks,
+            useBrackets: true,
+            textExpansionFormat: TextExpansionFormat.numberWords,
+          ),
+          '[Ŧⱨɇ ɋúȋċĸ ƀřðŵņ ſǭ× ȷűmȹƽ ⱺⱴₑȑ ƫĥĕ ȴaƺƴ ǳȯĝ. one two three four]',
+        );
+      });
+
+      test(
+          'When ${TextExpansionFormat.exclamationMarks}, default text expansion ratio and no brackets, expect correct output',
+          () {
+        expect(
+          pseudoGenerator.generatePseudoTranslation(
+            'The quick brown fox jumps over the lazy dog.',
+            unicodeBlocks: DefaultSettings.unicodeBlocks,
+            useBrackets: false,
+            textExpansionFormat: TextExpansionFormat.exclamationMarks,
+          ),
+          '!!! Ŧⱨɇ ɋúȋċĸ ƀřðŵņ ſǭ× ȷűmȹƽ ⱺⱴₑȑ ƫĥĕ ȴaƺƴ ǳȯĝ. !!!',
+        );
+      });
+
+      test(
+          'When ${TextExpansionFormat.exclamationMarks}, default text expansion ratio and brackets, expect correct output',
+          () {
+        expect(
+          pseudoGenerator.generatePseudoTranslation(
+            'The quick brown fox jumps over the lazy dog.',
+            unicodeBlocks: DefaultSettings.unicodeBlocks,
+            useBrackets: true,
+            textExpansionFormat: TextExpansionFormat.exclamationMarks,
+          ),
+          '[!!! Ŧⱨɇ ɋúȋċĸ ƀřðŵņ ſǭ× ȷűmȹƽ ⱺⱴₑȑ ƫĥĕ ȴaƺƴ ǳȯĝ. !!!]',
+        );
+      });
+
+      test(
+          'when ${TextExpansionFormat.repeatVowels} and no vowels, expect correct output',
+          () {
+        expect(
+          pseudoGenerator.generatePseudoTranslation(
+            'by',
+            unicodeBlocks: DefaultSettings.unicodeBlocks,
+            useBrackets: false,
+            textExpansionFormat: TextExpansionFormat.repeatVowels,
+          ),
+          'ȸɏ ƨ',
         );
       });
     });
@@ -85,7 +189,7 @@ void main() {
         );
       });
 
-      test('When hello, goodbye count = 5, expect heelloo, goooodbyye', () {
+      test('When hello, goodbye count = 5, expect heelloo, goooodbyee', () {
         expect(
           pseudoGenerator.repeatVowels(
             'hello, goodbye',
