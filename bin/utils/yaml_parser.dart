@@ -126,7 +126,7 @@ class YamlParser {
     return null;
   }
 
-  /// Converts a YamlList? into a List<String>?
+  /// Converts a `YamlList?` into a `List<String>?`
   static List<String>? _yamlListToStringList(YamlList? inputList) =>
       inputList?.map((item) => item.toString()).toList();
 

@@ -1,9 +1,9 @@
-## [0.6.0] - XX/XX/2026
+## [0.5.2] - 16/03/2026
 
-* Use seed number to ensure same random generated pseudo strings.
-* Added ability to define settings in `flutter_pseudolocalizor.yaml`.
-* Bug fixes & added more tests.
-* Set Dart 3 as min sdk constraint.
+* Add seed support to generate deterministic pseudo strings.
+* Add support for defining settings in `flutter_pseudolocalizor.yaml`.
+* Bug fixes and additional tests.
+* Set Dart 3 as the minimum SDK constraint.
 
 ## [0.5.1] - 24/07/2021
 

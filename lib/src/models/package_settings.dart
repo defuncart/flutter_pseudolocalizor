@@ -23,7 +23,7 @@ class PackageSettings {
 
   /// A seed for random generators.
   ///
-  /// This should ensure that psuedo strings are generated identically each run.
+  /// Ensures pseudo strings are generated deterministically across runs.
   ///
   /// Note that new releases of dart may update random seed algorithm.
   final int seed;
@@ -40,7 +40,7 @@ class PackageSettings {
   /// A RegExp to ignore during text replacement.
   final RegExp? patternToIgnore;
 
-  /// A list of keys which should be ignored.
+  /// A list of keys that should not be pseudo-translated.
   final List<String>? keysToIgnore;
 
   /// A model of arb settings.

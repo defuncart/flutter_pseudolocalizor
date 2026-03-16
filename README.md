@@ -1,26 +1,39 @@
 # flutter_pseudolocalizor
 
-A Pseudolocalization tool for Flutter which generates pseudo, nonsensical translations for multiple languages from a given English source.
+A pseudolocalization tool for Flutter that generates pseudo-translated strings from English source strings.
 
 ## Pseudolocalization
 
+Pseudolocalization is a testing technique that generates pseudo-translated strings to simulate localization and verify that an application correctly handles different languages, character sets and text expansion/contraction.
+
+```
+Hello World!  -> [Hellö Wörld! ÜüäßÖ]
+```
+
+<details>
+<summary>Learn more about pseudolocalization</summary>
+
+### What is pseudolocalization?
+
 - *Internationalization* is the process of designing a software application so that it can easily be adapted to various other languages and regions without any programming changes. 
 - *Localization* is the process of adapting internationalized software for a specific region or language by adding locale-specific components (€2.99 => 2,99€) and translating text (Hello World! => Hallo Welt!). 
-- *Pseudolocalization* is a software testing method used before the localization process in which a fake (or pseudo) translations (with the region and language specific characters) are generated: `Hello World!` => `[ Hellö Wörld! ÜüäßÖ ]`.
+- *Pseudolocalization* is a software testing method used before the localization process in which fake (pseudo) translations (with the region and language specific characters) are generated: `Hello World!` => `[Hellö Wörld! ÜüäßÖ]`.
 
-The benefits of pseudolocalization are three fold:
+### Why use pseudolocalization?
+
+The benefits of pseudolocalization are threefold:
 
 1. To test that all (special) characters of the target locale (i.e. German) are displayed correctly.
-2. To test that text boxes can accommodate longer translations. If a pseduotranslation is cutoff or visually looks ugly on the screen, then there's a good chance that the real translation will too.
+2. To test that text boxes can accommodate longer translations. If a pseudo-translation is cutoff or visually looks ugly on the screen, then there's a good chance that the real translation will too.
 3. To flag hardcoded strings or text images.
 
 ### Character Replacement
 
-Generally psuedo translations will replace characters in the English string (i.e. `Hello World`) with special (i.e. accented) characters from the target language. Considering German, the special characters `ä ö ü ß Ä Ö Ü ẞ` could be mapped to vowels a, o and u, with ß mapped to b. Although the letter ß has no relationship to b in German, what is important here is that the text is as readable as possible for the developer. The pseudo translation may also use a mixture of all UTF-8 special characters.
+Generally pseudo-translations will replace characters in the English string (i.e. `Hello World`) with special (i.e. accented) characters from the target language. For German, the special characters `ä ö ü ß Ä Ö Ü ẞ` are mapped to vowels a, o and u, with ß mapped to b. Although ß is not linguistically related to b in German, visually similar characters are used to keep pseudo-translated strings readable for developers. Pseudo-translations may include accented letters as well as other visually distinct symbols, such as ¿.
 
 ### Text Expansion
 
-Considering English as the base language, after translation many languages will exhibit *text expansion* and have longer text strings. Generally German extends by 10-35%, Polish 20-30% and Russian by 15%. Moreover, shorter English text strings tends to expanded even more than larger strings. Thus one approach to text expansion is to use a constant (say 40%), while another is to use a function of input text length returning values from 30-50%. Note that some languages (i.e. Japanese, Korean) generally contract and can actually have shorter text strings than their English counterparts.
+When English is used as the base language, after translation many languages will exhibit *text expansion* and have longer text. Generally German extends by 10-35%, Polish 20-30% and Russian by 15%. Moreover, short English strings often expand proportionally more than longer strings during localization. Thus one approach to text expansion is to use a constant (say 40%), while another is to use a function of input text length returning values from 30-50%. Note that some languages (i.e. Japanese, Korean) generally contract and can actually have shorter text than their English counterparts.
 
 ### Text Expansion Format
 
@@ -33,7 +46,7 @@ There are multiple ways to format the text expansion, for instance:
 
 Moreover, the text expansion is often wrapped in square brackets to easily determine UI clipping, while it may also use punctuation of the target language (i.e. ¿ and ¡ in Spanish).
 
-### Pseudo Translations
+### Pseudo-translations
 
 Putting this altogether, the base string can be rendered as follows:
 
@@ -44,7 +57,8 @@ Putting this altogether, the base string can be rendered as follows:
 | Russian | [!!! Нёлло Шоялд! !!!] |
 | Spanish | [Hélló Wórld! one two] |
 
-It is important to remember that these pseduotranslations are nonsensical: they are not real translations, instead merely a way to test that the app is ready for the translation stage.
+These pseudo-translations are intentionally nonsensical and do not represent real translations. They are used to verify that the application is ready for localization.
+</details>
 
 ## Getting Started
 
@@ -90,18 +104,18 @@ flutter_pseudolocalizor:
 | input_filepath             | A path to the input localization file.                                                                                  |
 | replace_base               | Whether the base language (en) should be replaced. Defaults to `false`.                                                 |
 | unicode_blocks             | When replace_base is true, a list of unicode blocks to use. Defaults to all.                                            |
-| seed                       | A seed for random generators. This should ensure that psuedo strings are generated identically each run.                |
+| seed                       | A seed for random generators. Ensures pseudo strings are generated deterministically across runs.                       |
 | text_expansion_format      | The format of the text expansion. Defaults to `repeatVowels`, alternatives `append`, `numberWords`, `exclamationMarks`. |
 | text_expansion_ratio       | The ratio (between 1 and 3) of text expansion. If `null`, uses a linear function.                                       |
 | languages_to_generate      | A list of languages to generate. Defaults to empty.                                                                     |
 | patterns_to_ignore         | A list of patterns to ignore during text replacement.                                                                   |
-| keys_to_ignore             | A list of keys which should be ignored.                                                                                 |
+| keys_to_ignore             | A list of keys that should not be pseudo-translated.                                                                    |
 | arb_settings               | Optional settings when the input file is an arb, please see below for more info.                                        |
 | csv_settings               | Optional settings when the input file is a csv file, please see below for more info.                                    |
 
 `input_filepath` must be given, all other settings are optional. 
 
-`replace_base` replaces the base language (en) with characters from `unicode_blocks`. To test specific languages, set `languages_to_generate` with a list of languages. `patterns_to_ignore` is especially useful to avoid text replacement for certain know constructs, for instance a product name or a pattern `%myVar$d` used to parse variables from text.
+`replace_base` replaces the base language (en) with characters from `unicode_blocks`. To test specific languages, set `languages_to_generate` with a list of languages. `patterns_to_ignore` prevents pseudolocalization for specific patterns such as variables or product names.
 
 | ARB Setting                | Description                                                                                                             |
 | -------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
@@ -125,14 +139,11 @@ to generate output files.
 
 ## Future Plans
 
-- Presently 500 non-basic latin characters are available. 
-  - IPA Extensions, Phonetic Extensions, Latin Extended Additional, Latin Extended Additional, Letterlike symbols will be considered in future versions.
-- Although 8 languages are currently supported, some of the world's most spoken languages like Arabic, Chinese and Hindi are not supported. 
-  - For languages with their own alphabets (like Arabic, Armenian, Georgian, Hindi, Korean etc.), one approach could be to append random letters from the alphabet onto the original English text.
-  - For character based writing systems like Chinese, Japanese etc., maybe random characters could be appended to the original English text.
-- If the Russian mapping is positively received, other languages which use the Cyrillic alphabet and Greek could be similarly implemented.
-- Migrate to use Characters class over Strings.
+- Currently, Latin-1 Supplement and Latin Extended A, B and C are supported, covering most Latin-script languages.
+- Add Latin Extended Additional to fully support Vietnamese.
+- Support additional non-Latin scripts, including Arabic, Hindi, Korean, and other character-based writing systems such as Chinese and Japanese.
+- Migrate from using plain String operations to Dart’s Characters Class for proper handling of multi-byte and combined Unicode characters.
 
 ## Collaboration
 
-Spotted any issues? Please open [an issue on GitHub](https://github.com/defuncart/flutter_pseudolocalizor/issues)! Would like to contribute a new language or feature? Fork the repo and submit a PR!
+Spotted any issues? Please open [an issue on GitHub](https://github.com/defuncart/flutter_pseudolocalizor/issues)! Would like to contribute a new feature? Fork the repo and submit a PR!

@@ -14,7 +14,7 @@ abstract class DefaultSettings {
 
   /// A seed for random generators.
   ///
-  /// This should ensure that psuedo strings are generated identically each run.
+  /// Ensures pseudo strings are generated deterministically across runs.
   ///
   /// Note that new releases of dart may update random seed algorithm.
   static const seed = 0;
