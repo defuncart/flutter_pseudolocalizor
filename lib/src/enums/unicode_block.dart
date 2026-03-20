@@ -3,5 +3,6 @@ enum UnicodeBlock {
   latinExtendedA,
   latinExtendedB,
   latinExtendedC,
+  latinExtendedAdditional,
   superscriptsSubscripts,
 }
