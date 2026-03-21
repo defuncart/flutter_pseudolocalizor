@@ -1,3 +1,7 @@
+## [0.6.0] - XX/XX/XXXX
+
+* Add Latin Extended Additional to fully support Vietnamese.
+
 ## [0.5.2] - 16/03/2026
 
 * Add seed support to generate deterministic pseudo strings.

@@ -1,6 +1,6 @@
 name: flutter_pseudolocalizor
 description: A pseudolocalization tool for Flutter that generates pseudo-translated strings from English source strings.
-version: 0.5.2
+version: 0.6.0-dev.0
 homepage: https://github.com/defuncart/flutter_pseudolocalizor
 repository: https://github.com/defuncart/flutter_pseudolocalizor
 issue_tracker: https://github.com/defuncart/flutter_pseudolocalizor/issues
