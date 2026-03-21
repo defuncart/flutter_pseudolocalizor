@@ -1,4 +1,5 @@
 import '../configs/blocks/latin_extended_a.dart';
+import '../configs/blocks/latin_extended_additional.dart';
 import '../configs/blocks/latin_extended_b.dart';
 import '../configs/blocks/latin_extended_c.dart';
 import '../configs/blocks/latin_supplement.dart';
@@ -12,6 +13,8 @@ extension UnicodeBlockExtensions on UnicodeBlock {
         UnicodeBlock.latinExtendedA => LatinExtendedA.specialCharacters,
         UnicodeBlock.latinExtendedB => LatinExtendedB.specialCharacters,
         UnicodeBlock.latinExtendedC => LatinExtendedC.specialCharacters,
+        UnicodeBlock.latinExtendedAdditional =>
+          LatinExtendedAdditional.specialCharacters,
         UnicodeBlock.superscriptsSubscripts =>
           SuperscriptsSubscripts.specialCharacters,
       };
@@ -22,6 +25,8 @@ extension UnicodeBlockExtensions on UnicodeBlock {
         UnicodeBlock.latinExtendedA => LatinExtendedA.mappingCharacters,
         UnicodeBlock.latinExtendedB => LatinExtendedB.mappingCharacters,
         UnicodeBlock.latinExtendedC => LatinExtendedC.mappingCharacters,
+        UnicodeBlock.latinExtendedAdditional =>
+          LatinExtendedAdditional.mappingCharacters,
         UnicodeBlock.superscriptsSubscripts =>
           SuperscriptsSubscripts.mappingCharacters,
       };

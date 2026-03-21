@@ -1,6 +1,6 @@
 name: example
 description: An example for flutter_pseudolocalizor package.
-version: 0.5.2
+version: 0.6.0
 publish_to: 'none'
 homepage: https://github.com/defuncart/flutter_pseudolocalizor
 
